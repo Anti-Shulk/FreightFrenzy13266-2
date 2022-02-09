@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.tuner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.profile.MotionProfile;
@@ -17,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SampleMecanumDrive;
 
 import java.util.List;
 
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.driveVelocityPIDTuner;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MOTOR_VELO_PID;
@@ -47,10 +47,10 @@ import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kV;
  * user to reset the position of the bot in the event that it drifts off the path.
  * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
-@Config
+//@Config
 @Autonomous(group = "drive")
 public class DriveVelocityPIDTuner extends LinearOpMode {
-    public static double DISTANCE = 72; // in
+//    public static double DISTANCE = 72; // in
 
     enum Mode {
         DRIVER_MODE,
@@ -58,8 +58,8 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
     }
 
     private static MotionProfile generateProfile(boolean movingForward) {
-        MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
-        MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
+        MotionState start = new MotionState(movingForward ? 0 : driveVelocityPIDTuner.DISTANCE, 0, 0, 0);
+        MotionState goal = new MotionState(movingForward ? driveVelocityPIDTuner.DISTANCE : 0, 0, 0, 0);
         return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
     }
 

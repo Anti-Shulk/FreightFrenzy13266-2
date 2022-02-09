@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.tuner;
 
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.maxVelocityTuner;
+
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -23,10 +24,10 @@ import java.util.Objects;
  * <p>
  * Further fine tuning of kF may be desired.
  */
-@Config
+//@Config
 @Autonomous(group = "drive")
 public class MaxVelocityTuner extends LinearOpMode {
-    public static double RUNTIME = 2.0;
+//    public static double RUNTIME = 2.0;
 
     private ElapsedTime timer;
     private double maxVelocity = 0.0;
@@ -43,7 +44,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        telemetry.addLine("Your bot will go at full speed for " + RUNTIME + " seconds.");
+        telemetry.addLine("Your bot will go at full speed for " + maxVelocityTuner.RUNTIME + " seconds.");
         telemetry.addLine("Please ensure you have enough space cleared.");
         telemetry.addLine("");
         telemetry.addLine("Press start when ready.");
@@ -57,7 +58,7 @@ public class MaxVelocityTuner extends LinearOpMode {
         drive.setDrivePower(new Pose2d(1, 0, 0));
         timer = new ElapsedTime();
 
-        while (!isStopRequested() && timer.seconds() < RUNTIME) {
+        while (!isStopRequested() && timer.seconds() < maxVelocityTuner.RUNTIME) {
             drive.updatePoseEstimate();
 
             Pose2d poseVelo = Objects.requireNonNull(drive.getPoseVelocity(), "poseVelocity() must not be null. Ensure that the getWheelVelocities() method has been overridden in your localizer.");

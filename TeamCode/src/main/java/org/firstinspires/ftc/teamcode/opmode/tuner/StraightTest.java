@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmode.tuner;
 
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.straightTest;
+
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -13,10 +14,10 @@ import org.firstinspires.ftc.teamcode.subsystems.SampleMecanumDrive;
 /*
  * This is a simple routine to test translational drive capabilities.
  */
-@Config
+//@Config
 @Autonomous(group = "drive")
 public class StraightTest extends LinearOpMode {
-    public static double DISTANCE = 60; // in
+//    public static double DISTANCE = 60; // in
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -25,7 +26,7 @@ public class StraightTest extends LinearOpMode {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
-                .forward(DISTANCE)
+                .forward(straightTest.DISTANCE)
                 .build();
 
         waitForStart();

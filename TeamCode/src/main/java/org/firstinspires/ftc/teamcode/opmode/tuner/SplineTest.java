@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.tuner;
 
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.splineTest;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -13,6 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SampleMecanumDrive;
  */
 @Autonomous(group = "drive")
 public class  SplineTest extends LinearOpMode {
+
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -22,7 +25,7 @@ public class  SplineTest extends LinearOpMode {
         if (isStopRequested()) return;
 
         Trajectory traj = drive.trajectoryBuilder(new Pose2d())
-                .splineTo(new Vector2d(30, 30), 0)
+                .splineTo(splineTest.END_VECTOR, 0)
                 .build();
 
         drive.followTrajectory(traj);

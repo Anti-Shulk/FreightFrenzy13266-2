@@ -5,17 +5,22 @@ import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import static org.firstinspires.ftc.teamcode.constants.Constants.Trapdoor.*;
+
+import org.firstinspires.ftc.teamcode.constants.Constants;
+
 public class TrapdoorSubsystem extends SubsystemBase {
 
     private ServoEx trapdoor;
-    TrapdoorSubsystem(final HardwareMap hMap, final String name) {
-        ServoEx trapdoor = new SimpleServo(hMap, name, 0, 270);
+
+    TrapdoorSubsystem(final HardwareMap hardwareMap, final String name) {
+        trapdoor = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MIN_ANGLE);
         trapdoor.setInverted(false);
     }
     public void open() {
-        trapdoor.turnToAngle(0);
+        trapdoor.turnToAngle(Constants.trapdoor.OPEN);
     }
     public void close() {
-        trapdoor.turnToAngle(270);
+        trapdoor.turnToAngle(Constants.trapdoor.CLOSE);
     }
 }

@@ -1,72 +1,76 @@
 package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-
-import org.checkerframework.checker.units.qual.C;
-import org.firstinspires.ftc.teamcode.constants.drive.DriveConstants;
 
 @Config
 public class Constants {
-    public static Arm ARM = new Arm();
-    public static Carousel CAROUSEL = new Carousel();
-    public static Turret TURRET = new Turret();
-    public static Gripper GRIPPER = new Gripper();
-    public static Trapdoor TRAPDOOR = new Trapdoor();
-    public static CameraServo CAMERASERVO = new CameraServo();
+    public static Arm arm = new Arm();
+    public static Carousel carousel = new Carousel();
+    public static Turret turret = new Turret();
+    public static Gripper gripper = new Gripper();
+    public static Trapdoor trapdoor = new Trapdoor();
+    public static CameraServo cameraServo = new CameraServo();
 
 
     // TODO: make it work in degrees
     public static class Arm {
-        public String NAME                  = "armMotor";
-        public boolean REVERSED = false;
-        public double RPM = 80;
-        public double CPR = 1000;
+        public static Hardware hardware = new Hardware();
+        public static Controller controller = new Controller();
 
-        public double ARM_HIGH       = 0; // Degrees
-        public double ARM_MID        = 0; // Degrees
-        public double ARM_LOW        = 0; // Degrees
-        public double ARM_INTAKE     = 0; // Degrees
-    }
+        public static class Hardware {
+            public String ID            = "armMotor";
+            public boolean REVERSED     = false;
+            public double RPM           = 80;
+            public double CPR           = 1000;
+        }
 
-    public static class Turret {
-        public String NAME               = "turretMotor";
-        public boolean REVERSED = false;
-        public double RPM = 80;
-        public double CPR = 1000;
+        public static class Controller {
+            public double TOLERANCE     = 10;
+            public double KP            = 5;
+            public double POWER         = 0.6;
+        }
 
-        public double TURRET_FORWARD = 0; // Degrees
-        public double TURRET_LEFT    = 0; // Degrees
-        public double TURRET_RIGHT   = 0; // Degrees
-    }
 
-    public static class Intake {
-        public String NAME               = "intakeMotor";
-        public boolean REVERSED = false;
-        public double RPM = 80;
-        public double CPR = 1000;
 
-        public double INTAKE_SPEED   = 1; // % of Power
+        public double HIGH          = 30; // Degrees
+        public double MID           = 0; // Degrees
+        public double LOW           = 0; // Degrees
+        public double INTAKE        = 0; // Degrees
+
+        public int INITIAL_POSITION = 0;
+
     }
 
     public static class Carousel {
-        public Carousel() { }
-        public static Spin SPIN = new Spin();
-        public static Lift LIFT = new Lift();
+        public static Spin spin = new Spin();
+        public static Lift lift = new Lift();
 
         public static class Spin {
-            public String NAME = "carouselServo";
-            public boolean REVERSED = false;
-            public double RPM = 80;
-            public double CPR = 1000;
+            public static Hardware hardware = new Hardware();
+            public static Controller controller = new Controller();
+
+            public static class Hardware {
+                public String ID = "carouselServo";
+                public boolean REVERSED = false;
+                public double RPM = 80;
+                public double CPR = 1000;
+            }
+            public static class Controller {
+                public double TOLERANCE     = 10;
+                public double KP            = 5;
+                public double POWER         = 0.6;
+            }
 
             public double SPEED                = 30; // Degrees per second
         }
         public static class Lift {
-            public String NAME  = "carouselLiftServo";
-            public boolean REVERSED = false;
-            public double MIN_ANGLE     = 0;
-            public double MAX_ANGLE     = 270;
+            public static Hardware hardware = new Hardware();
+            public static class Hardware {
+                public String ID = "carouselLiftServo";
+                public boolean REVERSED = false;
+                public double MIN_ANGLE = 0;
+                public double MAX_ANGLE = 270;
+            }
 
             public double UP                   = 90; // Degrees
             public double DOWN                 = 0; // Degrees
@@ -77,37 +81,91 @@ public class Constants {
 
     }
 
+
     public static class Gripper {
-        public static Grip SPIN = new Grip();
-        public static Lift LIFT = new Lift();
+        public static Grip grip = new Grip();
+        public static Lift lift = new Lift();
 
         public static class Grip {
-            public String GRIPPER_NAME = "gripperServo";
-            public double MIN_ANGLE     = 0;
-            public double MAX_ANGLE     = 270;
-            public boolean REVERSED = false;
-
+            public static Hardware hardware = new Hardware();
+            public static class Hardware {
+                public String ID = "gripperServo";
+                public double MIN_ANGLE     = 0;
+                public double MAX_ANGLE     = 270;
+                public boolean REVERSED = false;
+            }
             public double OPEN               = 180; // Degrees
             public double CLOSE              = 0; // Degrees
+
         }
         public static class Lift {
-            public String LIFT_NAME = "gripperLiftServo";
-            public double MIN_ANGLE     = 0;
-            public double MAX_ANGLE     = 270;
-            public boolean REVERSED = false;
-
+            public static Hardware hardware = new Hardware();
+            public static class Hardware {
+                public String ID = "gripperLiftServo";
+                public double MIN_ANGLE     = 0;
+                public double MAX_ANGLE     = 270;
+                public boolean REVERSED = false;
+            }
             public double UP                 = 90; // Degrees
             public double DOWN               = 0; // Degrees
+
         }
 
 
     }
 
+    public static class Turret {
+        public static Hardware hardware = new Hardware();
+        public static Controller controller = new Controller();
+
+        public static class Hardware {
+            public String ID               = "turretMotor";
+            public boolean REVERSED        = false;
+            public double RPM              = 80;
+            public double CPR              = 1000;
+        }
+
+        public static class Controller {
+            public double TOLERANCE     = 10;
+            public double KP            = 5;
+            public double POWER         = 0.6;
+            public double RANGE         = 360; // Degrees
+        }
+
+        public double FORWARD = 0; // Degrees
+        public double LEFT    = 0; // Degrees
+        public double RIGHT   = 0; // Degrees
+        public double INTAKE   = 0; // Degrees
+    }
+
+    public static class Intake {
+        public static Hardware hardware = new Hardware();
+        public static Controller controller = new Controller();
+        public static class Hardware {
+            public String ID = "intakeMotor";
+            public boolean REVERSED = false;
+            public double RPM = 80;
+            public double CPR = 1000;
+        }
+        public static class Controller {
+
+        }
+
+        public double INTAKE_SPEED   = 1; // % of Power
+    }
+
+
+
+
+
     public static class Trapdoor {
-        public String NAME = "trapdoorServo";
-        public double MIN_ANGLE     = 0;
-        public double MAX_ANGLE     = 270;
-        public boolean REVERSED = false;
+        public static Hardware hardware = new Hardware();
+        public static class Hardware {
+            public String ID = "trapdoorServo";
+            public double MIN_ANGLE = 0;
+            public double MAX_ANGLE = 270;
+            public boolean REVERSED = false;
+        }
 
         public double OPEN                       = 180; // Degrees
         public double CLOSE                      = 0; // Degrees
@@ -115,7 +173,7 @@ public class Constants {
 
     public static class CameraServo {
 
-        public String NAME = "cameraServo";
+        public String ID = "cameraServo";
         public double MIN_ANGLE     = 0;
         public double MAX_ANGLE     = 270;
         public boolean REVERSED = false;

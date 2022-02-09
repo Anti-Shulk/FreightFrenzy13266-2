@@ -1,26 +1,30 @@
 package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys.*;
+import com.arcrobotics.ftclib.gamepad.TriggerReader;
 
 @Config
 public class Controls {
     public static class Driver {
-        public static GamepadKeys.Button  SLOW        = GamepadKeys.Button.RIGHT_BUMPER;
-        public static GamepadKeys.Button  TURBO       = GamepadKeys.Button.LEFT_BUMPER;
+        public static Button  SLOW        = Button.RIGHT_BUMPER;
+        public static Button  TURBO       = Button.LEFT_BUMPER;
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
-        public static GamepadKeys.Trigger INTAKE      = GamepadKeys.Trigger.LEFT_TRIGGER;
-        public static GamepadKeys.Trigger OUTTAKE     = GamepadKeys.Trigger.RIGHT_TRIGGER;
+        public static Trigger INTAKE      = Trigger.LEFT_TRIGGER;
+        public static Trigger OUTTAKE     = Trigger.RIGHT_TRIGGER;
     }
     public static class Operator {
-        public static GamepadKeys.Button  ARM_FORWARD = GamepadKeys.Button.DPAD_UP;
-        public static GamepadKeys.Button  ARM_LEFT    = GamepadKeys.Button.DPAD_LEFT;
-        public static GamepadKeys.Button  ARM_RIGHT   = GamepadKeys.Button.DPAD_RIGHT;
-        public static GamepadKeys.Button  ARM_INTAKE  = GamepadKeys.Button.DPAD_RIGHT;
+        public static Button  ARM_FORWARD = Button.DPAD_UP;
+        public static Button  ARM_LEFT    = Button.DPAD_LEFT;
+        public static Button  ARM_RIGHT   = Button.DPAD_RIGHT;
+        public static Button  ARM_INTAKE  = Button.DPAD_DOWN;
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
-        public static GamepadKeys.Trigger ARM_DOWN    = GamepadKeys.Trigger.LEFT_TRIGGER;
-        public static GamepadKeys.Trigger ARM_UP      = GamepadKeys.Trigger.LEFT_TRIGGER;
+        public static Trigger ARM_DOWN    = Trigger.LEFT_TRIGGER;
+        public static Trigger ARM_UP      = Trigger.LEFT_TRIGGER;
+
+        public static Button CAROUSEL     = Button.X;
     }
 }

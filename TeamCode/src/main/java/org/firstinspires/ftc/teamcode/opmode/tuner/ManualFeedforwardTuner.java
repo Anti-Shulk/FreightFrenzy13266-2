@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmode.tuner;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.kinematics.Kinematics;
@@ -17,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SampleMecanumDrive;
 
 import java.util.Objects;
 
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.manualFeedforwardTuner;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_ENCODER;
@@ -42,7 +42,7 @@ import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kV;
 //@Config
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
-    public double DISTANCE = 72; // in
+//    public double DISTANCE = 72; // in
 
     private FtcDashboard dashboard = FtcDashboard.getInstance();
 
@@ -56,8 +56,8 @@ public class ManualFeedforwardTuner extends LinearOpMode {
     private Mode mode;
 
     private MotionProfile generateProfile(boolean movingForward) {
-        MotionState start = new MotionState(movingForward ? 0 : DISTANCE, 0, 0, 0);
-        MotionState goal = new MotionState(movingForward ? DISTANCE : 0, 0, 0, 0);
+        MotionState start = new MotionState(movingForward ? 0 : manualFeedforwardTuner.DISTANCE, 0, 0, 0);
+        MotionState goal = new MotionState(movingForward ? manualFeedforwardTuner.DISTANCE : 0, 0, 0, 0);
         return MotionProfileGenerator.generateSimpleMotionProfile(start, goal, MAX_VEL, MAX_ACCEL);
     }
 
