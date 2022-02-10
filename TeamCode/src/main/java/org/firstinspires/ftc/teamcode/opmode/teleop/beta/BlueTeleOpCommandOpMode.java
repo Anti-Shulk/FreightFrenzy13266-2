@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 public class BlueTeleOpCommandOpMode extends CommandOpMode {
     @Override
     public void initialize() {
-        GamepadEx driverGamepad = new GamepadEx(gamepad1);
-        GamepadEx operatorGamepad = new GamepadEx(gamepad2);
+        GamepadEx driver = new GamepadEx(gamepad1);
+        GamepadEx operator = new GamepadEx(gamepad2);
 
         ArmSubsystem arm = new ArmSubsystem(hardwareMap);
 //        CarouselSubsystem carousel = new CarouselSubsystem(hardwareMap);
@@ -53,7 +53,7 @@ public class BlueTeleOpCommandOpMode extends CommandOpMode {
         //
 
         // i think something like this would be my idea format.
-        CommandScheduler.getInstance().addButton(operatorGamepad.getButton(GamepadKeys.Button.A) ? arm::moveHigh : arm::moveLow);
+        CommandScheduler.getInstance().addButton(operator.getButton(GamepadKeys.Button.A) ? arm::moveHigh : arm::moveLow);
         // vv
         // addCommand(operatorGet(SLOW_MODE) ? arm::moveHigh : arm::moveLow);
         // or maybe this for something more complicated
@@ -61,15 +61,48 @@ public class BlueTeleOpCommandOpMode extends CommandOpMode {
         // operatorGet(SLOW_MODE) ? arm::moveHigh : arm::moveLow
         // });
 
+        // I lied now i want this
+        // simpleComamnd(operator.get(SLOW_MODE), arm::moveHigh)
+        // simpleCOmmand(booleanSupplier condition, Command... command)
+        // simpleCOmmand(boolean, interuptable, booleanSupplier condition, Command... command)
+
+        // maybe i could do something like this
+//        Command(
+//                gamepadbutton,
+//                button (aka command)
+//                button (aka command)
+//        )
+//        this could turn into something like this
+//        newCommand(
+//             operatorGamepad.get(SLOW_MODE),
+//             .whenPressed(arm::intake)
+//             .whenReleased(arm::outtake)
+//        );
+//        ^ i think i like this appreach most becuase it is very close. i like that there is a comma to separete, but that isnt required by me
+//        i like the shortness ig and its very similar to the default
+//        now how would we do this for something like the turert?
+
+//        newCommand(
+//             (we could make this condition to run the command be the math to calculatoe the stick
+//             touching the edge),
+//             .whenPressed(we could od something like
+//             turret.setTargetAngle(operator.getx, operator.gety)
+//        );
+
+        // maybe i should rename it from when pressed to when active but maybe not
 
 
 
 
 
 
-        operatorGamepad.getGamepadButton(Operator.ARM_INTAKE).whenPressed(arm::moveHigh);
-        operatorGamepad.getGamepadButton(Operator.ARM_RIGHT).whenPressed(arm::moveLow);
-        operatorGamepad.getGamepadButton(Operator.ARM_RIGHT).whenPressed(arm::moveLow);
+
+//        operatorGamepad.getGamepadButton(Operator.ARM_INTAKE)
+//                .whenPressed(arm::moveHigh)
+//                .whenHeld(arm::moveHigh)
+//                .whenReleased(arm::moveHigh);
+        operator.getGamepadButton(Operator.ARM_RIGHT).whenPressed(arm::moveLow);
+        operator.getGamepadButton(Operator.ARM_RIGHT).whenPressed(arm::moveLow);
 //        Button hi = () -> {
 //            if (operatorGamepad.getTrigger(Operator.ARM_UP) > 0.3 ) {
 //                arm.moveHigh();
@@ -77,17 +110,17 @@ public class BlueTeleOpCommandOpMode extends CommandOpMode {
 //                arm.moveLow();
 //            }
 //        };
-        BooleanSupplier qwer = () -> operatorGamepad.getTrigger(Operator.ARM_UP) > 0.3;
+        BooleanSupplier qwer = () -> operator.getTrigger(Operator.ARM_UP) > 0.3;
         Button hi = new Button(qwer);
-        Button hi = new GamepadTrigger(operatorGamepad, Operator.ARM_UP).whenPressed(arm::moveHigh);
+        Button hi = new GamepadTrigger(operator, Operator.ARM_UP).whenPressed(arm::moveHigh);
         CommandScheduler.getInstance().addButton(arm::moveHigh);
 //         how to put it on another thread
         CommandScheduler.getInstance().addButton(() -> new Thread(arm::moveHigh).start());
 
-        operatorGamepad.getGamepadButton(Operator.CAROUSEL).whenPressed(carousel::spinForward);
-        CommandScheduler.getInstance().addButton(operatorGamepad.getButton(GamepadKeys.Button.A) ? arm::moveHigh : arm::moveLow);
+        operator.getGamepadButton(Operator.CAROUSEL).whenPressed(carousel::spinForward);
+        CommandScheduler.getInstance().addButton(operator.getButton(GamepadKeys.Button.A) ? arm::moveHigh : arm::moveLow);
 
-        Button armUp = new GamepadTrigger(operatorGamepad, Operator.ARM_UP).whenPressed(arm::moveHigh);
+        Button armUp = new GamepadTrigger(operator, Operator.ARM_UP).whenPressed(arm::moveHigh);
         waitForStart();
         while (opModeIsActive()) {
             // There are two things that get run when you do this.
