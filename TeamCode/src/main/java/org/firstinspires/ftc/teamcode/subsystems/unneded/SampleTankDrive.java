@@ -34,17 +34,17 @@ import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Hardware.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kA;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kStatic;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kV;
 
 /*
  * Simple tank drive hardware implementation for REV hardware.

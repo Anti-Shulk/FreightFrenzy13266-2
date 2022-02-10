@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.constants.Constants;
+import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -37,17 +38,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.HEADING_PID;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.INITIAL_POS_MAYBE;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.LATERAL_MULTIPLIER;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.OMEGA_WEIGHT;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.TIMEOUT;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.TRANSLATIONAL_PID;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VX_WEIGHT;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VY_WEIGHT;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Hardware.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kA;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kStatic;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kV;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -80,15 +89,6 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
 
 
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
-
-    public static double LATERAL_MULTIPLIER = 1;
-
-    public static double VX_WEIGHT = 1;
-    public static double VY_WEIGHT = 1;
-    public static double OMEGA_WEIGHT = 1;
-
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
@@ -112,7 +112,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(5.0)), 0.5);
+                INITIAL_POS_MAYBE, TIMEOUT);
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -123,7 +123,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         }
 
         // TODO: adjust the names of the following hardware devices to match your configuration
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, ID);
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
