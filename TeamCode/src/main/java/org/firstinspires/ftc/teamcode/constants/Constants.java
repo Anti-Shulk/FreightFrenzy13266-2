@@ -10,6 +10,7 @@ public class Constants {
     public static Gripper gripper = new Gripper();
     public static Trapdoor trapdoor = new Trapdoor();
     public static CameraServo cameraServo = new CameraServo();
+    
 
 
     // TODO: make it work in degrees
@@ -20,8 +21,8 @@ public class Constants {
         public static class Hardware {
             public String ID            = "armMotor";
             public boolean REVERSED     = false;
-            public double RPM           = 80;
-            public double CPR           = 1000;
+            public double RPM           = 84;
+            public double CPR           = 1993;
         }
 
         public static class Controller {
@@ -52,8 +53,8 @@ public class Constants {
             public static class Hardware {
                 public String ID = "carouselServo";
                 public boolean REVERSED = false;
-                public double RPM = 80;
-                public double CPR = 1000;
+                public double RPM = 117;
+                public double CPR = 1425.1 * 2;
             }
             public static class Controller {
                 public double TOLERANCE     = 10;
@@ -78,6 +79,64 @@ public class Constants {
 
 
 
+
+    }
+    public static class Drive {
+        public static LeftFront leftFront = new LeftFront();
+        public static LeftRear leftRear = new LeftRear();
+        public static RightFront rightFront = new RightFront();
+        public static RightRear rightRear = new RightRear();
+
+        public static class LeftFront {
+            public static Hardware hardware = new Hardware();
+
+            public static class Hardware {
+                public String ID            = "leftFront";
+                public boolean REVERSED     = false;
+                public double RPM           = 84;
+                public double CPR           = 1993;
+            }
+        }
+        public static class LeftRear {
+            public static Hardware hardware = new Hardware();
+
+            public static class Hardware {
+                public String ID            = "leftRear";
+                public boolean REVERSED     = false;
+                public double RPM           = 84;
+                public double CPR           = 1993;
+            }
+        }
+        public static class RightFront {
+            public static Hardware hardware = new Hardware();
+
+            public static class Hardware {
+                public String ID            = "rightFront";
+                public boolean REVERSED     = false;
+                public double RPM           = 84;
+                public double CPR           = 1993;
+            }
+        }
+        public static class RightRear {
+            public static Hardware hardware = new Hardware();
+
+            public static class Hardware {
+                public String ID            = "rightRear";
+                public boolean REVERSED     = false;
+                public double RPM           = 84;
+                public double CPR           = 1993;
+            }
+        }
+        
+
+
+
+        public double HIGH          = 30; // Degrees
+        public double MID           = 0; // Degrees
+        public double LOW           = 0; // Degrees
+        public double INTAKE        = 0; // Degrees
+
+        public int INITIAL_POSITION = 0;
 
     }
 

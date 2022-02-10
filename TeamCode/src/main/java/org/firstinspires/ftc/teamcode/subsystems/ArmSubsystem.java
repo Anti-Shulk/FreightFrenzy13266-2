@@ -16,6 +16,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     //    private final DcMotorEx arm;
     private final MotorExEx arm;
+    private boolean isIntake;
 
     public ArmSubsystem(HardwareMap hardwareMap) {
         arm = new MotorExEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
@@ -27,6 +28,7 @@ public class ArmSubsystem extends SubsystemBase {
         arm.resetEncoder();
         arm.setTargetPosition(Constants.arm.INITIAL_POSITION);
         arm.setRunMode(MotorEx.RunMode.PositionControl);
+        arm.setTargetPosition(Constants.arm.INITIAL_POSITION);
         arm.set(controller.POWER);
 
 //        arm = hMap.get(DcMotorEx.class, HARDWARE.NAME);
@@ -62,6 +64,9 @@ public class ArmSubsystem extends SubsystemBase {
         arm.setTargetDegrees(Constants.arm.INTAKE);
     }
 
+    public boolean isIntake() {
+        return isIntake;
+    }
 //    public void setTargetRevolutions(double revolutions) {
 //        arm.setTargetPosition((int) (arm.getCPR() * revolutions));
 //        double ticksPerRev = 1993;
