@@ -1,20 +1,21 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.subsystems.unneded;
 
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
+
+import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 
 public class MecanumDriveSubsystemBasic extends SubsystemBase {
-    SampleMecanumDrive drive;
+    MecanumDriveSubsystem drive;
     OpMode opMode;
     double denominator;
     double speedMultiplier;
 
 
-    public MecanumDriveSubsystemBasic(SampleMecanumDrive drive) {
+    public MecanumDriveSubsystemBasic(MecanumDriveSubsystem drive) {
         this.drive = drive;
     }
 

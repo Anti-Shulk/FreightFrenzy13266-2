@@ -4,15 +4,20 @@ import androidx.annotation.NonNull;
 
 import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import java.util.function.Supplier;
+
 public class MotorExEx extends MotorEx {
 
     // Overridden field
     protected PIDFController positionController = new PIDFController(1, 0, 0, 0);
+
+
     /**
      * Constructs an instance motor for the wrapper wrapper
      *
@@ -25,6 +30,7 @@ public class MotorExEx extends MotorEx {
     public MotorExEx(@NonNull HardwareMap hMap, String id, double cpr, double rpm) {
         super(hMap, id, cpr, rpm);
         motorEx = (DcMotorEx) super.motor;
+        encoder.reset();
     }
 
 
