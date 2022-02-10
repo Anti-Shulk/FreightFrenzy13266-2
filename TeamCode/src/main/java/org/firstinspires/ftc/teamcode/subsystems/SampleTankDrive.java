@@ -39,7 +39,7 @@ import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ANG_VEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kA;
@@ -128,13 +128,13 @@ public class SampleTankDrive extends TankDrive {
             motor.setMotorType(motorConfigurationType);
         }
 
-        if (RUN_USING_ENCODER) {
+        if (RUN_USING_BUILT_IN_CONTROLLER) {
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
+        if (RUN_USING_BUILT_IN_CONTROLLER && MOTOR_VELO_PID != null) {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
 

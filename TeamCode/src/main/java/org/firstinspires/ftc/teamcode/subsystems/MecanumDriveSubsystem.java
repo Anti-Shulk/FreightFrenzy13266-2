@@ -9,6 +9,8 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
+
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         fieldCentric = isFieldCentric;
     }
 
-    public void setMode(DcMotor.RunMode mode) {
+    public void setMode(MotorExEx.RunMode mode) {
         drive.setMode(mode);
     }
 

@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
 import com.acmerobotics.roadrunner.profile.MotionState;
 import com.acmerobotics.roadrunner.util.NanoClock;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -20,7 +21,7 @@ import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.driveVel
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kV;
 
 /*
@@ -65,7 +66,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        if (!RUN_USING_ENCODER) {
+        if (!RUN_USING_BUILT_IN_CONTROLLER) {
             RobotLog.setGlobalErrorMsg("%s does not need to be run if the built-in motor velocity" +
                     "PID is not in use", getClass().getSimpleName());
         }
@@ -105,7 +106,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                 case TUNING_MODE:
                     if (gamepad1.y) {
                         mode = Mode.DRIVER_MODE;
-                        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                        drive.setMode(Motor.RunMode.RawPower);
                     }
 
                     // calculate and set the motor power
@@ -136,7 +137,7 @@ public class DriveVelocityPIDTuner extends LinearOpMode {
                     break;
                 case DRIVER_MODE:
                     if (gamepad1.b) {
-                        drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                        drive.setMode(Motor.RunMode.VelocityControl);
 
                         mode = Mode.TUNING_MODE;
                         movingForwards = true;

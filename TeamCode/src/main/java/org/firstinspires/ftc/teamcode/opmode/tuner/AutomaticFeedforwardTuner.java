@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.automaticFeedforwardTuner;;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_RPM;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
 import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.rpmToVelocity;
 
 /*
@@ -39,7 +39,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        if (RUN_USING_ENCODER) {
+        if (RUN_USING_BUILT_IN_CONTROLLER) {
             RobotLog.setGlobalErrorMsg("Feedforward constants usually don't need to be tuned " +
                     "when using the built-in drive motor velocity PID.");
         }

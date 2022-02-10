@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -18,7 +19,7 @@ public class MecanumDriveSubsystemBasic extends SubsystemBase {
     }
 
     public void init() {
-        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        drive.setMode(Motor.RunMode.RawPower);
         drive.setMotorPowers(0, 0, 0, 0);
         drive.setPoseEstimate(new Pose2d());
     }
