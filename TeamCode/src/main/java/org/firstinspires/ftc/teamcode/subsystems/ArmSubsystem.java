@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.constants.Constants.Arm.*;
-import org.firstinspires.ftc.teamcode.constants.Constants;
+import static org.firstinspires.ftc.teamcode.constants.Constants.ArmConstants.*;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
@@ -10,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
-//import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MOTOR_VELO_PID;
+//import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MOTOR_VELO_PID;
 
 public class ArmSubsystem extends SubsystemBase {
 
@@ -26,9 +25,9 @@ public class ArmSubsystem extends SubsystemBase {
         arm.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         arm.setRunMode(Motor.RunMode.VelocityControl);
         arm.resetEncoder();
-        arm.setTargetPosition(Constants.arm.INITIAL_POSITION);
+        arm.setTargetPosition(value.INITIAL_POSITION);
         arm.setRunMode(MotorEx.RunMode.PositionControl);
-        arm.setTargetPosition(Constants.arm.INITIAL_POSITION);
+        arm.setTargetPosition(value.INITIAL_POSITION);
         arm.set(controller.POWER);
 
 //        arm = hMap.get(DcMotorEx.class, HARDWARE.NAME);
@@ -49,19 +48,19 @@ public class ArmSubsystem extends SubsystemBase {
 //    }
 
     public void moveHigh() {
-        arm.setTargetDegrees(Constants.arm.LOW);
+        arm.setTargetDegrees(value.LOW);
     }
 
     public void moveLow() {
-        arm.setTargetDegrees(Constants.arm.LOW);
+        arm.setTargetDegrees(value.LOW);
     }
 
     public void moveMid() {
-        arm.setTargetDegrees(Constants.arm.MID);
+        arm.setTargetDegrees(value.MID);
     }
 
     public void moveIntake() {
-        arm.setTargetDegrees(Constants.arm.INTAKE);
+        arm.setTargetDegrees(value.INTAKE);
     }
 
     public boolean isIntake() {

@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import static org.firstinspires.ftc.teamcode.constants.Constants.Gripper;
-import static org.firstinspires.ftc.teamcode.constants.Constants.Gripper.*;
-//import static org.firstinspires.ftc.teamcode.constants.Constants.Gripper.Grip.*;
+import static org.firstinspires.ftc.teamcode.constants.Constants.GrabberConstants.Grip;
+import static org.firstinspires.ftc.teamcode.constants.Constants.GrabberConstants.Lift;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -23,16 +21,16 @@ public class GripperSubsystem extends SubsystemBase {
         lift.setInverted(false);
     }
     public void open() {
-        grip.turnToAngle(Gripper.grip.OPEN , AngleUnit.DEGREES);
+        grip.turnToAngle(Grip.value.OPEN , AngleUnit.DEGREES);
     }
     public void close() {
-        grip.turnToAngle(Gripper.grip.CLOSE , AngleUnit.DEGREES);
+        grip.turnToAngle(Grip.value.CLOSE , AngleUnit.DEGREES);
     }
 
     public void moveUp() {
-        lift.turnToAngle(Gripper.lift.UP , AngleUnit.DEGREES);
+        lift.turnToAngle(Lift.value.UP , AngleUnit.DEGREES);
     }
     public void moveDown() {
-        lift.turnToAngle(Gripper.lift.DOWN, AngleUnit.DEGREES);
+        lift.turnToAngle(Lift.value.DOWN, AngleUnit.DEGREES);
     }
 }

@@ -1,24 +1,17 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
-import static org.firstinspires.ftc.teamcode.constants.Constants.Carousel.*;
-import static org.firstinspires.ftc.teamcode.constants.Constants.Carousel.Spin.*;
-import static org.firstinspires.ftc.teamcode.constants.Constants.Carousel.Lift.*;
+import static org.firstinspires.ftc.teamcode.constants.Constants.CarouselConstants.Spin;
+import static org.firstinspires.ftc.teamcode.constants.Constants.CarouselConstants.Lift;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.constants.Constants;
 
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
-
-import org.firstinspires.ftc.teamcode.constants.Constants;
-import org.firstinspires.ftc.teamcode.constants.Constants.Carousel;
 import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
 
 
@@ -52,7 +45,7 @@ public class CarouselSubsystem extends SubsystemBase {
     }
 
     public void spin (boolean reversed) {
-        spin.set(reversed ? -Carousel.spin.SPEED : Carousel.spin.SPEED);
+        spin.set(reversed ? -Spin.value.SPEED : Spin.value.SPEED);
     }
     public void spinForward () {
         spin(false);
@@ -62,9 +55,9 @@ public class CarouselSubsystem extends SubsystemBase {
     }
 
     public void moveUp () {
-        lift.turnToAngle(Carousel.lift.UP, AngleUnit.DEGREES);
+        lift.turnToAngle(Lift.value.UP, AngleUnit.DEGREES);
     }
     public void moveDown () {
-        lift.turnToAngle(Carousel.lift.DOWN, AngleUnit.DEGREES);
+        lift.turnToAngle(Lift.value.DOWN, AngleUnit.DEGREES);
     }
 }

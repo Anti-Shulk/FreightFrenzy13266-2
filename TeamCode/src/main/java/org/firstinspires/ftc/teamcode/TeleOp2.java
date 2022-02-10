@@ -16,13 +16,13 @@ public class TeleOp2 extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.dpad_up) {
-                new Thread(() -> armUpCommand(arm, turret, Constants.turret.FORWARD)).start();
+                new Thread(() -> armUpCommand(arm, turret, Constants.TurretConstants.value.FORWARD)).start();
             }
             if (gamepad1.dpad_left) {
-                new Thread(() -> armUpCommand(arm, turret, Constants.turret.LEFT)).start();
+                new Thread(() -> armUpCommand(arm, turret, Constants.TurretConstants.value.LEFT)).start();
             }
             if (gamepad1.dpad_right) {
-                new Thread(() -> armUpCommand(arm, turret, Constants.turret.RIGHT)).start();
+                new Thread(() -> armUpCommand(arm, turret, Constants.TurretConstants.value.RIGHT)).start();
             }
             if (gamepad1.dpad_down) {
                 new Thread(() -> armDownCommand(arm, turret)).start();
@@ -39,6 +39,6 @@ public class TeleOp2 extends LinearOpMode {
     private void armDownCommand(ArmSubsystem arm, TurretSubsystem turret) {
         arm.moveHigh();
         sleep(1000);
-        turret.setTarget(Constants.turret.INTAKE);
+        turret.setTarget(Constants.TurretConstants.value.RETURN);
     }
 }

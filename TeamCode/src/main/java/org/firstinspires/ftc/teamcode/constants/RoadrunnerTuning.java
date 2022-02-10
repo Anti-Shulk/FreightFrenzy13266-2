@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Config
 public class RoadrunnerTuning {
+    //TODO: fix this (unless ftcdashbord thing doens twork)
     public static AutomaticFeedforwardTuner automaticFeedforwardTuner = new AutomaticFeedforwardTuner();
     public static BackAndForth backAndForth = new BackAndForth();
     public static DriveVelocityPIDTuner driveVelocityPIDTuner = new DriveVelocityPIDTuner();
@@ -23,7 +24,6 @@ public class RoadrunnerTuning {
     public static TrackingWheelLateralDistanceTuner trackingWheelLateralDistanceTuner = new TrackingWheelLateralDistanceTuner();
     public static TrackWidthTuner trackWidthTuner = new TrackWidthTuner();
     public static TurnTest turnTest = new TurnTest();
-//    public static ManualFeedforwardTuner ManualFeedforwardTuner = new ManualFeedforwardTuner();
 
 
 

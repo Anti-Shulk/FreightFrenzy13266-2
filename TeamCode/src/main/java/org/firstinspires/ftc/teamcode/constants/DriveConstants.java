@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.constants.drive;
+package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -22,9 +22,9 @@ public class DriveConstants {
      * These are Speeds that can be used to control the drivetrain when not using Localization,
      * Trajectory generation, and Path following
     */
-    public static double SLOW_SPEED   = 0.3;
-    public static double NORMAL_SPEED = 1;
-    public static double TURBO_SPEED  = 0.3;
+    public static double SPEED_SLOW   = 0.3;
+    public static double SPEED_NORMAL = 1;
+    public static double SPEED_TURBO  = 0.3;
 
     /**
      * These are motor constants that should be listed online for your motors.

@@ -22,8 +22,6 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -39,17 +37,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.constants.drive.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.RUN_USING_BUILT_IN_CONTROLLER;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.kV;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -152,10 +150,10 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
-        leftFront = new MotorExEx(hardwareMap, Constants.Drive.LeftFront.hardware.ID, Constants.Drive.LeftFront.hardware.CPR, Constants.Drive.LeftFront.hardware.RPM);
-        leftRear = new MotorExEx(hardwareMap, Constants.Drive.LeftRear.hardware.ID, Constants.Drive.LeftRear.hardware.CPR, Constants.Drive.LeftRear.hardware.RPM);
-        rightFront = new MotorExEx(hardwareMap, Constants.Drive.RightFront.hardware.ID, Constants.Drive.RightFront.hardware.CPR, Constants.Drive.RightFront.hardware.RPM);
-        rightRear = new MotorExEx(hardwareMap, Constants.Drive.RightRear.hardware.ID, Constants.Drive.RightRear.hardware.CPR, Constants.Drive.RightRear.hardware.RPM);
+        leftFront = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.LeftFront.hardware.ID, Constants.DriveConstantsBad.LeftFront.hardware.CPR, Constants.DriveConstantsBad.LeftFront.hardware.RPM);
+        leftRear = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.LeftRear.hardware.ID, Constants.DriveConstantsBad.LeftRear.hardware.CPR, Constants.DriveConstantsBad.LeftRear.hardware.RPM);
+        rightFront = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.RightFront.hardware.ID, Constants.DriveConstantsBad.RightFront.hardware.CPR, Constants.DriveConstantsBad.RightFront.hardware.RPM);
+        rightRear = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.RightRear.hardware.ID, Constants.DriveConstantsBad.RightRear.hardware.CPR, Constants.DriveConstantsBad.RightRear.hardware.RPM);
 
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
