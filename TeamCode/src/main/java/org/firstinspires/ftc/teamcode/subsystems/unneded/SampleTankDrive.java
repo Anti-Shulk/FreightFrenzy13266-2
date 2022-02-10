@@ -40,7 +40,7 @@ import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Hardware.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Values.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kA;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kStatic;

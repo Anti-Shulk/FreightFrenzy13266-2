@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.util.RegressionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.automaticFeedforwardTuner;;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Hardware.MAX_RPM;
+import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.automaticFeedforwardTuner;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Values.MAX_RPM;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.rpmToVelocity;
 

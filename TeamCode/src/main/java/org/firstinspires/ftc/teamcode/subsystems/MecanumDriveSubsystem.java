@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
@@ -52,11 +51,13 @@ import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.T
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.TRANSLATIONAL_PID;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VX_WEIGHT;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VY_WEIGHT;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Hardware.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Values.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kA;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kStatic;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kV;
+
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Imu.Hardware.*;
 
 /*
  * Simple mecanum drive hardware implementation for REV hardware.
@@ -103,7 +104,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     private VoltageSensor batteryVoltageSensor;
 
     // This is to make an FtcLib mecanum drive
-    com.arcrobotics.ftclib.drivebase.MecanumDrive mecanumDrive;
+    com.arcrobotics.ftclib.drivebase.MecanumDrive controllerMecanumDrive;
 
     public MecanumDriveSubsystem(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
@@ -122,13 +123,15 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        // TODO: adjust the names of the following hardware devices to match your configuration
+        // adjust the names of the following hardware devices to match your configuration
         imu = hardwareMap.get(BNO055IMU.class, ID);
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        //TODO: this will probably mess up roadrunner put it back to radians or maybe
+        // do math.toDegrees
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
 
-        // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does
+        //  If the hub containing the IMU you are using is mounted so that the "REV" logo does
         // not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
         //
         //             | +Z axis
@@ -176,10 +179,11 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-        leftFront.setInverted(true);
-        leftRear.setInverted(true);
-        rightFront.setInverted(false);
-        rightRear.setInverted(false);
+//        leftFront.setInverted(true);
+//        leftRear.setInverted(true);
+//        rightFront.setInverted(false);
+//        rightRear.setInverted(false);
+
 //        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 //        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 //        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -187,12 +191,13 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
         // This is to give our ftc MecanumDrive a value
         // we do this after inverting the motors
-        mecanumDrive = new com.arcrobotics.ftclib.drivebase.MecanumDrive(false,
+        controllerMecanumDrive = new com.arcrobotics.ftclib.drivebase.MecanumDrive(true,
                 leftFront,
                 leftRear,
                 rightFront,
                 rightRear
         );
+        setNormal();
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -374,5 +379,25 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
     public static TrajectoryAccelerationConstraint getAccelerationConstraint(double maxAccel) {
         return new ProfileAccelerationConstraint(maxAccel);
+    }
+
+    public void driveFieldCentric(double x, double y, double rotate, boolean fineControl) {
+        controllerMecanumDrive.driveFieldCentric(x, y, rotate, -getRawExternalHeading(), fineControl);
+    }
+
+    public void driveRobotCentric(double x, double y, double rotate, boolean fineControl) {
+        controllerMecanumDrive.driveRobotCentric(x, y, rotate, fineControl);
+    }
+
+    public void setSlow() {
+        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_SLOW);
+    }
+
+    public void setTurbo() {
+        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_TURBO);
+    }
+
+    public void setNormal() {
+        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_NORMAL);
     }
 }

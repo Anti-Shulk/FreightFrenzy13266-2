@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
-@Config
+//@Config
 public class Constants {
+    // TODO: remove all statics except for utility classes so that we can have folders
     public static ArmConstants armConstants;
     public static CameraServoConstants cameraServoConstants;
     public static CarouselConstants carouselConstants;
@@ -15,11 +17,11 @@ public class Constants {
     
 
 
-    // TODO: make it work in degrees
+    //
     public static class ArmConstants {
-        public static Hardware hardware;
-        public static Controller controller;
-        public static Value value;
+        public static Hardware hardware = new Hardware();
+        public static Controller controller = new Controller();
+        public static Value value = new Value();
 
         public static class Hardware {
             public String ID            = "armMotor";
@@ -38,14 +40,15 @@ public class Constants {
             public double MID           = 0; // Degrees
             public double LOW           = 0; // Degrees
             public double INTAKE        = 0; // Degrees
+            public double SHARED        = 0; // Degrees
 
             public int INITIAL_POSITION = 0;
         }
     }
 
     public static class CameraServoConstants {
-        public static Hardware hardware;
-        public static Value value;
+        public static Hardware hardware = new Hardware();
+            public static Value value = new Value();
 
         public static class Hardware {
             public boolean REVERSED = false;
@@ -69,7 +72,7 @@ public class Constants {
             public static Value value;
 
             public static class Hardware {
-                public String ID = "carouselServo";
+                public String ID = "carouselSpinServo";
                 public boolean REVERSED = false;
                 public double RPM = 117;
                 public double CPR = 1425.1 * 2;
@@ -87,7 +90,7 @@ public class Constants {
         }
         public static class Lift {
             public static Hardware hardware = new Hardware();
-            public static Value value;
+            public static Value value = new Value();
 
             public static class Hardware {
                 public String ID = "carouselLiftServo";
@@ -111,7 +114,7 @@ public class Constants {
         public static RightRear rightRear;
 
         public static class LeftFront {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "leftFront";
@@ -121,7 +124,7 @@ public class Constants {
             }
         }
         public static class LeftRear {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "leftRear";
@@ -131,7 +134,7 @@ public class Constants {
             }
         }
         public static class RightFront {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "rightFront";
@@ -141,7 +144,7 @@ public class Constants {
             }
         }
         public static class RightRear {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "rightRear";
@@ -158,10 +161,10 @@ public class Constants {
         public static Lift lift;
 
         public static class Grip {
-            public static Hardware hardware;
-            public static Value value;
+            public static Hardware hardware = new Hardware();
+            public static Value value = new Value();
             public static class Hardware {
-                public String ID = "gripperServo";
+                public String ID = "gripperGripServo";
                 public double MIN_ANGLE     = 0;
                 public double MAX_ANGLE     = 270;
                 public boolean REVERSED = false;
@@ -173,8 +176,8 @@ public class Constants {
 
         }
         public static class Lift {
-            public static Hardware hardware;
-            public static Value value;
+            public static Hardware hardware = new Hardware();
+            public static Value value = new Value();
             public static class Hardware {
                 public String ID = "gripperLiftServo";
                 public double MIN_ANGLE     = 0;
@@ -189,9 +192,9 @@ public class Constants {
         }
     }
     public static class IntakeConstants {
-        public static Hardware hardware;
-        public static Controller controller;
-        public static Value value;
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
+        public static Controller controller = new Controller();
 
         public static class Hardware {
             public String ID            = "intakeMotor";
@@ -212,9 +215,9 @@ public class Constants {
     }
 
     public static class TurretConstants {
-        public static Hardware hardware;
-        public static Controller controller;
-        public static Value value;
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
+        public static Controller controller = new Controller();
 
         public static class Hardware {
             public String ID               = "turretMotor";
@@ -247,8 +250,8 @@ public class Constants {
 
 
     public static class TrapdoorConstants {
-        public static Hardware hardware;
-        public static Value value;
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
 
         public static class Hardware {
             public String ID = "trapdoorServo";

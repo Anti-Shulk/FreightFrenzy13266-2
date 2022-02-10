@@ -43,7 +43,7 @@ public class TurretSubsystem extends SubsystemBase {
         isZero = true;
     }
 
-    public void moveIntake() {
+    public void moveDown() {
         turret.setTargetDegrees(value.RETURN);
         isZero = false;
     }

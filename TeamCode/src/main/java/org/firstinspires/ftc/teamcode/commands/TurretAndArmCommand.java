@@ -11,10 +11,10 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import java.util.Set;
 
 public class TurretAndArmCommand extends SequentialCommandGroup {
-    public TurretAndArmCommand(ArmSubsystem arm, TurretSubsystem turret) {
-        addCommands(new InstantCommand(() -> {
-            if (arm.isIntake() && turret.isZero()) {
-            }
-        }, arm, turret));
-    }
+//    public TurretAndArmCommand(ArmSubsystem arm, TurretSubsystem turret) {
+//        addCommands(new InstantCommand(() -> {
+//            if (arm.isIntake() && turret.isZero()) {
+//            }
+//        }, arm, turret));
+//    }
 }

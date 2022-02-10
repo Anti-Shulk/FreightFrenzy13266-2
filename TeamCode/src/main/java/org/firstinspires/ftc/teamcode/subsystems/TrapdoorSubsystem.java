@@ -13,7 +13,7 @@ public class TrapdoorSubsystem extends SubsystemBase {
 
     private ServoEx trapdoor;
 
-    TrapdoorSubsystem(final HardwareMap hardwareMap, final String name) {
+    public TrapdoorSubsystem(HardwareMap hardwareMap) {
         trapdoor = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MIN_ANGLE);
         trapdoor.setInverted(false);
     }

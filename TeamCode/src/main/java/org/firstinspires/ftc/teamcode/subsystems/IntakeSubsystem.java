@@ -28,4 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public void outtake() {
         intake.set(-controller.POWER);
     }
+    public void stop() {
+        intake.set(0);
+    }
 }
