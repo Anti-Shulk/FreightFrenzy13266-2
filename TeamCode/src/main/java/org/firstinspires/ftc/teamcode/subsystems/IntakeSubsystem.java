@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
 public class IntakeSubsystem extends SubsystemBase {
     private final MotorExEx intake;
 
+
     public IntakeSubsystem(HardwareMap hardwareMap) {
         intake = new MotorExEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
         intake.setInverted(hardware.REVERSED);

@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.constants;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
-//@Config
+@Config
 public class Constants {
     // TODO: remove all statics except for utility classes so that we can have folders
     public static ArmConstants armConstants;
@@ -69,7 +69,7 @@ public class Constants {
         public static class Spin {
             public static Hardware hardware = new Hardware();
             public static Controller controller = new Controller();
-            public static Value value;
+            public static Value value = new Value();
 
             public static class Hardware {
                 public String ID = "carouselSpinServo";

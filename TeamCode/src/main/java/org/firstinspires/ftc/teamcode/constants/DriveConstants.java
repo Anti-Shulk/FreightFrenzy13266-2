@@ -29,7 +29,7 @@ public class DriveConstants {
         public static RightRear rightRear;
 
         public static class LeftFront {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "leftFront";
@@ -37,7 +37,7 @@ public class DriveConstants {
             }
         }
         public static class LeftRear {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "leftRear";
@@ -45,7 +45,7 @@ public class DriveConstants {
             }
         }
         public static class RightFront {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "rightFront";
@@ -53,7 +53,7 @@ public class DriveConstants {
             }
         }
         public static class RightRear {
-            public static Hardware hardware;
+            public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "rightRear";

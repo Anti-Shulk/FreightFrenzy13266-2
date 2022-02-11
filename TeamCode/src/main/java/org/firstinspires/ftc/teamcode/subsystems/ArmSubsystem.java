@@ -35,11 +35,11 @@ public class ArmSubsystem extends SubsystemBase {
 //        arm.setTargetPosition(value.INITIAL_POSITION);
 
         arm = hardwareMap.get(DcMotorEx.class, hardware.ID);
-        arm.setPositionPIDFCoefficients(5);
-        arm.setTargetPositionTolerance(10);
+//        arm.setPositionPIDFCoefficients(5);
+//        arm.setTargetPositionTolerance(10);
         arm.setDirection(hardware.REVERSED ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setTargetDegrees(0);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
