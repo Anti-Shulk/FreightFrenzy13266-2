@@ -247,15 +247,15 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 0.1,
+                    POWER         = 0.4,
                     RANGE         = 360; // Degrees
 
         }
         public static class Value {
             public double
                     FORWARD = 180, // Degrees
-                    LEFT    = 90, // Degrees
-                    RIGHT   = -90, // Degrees
+                    LEFT    = -90, // Degrees
+                    RIGHT   = 90, // Degrees
                     RETURN  = 0; // Degrees
 
             public int INITIAL_POSITION = 0; // Degrees

@@ -17,6 +17,18 @@ public class StickTest extends LinearOpMode {
             telemetry.addLine(String.valueOf(
                     Math.toDegrees(Math.atan2(tester.getLeftX(), -tester.getLeftY()))));
             telemetry.addLine(String.valueOf(tester.getRightStickToDegrees()));
+            telemetry.addLine(String.valueOf(
+                    Math.toDegrees(Math.atan2(tester.getLeftX(), tester.getLeftY()))));
+
+
+            telemetry.addLine(String.valueOf(
+                    Math.toDegrees(Math.atan2(tester.getLeftX(), tester.getLeftY())) + 180));
+
+
+
+
+            telemetry.addLine(String.valueOf(
+                    Math.toDegrees(Math.atan2(tester.getLeftX(), -tester.getLeftY())) + 180));
             telemetry.addData("left stick x", tester.getLeftX());
             telemetry.addData("left stick y", tester.getLeftY());
             telemetry.addData("right stick x", tester.getRightX());

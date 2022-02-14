@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,15 +8,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 //import static org.firstinspires.ftc.teamcode.constants.Constants.ArmConstants.hardware;
 import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants.*;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.util.MotorExEx;
-
 
 public class TurretSubsystem extends HardwareSubsystem {
 
     private DcMotorEx turret;
     private MotorEx turret2;
-    private int target = 0;
+    private int targetTicks = 0;
+    private double targetDegrees = value.FORWARD;
 //    private boolean isZero;
     public TurretSubsystem() {
 //        turret = new MotorExEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
@@ -41,7 +36,7 @@ public class TurretSubsystem extends HardwareSubsystem {
         turret.setDirection(hardware.REVERSED ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setTargetDegrees(0);
+        setDegrees(0);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(controller.POWER);
 
@@ -62,19 +57,22 @@ public class TurretSubsystem extends HardwareSubsystem {
     }
 
     public void moveForward() {
-        setTargetDegrees(value.FORWARD);
+        setDegrees(value.FORWARD);
     }
 
     public void moveLeft() {
-        setTargetDegrees(value.LEFT);
+        setDegrees(value.LEFT);
     }
 
     public void moveRight() {
-       setTargetDegrees(value.RIGHT);
+       setDegrees(value.RIGHT);
     }
 
-    public void moveDown() {
-        setTargetDegrees(value.RETURN);
+    public void moveIn() {
+        if (targetDegrees >= 180) {
+            setDegrees(value.RETURN + 360);
+        }
+        setDegrees(value.RETURN + 360);
     }
 
 //    public boolean isZero() {
@@ -86,20 +84,33 @@ public class TurretSubsystem extends HardwareSubsystem {
 //        double min = (360 - controller.RANGE) / 2;
 //        double max = 360 - ((360 - controller.RANGE) / 2);
 //        setTargetDegrees(Range.clip(position, min, max));
-        setTargetDegrees(Math.toDegrees(Math.atan2(stickX, stickY)));
+        setDegrees(Math.toDegrees(Math.atan2(stickX, stickY)));
+    }
+    public void setDegrees(double degrees) {
+        targetTicks = (int) ((hardware.CPR / 360) * degrees);
+        turret.setTargetPosition(targetTicks);
+//        turret2.setTargetPosition((int) ((hardware.CPR / 360) * degrees));
     }
     public void setTargetDegrees(double degrees) {
-        target = (int) ((hardware.CPR / 360) * degrees);
-        turret.setTargetPosition(target);
-//        turret2.setTargetPosition((int) ((hardware.CPR / 360) * degrees));
+        targetDegrees = degrees;
+    }
+    public double getTargetDegrees() {
+        return targetDegrees;
+    }
+
+    public void moveToTargetDegrees() {
+        setDegrees(targetDegrees);
     }
 
     public boolean isAtTarget() {
         int current   = turret.getCurrentPosition();
 //        int tolerance = turret.getTargetPositionTolerance();
-//        return current <= target + 5 &&
-//                current >= target - 5;
-        return current == 1;
+        return (current <= value.INITIAL_POSITION + 5 &&
+                current >= value.INITIAL_POSITION - 5 &&
+                current != 0) || (current <= value.INITIAL_POSITION + 360 + 5 &&
+                current >= value.INITIAL_POSITION + 360 - 5 &&
+                current != 0);
+//        return current == 1;
     }
 //
 //    public void setTarget(double pos) {

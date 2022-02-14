@@ -110,20 +110,24 @@ public class realTeleopHopefully extends CommandOpMode {
 
         command.add(() -> operator.get(button.DOWN))
                 .whenPressed(new ArmInQuick(arm, turret));
-//
-//        command.add(() -> operator.get(button.LEFT))
-//                .whenPressed(new ArmOutQuick(arm, turret, Constants.TurretConstants.value.LEFT));
+
+        command.add(() -> operator.get(button.LEFT))
+                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.LEFT))
+                .whenPressed(new ArmOutQuick(arm, turret));
 
         command.add(() -> operator.get(button.RIGHT))
-                .whenPressed(new ArmOutQuick(arm, turret, Constants.TurretConstants.value.RIGHT));
+                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.RIGHT))
+                .whenPressed(new ArmOutQuick(arm, turret));
 
         command.add(() -> operator.get(button.FORWARD))
-                .whenPressed(new ArmOutQuick(arm, turret, Constants.TurretConstants.value.FORWARD));
+                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.FORWARD))
+                .whenPressed(new ArmOutQuick(arm, turret));
 
         command.add(operator::getRightTouchingEdge)
                 .whileHeld(() -> telemetry.addLine("pressed"))
                 .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
-                .whenPressed(new ArmOutQuick(arm, turret, Math.toDegrees(Math.atan2(operator.getRightX(), operator.getRightY()))));
+                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees() + 180))
+                .whileHeld(new ArmOutQuick(arm, turret));
 
 //        command.add(() -> operator.get(button.LEFT))
 //                .whenPressed(new ArmOutQuick(arm, turret, operator.getRightStickToDegrees()));
