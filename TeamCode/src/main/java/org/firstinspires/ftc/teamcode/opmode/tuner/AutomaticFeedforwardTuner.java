@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.automaticFeedforwardTuner;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Values.MAX_RPM;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Value.MAX_RPM;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.rpmToVelocity;
 
@@ -46,7 +46,7 @@ public class AutomaticFeedforwardTuner extends LinearOpMode {
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(hardwareMap);
+        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
         NanoClock clock = NanoClock.system();
 

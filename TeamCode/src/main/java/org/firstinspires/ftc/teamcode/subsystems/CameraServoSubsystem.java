@@ -1,4 +1,15 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-public class CameraServoSubsystem {
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+
+public class CameraServoSubsystem extends HardwareSubsystem {
+
+    public CameraServoSubsystem() {
+
+    }
+
+    @Override
+    public void periodic() {
+
+    }
 }

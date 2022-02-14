@@ -2,25 +2,20 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static org.firstinspires.ftc.teamcode.constants.Constants.ArmConstants.*;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
-
-import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
 //import static org.firstinspires.ftc.teamcode.constants.DriveConstants.MOTOR_VELO_PID;
 
-public class ArmSubsystem extends SubsystemBase {
+public class ArmSubsystem extends HardwareSubsystem {
 
         private final DcMotorEx arm;
 //    private final MotorExEx arm;
 //    private boolean isIntake;
+    private int targetTicks = 0;
+    private double targetDegrees = value.HIGH;
 
-    public ArmSubsystem(HardwareMap hardwareMap) {
+    public ArmSubsystem() {
 //        arm = new MotorExEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
 //        arm.setPositionCoefficient(controller.KP);
 //        arm.setPositionTolerance(controller.TOLERANCE);
@@ -41,9 +36,14 @@ public class ArmSubsystem extends SubsystemBase {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        setTargetDegrees(0);
+        setDegrees(0);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(controller.POWER);
+    }
+
+    @Override
+    public void periodic() {
+        telemetry.addData("Arm Position", targetTicks + " degrees");
     }
 //    public void setDegrees(double degrees) {
 //        arm.setTargetPosition((int) (HARDWARE.CPR * degrees / 360));
@@ -52,27 +52,55 @@ public class ArmSubsystem extends SubsystemBase {
 //    }
 
     public void moveHigh() {
-        setTargetDegrees(value.HIGH);
+        setDegrees(value.HIGH);
     }
 
     public void moveLow() {
-        setTargetDegrees(value.LOW);
+        setDegrees(value.LOW);
     }
 
     public void moveMid() {
-        setTargetDegrees(value.MID);
+        setDegrees(value.MID);
     }
 
     public void moveIntake() {
-        setTargetDegrees(value.INTAKE);
+        setDegrees(value.INITIAL);
+    }
+
+    public void moveWontHitSides() {
+        setDegrees(value.WONT_HIT_SIDES);
     }
 
     public void moveShared() {
-        setTargetDegrees(value.SHARED);
+        setDegrees(value.SHARED);
     }
 
-    public void setTargetDegrees(double degrees) {
-        arm.setTargetPosition((int) ((hardware.CPR / 360) * degrees));
+    public void setDegrees(double degrees) {
+        targetTicks = (int) ((hardware.CPR / 360) * degrees);
+        arm.setTargetPosition(targetTicks);
+    }
+
+    public void setTargetDegrees(double targetDegrees) {
+        this.targetDegrees = targetDegrees;
+        moveToTarget();
+    }
+
+    public void getTarget(int target) {
+        this.targetDegrees = target;
+    }
+
+    public void moveToTarget() {
+        setDegrees(targetDegrees);
+    }
+
+    public double getTargetTicks() {
+        return arm.getCurrentPosition();
+    }
+
+    public boolean wontHitSides() {
+        int current   = arm.getCurrentPosition();
+        return current >= hardware.CPR / 360 * value.WONT_HIT_SIDES;
+//        return false;
     }
 
 //    public boolean isIntake() {

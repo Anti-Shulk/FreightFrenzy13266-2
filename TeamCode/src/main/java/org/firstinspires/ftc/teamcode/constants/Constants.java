@@ -25,24 +25,27 @@ public class Constants {
 
         public static class Hardware {
             public String ID            = "armMotor";
-            public boolean REVERSED     = false;
-            public double RPM           = 84;
-            public double CPR           = 1993;
+            public boolean REVERSED     = true;
+            public double
+                    RPM           = 84,
+                    CPR           = 1993;
         }
 
         public static class Controller {
-            public double TOLERANCE     = 10;
-            public double KP            = 5;
-            public double POWER         = 0.6;
+            public double
+                    TOLERANCE     = 10,
+                    KP            = 5,
+                    POWER         = 0.6;
         }
         public static class Value {
-            public double HIGH          = 30; // Degrees
-            public double MID           = 0; // Degrees
-            public double LOW           = 0; // Degrees
-            public double INTAKE        = 0; // Degrees
-            public double SHARED        = 0; // Degrees
-
-            public int INITIAL_POSITION = 0;
+            public double
+                    HIGH          = 80, // Degrees
+                    MID           = 0, // Degrees
+                    LOW           = 0, // Degrees
+//                    INTAKE        = 0, // Degrees
+                    SHARED        = 0, // Degrees
+                    INITIAL = 10,
+                    WONT_HIT_SIDES = 40;
         }
     }
 
@@ -55,10 +58,11 @@ public class Constants {
 
         }
         public static class Value {
-            public double BLUE_WAREHOUSE             = 1; // Degrees
-            public double BLUE_CAROUSEL              = 1; // Degrees
-            public double RED_WAREHOUSE              = 1; // Degrees
-            public double RED_CAROUSEL               = 1; // Degrees
+            public double
+                    BLUE_WAREHOUSE             = 1, // Degrees
+                    BLUE_CAROUSEL              = 1, // Degrees
+                    RED_WAREHOUSE              = 1, // Degrees
+                    RED_CAROUSEL               = 1; // Degrees
         }
     }
 
@@ -74,16 +78,18 @@ public class Constants {
             public static class Hardware {
                 public String ID = "carouselSpinServo";
                 public boolean REVERSED = false;
-                public double RPM = 117;
-                public double CPR = 1425.1 * 2;
+                public double
+                        RPM = 117,
+                        CPR = 1425.1;
             }
             public static class Controller {
-                public double TOLERANCE     = 10;
-                public double KP            = 5;
-                public double POWER         = 0.6;
+                public double
+                        TOLERANCE     = 10,
+                        KP            = 5,
+                        POWER         = 0.6;
             }
             public static class Value {
-                public double SPEED                = 30; // Degrees per second
+                public double SPEED                = 1; // power
             }
 
 
@@ -95,65 +101,67 @@ public class Constants {
             public static class Hardware {
                 public String ID = "carouselLiftServo";
                 public boolean REVERSED = false;
-                public double MIN_ANGLE = 0;
-                public double MAX_ANGLE = 270;
+                public double
+                        MIN_ANGLE = 0,
+                        MAX_ANGLE = 270;
             }
             public static class Value {
-                public double UP                   = 90; // Degrees
-                public double DOWN                 = 0; // Degrees
+                public double
+                        UP                   = 90, // Degrees
+                        DOWN                 = 0; // Degrees
             }
 
 
         }
     }
 
-    public static class DriveConstantsBad {
-        public static LeftFront leftFront;
-        public static LeftRear leftRear;
-        public static RightFront rightFront;
-        public static RightRear rightRear;
-
-        public static class LeftFront {
-            public static Hardware hardware = new Hardware();
-
-            public static class Hardware {
-                public String ID            = "leftFront";
-                public boolean REVERSED     = false;
-                public double RPM           = 84;
-                public double CPR           = 1993;
-            }
-        }
-        public static class LeftRear {
-            public static Hardware hardware = new Hardware();
-
-            public static class Hardware {
-                public String ID            = "leftRear";
-                public boolean REVERSED     = false;
-                public double RPM           = 84;
-                public double CPR           = 1993;
-            }
-        }
-        public static class RightFront {
-            public static Hardware hardware = new Hardware();
-
-            public static class Hardware {
-                public String ID            = "rightFront";
-                public boolean REVERSED     = false;
-                public double RPM           = 84;
-                public double CPR           = 1993;
-            }
-        }
-        public static class RightRear {
-            public static Hardware hardware = new Hardware();
-
-            public static class Hardware {
-                public String ID            = "rightRear";
-                public boolean REVERSED     = false;
-                public double RPM           = 84;
-                public double CPR           = 1993;
-            }
-        }
-    }
+//    public static class DriveConstantsBad {
+//        public static LeftFront leftFront;
+//        public static LeftRear leftRear;
+//        public static RightFront rightFront;
+//        public static RightRear rightRear;
+//
+//        public static class LeftFront {
+//            public static Hardware hardware = new Hardware();
+//
+//            public static class Hardware {
+//                public String ID            = "leftFront";
+//                public boolean REVERSED     = false;
+//                public double RPM           = 84;
+//                public double CPR           = 1993;
+//            }
+//        }
+//        public static class LeftRear {
+//            public static Hardware hardware = new Hardware();
+//
+//            public static class Hardware {
+//                public String ID            = "leftRear";
+//                public boolean REVERSED     = false;
+//                public double RPM           = 84;
+//                public double CPR           = 1993;
+//            }
+//        }
+//        public static class RightFront {
+//            public static Hardware hardware = new Hardware();
+//
+//            public static class Hardware {
+//                public String ID            = "rightFront";
+//                public boolean REVERSED     = false;
+//                public double RPM           = 84;
+//                public double CPR           = 1993;
+//            }
+//        }
+//        public static class RightRear {
+//            public static Hardware hardware = new Hardware();
+//
+//            public static class Hardware {
+//                public String ID            = "rightRear";
+//                public boolean REVERSED     = false;
+//                public double RPM           = 84;
+//                public double CPR           = 1993;
+//            }
+//        }
+//    }
 
 
     public static class GrabberConstants {
@@ -165,13 +173,16 @@ public class Constants {
             public static Value value = new Value();
             public static class Hardware {
                 public String ID = "gripperGripServo";
-                public double MIN_ANGLE     = 0;
-                public double MAX_ANGLE     = 270;
                 public boolean REVERSED = false;
+                public double
+                        MIN_ANGLE     = 0,
+                        MAX_ANGLE     = 270;
+
             }
             public static class Value {
-                public double OPEN = 180; // Degrees
-                public double CLOSE = 0; // Degrees
+                public double
+                        OPEN = 180, // Degrees
+                        CLOSE = 0; // Degrees
             }
 
         }
@@ -180,13 +191,16 @@ public class Constants {
             public static Value value = new Value();
             public static class Hardware {
                 public String ID = "gripperLiftServo";
-                public double MIN_ANGLE     = 0;
-                public double MAX_ANGLE     = 270;
                 public boolean REVERSED = false;
+                public double
+                        MIN_ANGLE     = 0,
+                        MAX_ANGLE     = 270;
+
             }
             public static class Value {
-                public double UP = 90; // Degrees
-                public double DOWN = 0; // Degrees
+                public double
+                        UP = 90, // Degrees
+                        DOWN = 0; // Degrees
             }
 
         }
@@ -199,15 +213,17 @@ public class Constants {
         public static class Hardware {
             public String ID            = "intakeMotor";
             public boolean REVERSED     = false;
-            public double RPM           = 435;
-            public double CPR           = 1993; // figure this out
+            public double
+                    RPM           = 435,
+                    CPR           = 1993; // figure this out
         }
 
         public static class Controller {
-            public double TOLERANCE     = 10;
-            public double KP            = 5;
-            public double POWER         = 0.6;
-            public double INIT_POWER    = 0;
+            public double
+                    TOLERANCE     = 10,
+                    KP            = 5,
+                    POWER         = 0.6,
+                    INIT_POWER    = 0;
         }
         public static class Value {
             public double INTAKE_SPEED   = 1; // % of Power
@@ -222,22 +238,25 @@ public class Constants {
         public static class Hardware {
             public String ID               = "turretMotor";
             public boolean REVERSED        = false;
-            public double RPM              = 80;
-            public double CPR              = 1000;
+            public double
+                    RPM              = 80,
+                    CPR              = 1425.1 * 2;
         }
 
         public static class Controller {
-            public double TOLERANCE     = 10;
-            public double KP            = 5;
-            public double POWER         = 0.6;
-            public double RANGE         = 360; // Degrees
+            public double
+                    TOLERANCE     = 10,
+                    KP            = 5,
+                    POWER         = 0.1,
+                    RANGE         = 360; // Degrees
 
         }
         public static class Value {
-            public double FORWARD = 0; // Degrees
-            public double LEFT    = 0; // Degrees
-            public double RIGHT   = 0; // Degrees
-            public double RETURN  = 0; // Degrees
+            public double
+                    FORWARD = 180, // Degrees
+                    LEFT    = 90, // Degrees
+                    RIGHT   = -90, // Degrees
+                    RETURN  = 0; // Degrees
 
             public int INITIAL_POSITION = 0; // Degrees
         }

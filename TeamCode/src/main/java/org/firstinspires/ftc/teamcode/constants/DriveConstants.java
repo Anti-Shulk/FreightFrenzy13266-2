@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants;
 
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -21,19 +20,24 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
  */
 //@Config
 public class DriveConstants {
+    public static Drivetrain drivetrain;
+    public static Imu imu;
+    public static Controller controller;
+    public static Follower follower;
     // TODO: make all of thse non static pls pls pls
     public static class Drivetrain {
         public static LeftFront leftFront;
         public static LeftRear leftRear;
         public static RightFront rightFront;
         public static RightRear rightRear;
+        public static Value value;
 
         public static class LeftFront {
             public static Hardware hardware = new Hardware();
 
             public static class Hardware {
                 public String ID            = "leftFront";
-                public boolean REVERSED     = false;
+                public boolean REVERSED     = true;
             }
         }
         public static class LeftRear {
@@ -41,7 +45,7 @@ public class DriveConstants {
 
             public static class Hardware {
                 public String ID            = "leftRear";
-                public boolean REVERSED     = false;
+                public boolean REVERSED     = true;
             }
         }
         public static class RightFront {
@@ -57,10 +61,11 @@ public class DriveConstants {
 
             public static class Hardware {
                 public String ID            = "rightRear";
+                public boolean REVERSED     = false;
 
             }
         }
-        public static class Values {
+        public static class Value {
             /**
              * These are physical constants that can be determined from your robot (including the track
              * width; it will be tune empirically later although a rough estimate is important). Users are
@@ -86,6 +91,8 @@ public class DriveConstants {
             public static double TELEOP_SLOW   = 0.3;
             public static double TELEOP_NORMAL = 1;
             public static double TELEOP_TURBO  = 0.3;
+            public static boolean FINE_CONTROL = true;
+            public static boolean FIELD_CENTRIC = false;
         }
     }
     public static class Imu {
@@ -105,7 +112,7 @@ public class DriveConstants {
          */
         public static boolean RUN_USING_BUILT_IN_CONTROLLER = false;
         public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(0, 0, 0,
-                getMotorVelocityF(Drivetrain.Values.MAX_RPM / 60 * Drivetrain.Values.TICKS_PER_REV));
+                getMotorVelocityF(Drivetrain.Value.MAX_RPM / 60 * Drivetrain.Value.TICKS_PER_REV));
         /**
          * These are the feedforward parameters used to model the drive motor behavior. If you are using
          * the built-in velocity PID, *these values are fine as is*. However, if you do not have drive
@@ -187,11 +194,11 @@ public class DriveConstants {
 
 
     public static double encoderTicksToInches(double ticks) {
-        return Drivetrain.Values.WHEEL_RADIUS * 2 * Math.PI * Drivetrain.Values.GEAR_RATIO * ticks / Drivetrain.Values.TICKS_PER_REV;
+        return Drivetrain.Value.WHEEL_RADIUS * 2 * Math.PI * Drivetrain.Value.GEAR_RATIO * ticks / Drivetrain.Value.TICKS_PER_REV;
     }
 
     public static double rpmToVelocity(double rpm) {
-        return rpm * Drivetrain.Values.GEAR_RATIO * 2 * Math.PI * Drivetrain.Values.WHEEL_RADIUS / 60.0;
+        return rpm * Drivetrain.Value.GEAR_RATIO * 2 * Math.PI * Drivetrain.Value.WHEEL_RADIUS / 60.0;
     }
 
     public static double getMotorVelocityF(double ticksPerSecond) {

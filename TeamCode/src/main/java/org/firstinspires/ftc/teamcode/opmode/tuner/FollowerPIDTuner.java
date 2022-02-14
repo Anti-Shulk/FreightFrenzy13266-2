@@ -28,7 +28,7 @@ public class FollowerPIDTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(hardwareMap);
+        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
         Pose2d startPose = new Pose2d(-followerPIDTuner.DISTANCE / 2, -followerPIDTuner.DISTANCE / 2, 0);
 

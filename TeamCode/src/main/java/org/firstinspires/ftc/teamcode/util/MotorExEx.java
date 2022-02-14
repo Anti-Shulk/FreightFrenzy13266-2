@@ -1,16 +1,12 @@
-package org.firstinspires.ftc.teamcode.utilities;
+package org.firstinspires.ftc.teamcode.util;
 
 import androidx.annotation.NonNull;
 
-import com.arcrobotics.ftclib.controller.PController;
 import com.arcrobotics.ftclib.controller.PIDFController;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-
-import java.util.function.Supplier;
 
 public class MotorExEx extends MotorEx {
 

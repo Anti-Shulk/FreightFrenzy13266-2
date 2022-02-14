@@ -9,7 +9,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
-import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
+import org.firstinspires.ftc.teamcode.util.MotorExEx;
 
 import java.util.List;
 

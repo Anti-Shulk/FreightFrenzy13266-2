@@ -23,7 +23,7 @@ public class StraightTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(hardwareMap);
+        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .forward(straightTest.DISTANCE)

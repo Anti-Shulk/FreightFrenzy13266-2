@@ -18,20 +18,22 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.drivebase.RobotDrive;
+import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.constants.Constants;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
-import org.firstinspires.ftc.teamcode.utilities.MotorExEx;
+import org.firstinspires.ftc.teamcode.util.MotorExEx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +53,7 @@ import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.T
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.TRANSLATIONAL_PID;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VX_WEIGHT;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.VY_WEIGHT;
-import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Values.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Value.TRACK_WIDTH;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kA;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.kStatic;
@@ -103,11 +105,14 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
-    // This is to make an FtcLib mecanum drive
-    com.arcrobotics.ftclib.drivebase.MecanumDrive controllerMecanumDrive;
+    private final Telemetry telemetry;
 
-    public MecanumDriveSubsystem(HardwareMap hardwareMap) {
+    // This is to make an FtcLib mecanum drive
+//    com.arcrobotics.ftclib.drivebase.MecanumDrive controllerMecanumDrive;
+
+    public MecanumDriveSubsystem(OpMode opMode) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        telemetry = opMode.telemetry;
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -115,20 +120,20 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 INITIAL_POS_MAYBE, TIMEOUT);
 
-        LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
+        LynxModuleUtil.ensureMinimumFirmwareVersion(opMode.hardwareMap);
 
-        batteryVoltageSensor = hardwareMap.voltageSensor.iterator().next();
+        batteryVoltageSensor = opMode.hardwareMap.voltageSensor.iterator().next();
 
-        for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
+        for (LynxModule module : opMode.hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
         // adjust the names of the following hardware devices to match your configuration
-        imu = hardwareMap.get(BNO055IMU.class, ID);
+        imu = opMode.hardwareMap.get(BNO055IMU.class, ID);
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         //TODO: this will probably mess up roadrunner put it back to radians or maybe
         // do math.toDegrees
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
 
         //  If the hub containing the IMU you are using is mounted so that the "REV" logo does
@@ -153,10 +158,10 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         // For example, if +Y in this diagram faces downwards, you would use AxisDirection.NEG_Y.
         // BNO055IMUUtil.remapZAxis(imu, AxisDirection.NEG_Y);
 
-        leftFront = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.LeftFront.hardware.ID, Constants.DriveConstantsBad.LeftFront.hardware.CPR, Constants.DriveConstantsBad.LeftFront.hardware.RPM);
-        leftRear = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.LeftRear.hardware.ID, Constants.DriveConstantsBad.LeftRear.hardware.CPR, Constants.DriveConstantsBad.LeftRear.hardware.RPM);
-        rightFront = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.RightFront.hardware.ID, Constants.DriveConstantsBad.RightFront.hardware.CPR, Constants.DriveConstantsBad.RightFront.hardware.RPM);
-        rightRear = new MotorExEx(hardwareMap, Constants.DriveConstantsBad.RightRear.hardware.ID, Constants.DriveConstantsBad.RightRear.hardware.CPR, Constants.DriveConstantsBad.RightRear.hardware.RPM);
+        leftFront = new MotorExEx(opMode.hardwareMap, DriveConstants.Drivetrain.LeftFront.hardware.ID, DriveConstants.Drivetrain.Value.TICKS_PER_REV, DriveConstants.Drivetrain.Value.MAX_RPM);
+        leftRear = new MotorExEx(opMode.hardwareMap, DriveConstants.Drivetrain.LeftRear.hardware.ID, DriveConstants.Drivetrain.Value.TICKS_PER_REV, DriveConstants.Drivetrain.Value.MAX_RPM);
+        rightFront = new MotorExEx(opMode.hardwareMap, DriveConstants.Drivetrain.RightFront.hardware.ID, DriveConstants.Drivetrain.Value.TICKS_PER_REV, DriveConstants.Drivetrain.Value.MAX_RPM);
+        rightRear = new MotorExEx(opMode.hardwareMap, DriveConstants.Drivetrain.RightRear.hardware.ID, DriveConstants.Drivetrain.Value.TICKS_PER_REV, DriveConstants.Drivetrain.Value.MAX_RPM);
 
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
@@ -179,10 +184,10 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         }
 
         // TODO: reverse any motors using DcMotor.setDirection()
-//        leftFront.setInverted(true);
-//        leftRear.setInverted(true);
-//        rightFront.setInverted(false);
-//        rightRear.setInverted(false);
+        leftFront.setInverted(DriveConstants.Drivetrain.LeftFront.hardware.REVERSED);
+        leftRear.setInverted(DriveConstants.Drivetrain.LeftRear.hardware.REVERSED);
+        rightFront.setInverted(DriveConstants.Drivetrain.RightFront.hardware.REVERSED);
+        rightRear.setInverted(DriveConstants.Drivetrain.RightRear.hardware.REVERSED);
 
 //        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 //        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -191,13 +196,12 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
         // This is to give our ftc MecanumDrive a value
         // we do this after inverting the motors
-        controllerMecanumDrive = new com.arcrobotics.ftclib.drivebase.MecanumDrive(true,
-                leftFront,
-                leftRear,
-                rightFront,
-                rightRear
-        );
-        setNormal();
+//        controllerMecanumDrive = new com.arcrobotics.ftclib.drivebase.MecanumDrive(true,
+//                leftFront,
+//                leftRear,
+//                rightFront,
+//                rightRear
+//        );
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
@@ -381,23 +385,111 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         return new ProfileAccelerationConstraint(maxAccel);
     }
 
-    public void driveFieldCentric(double x, double y, double rotate, boolean fineControl) {
-        controllerMecanumDrive.driveFieldCentric(x, y, rotate, -getRawExternalHeading(), fineControl);
+    public void driveFieldCentric(double strafeSpeed, double forwardSpeed,
+                                  double turnSpeed, double gyroAngle) {
+        strafeSpeed = clipRange(strafeSpeed);
+        forwardSpeed = clipRange(forwardSpeed);
+        turnSpeed = clipRange(turnSpeed);
+
+        Vector2d input = new Vector2d(strafeSpeed, forwardSpeed);
+        input = input.rotateBy(-gyroAngle);
+
+        double theta = input.angle();
+
+        double[] wheelSpeeds = new double[4];
+        wheelSpeeds[0] = Math.sin(theta + Math.PI / 4);
+        wheelSpeeds[1] = Math.sin(theta - Math.PI / 4);
+        wheelSpeeds[2] = Math.sin(theta - Math.PI / 4);
+        wheelSpeeds[3] = Math.sin(theta + Math.PI / 4);
+
+        normalize(wheelSpeeds, input.magnitude());
+
+        wheelSpeeds[0] += turnSpeed;
+        wheelSpeeds[1] -= turnSpeed;
+        wheelSpeeds[2] += turnSpeed;
+        wheelSpeeds[3] -= turnSpeed;
+
+        normalize(wheelSpeeds);
+
+        leftFront
+                .set(wheelSpeeds[0]);
+        rightFront
+                .set(wheelSpeeds[1]);
+        leftRear
+                .set(wheelSpeeds[2]);
+        rightRear
+                .set(wheelSpeeds[3]);
     }
 
     public void driveRobotCentric(double x, double y, double rotate, boolean fineControl) {
-        controllerMecanumDrive.driveRobotCentric(x, y, rotate, fineControl);
+//        controllerMecanumDrive.driveRobotCentric(x, y, rotate, fineControl);
+        setWeightedDrivePower(
+                new Pose2d(
+                        (y),
+                        (-x),
+                        (-rotate)
+                )
+        );
+
+    }
+
+    public void drive(double x, double y, double rotate, boolean fineControl, boolean fieldCentric) {
+        if (fieldCentric) driveFieldCentric(x, y, rotate, Math.toDegrees(getRawExternalHeading()));
+        else driveRobotCentric(x, y, rotate, fineControl);
     }
 
     public void setSlow() {
-        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_SLOW);
+//        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_SLOW);
     }
 
     public void setTurbo() {
-        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_TURBO);
+//        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_TURBO);
     }
 
     public void setNormal() {
-        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Values.TELEOP_NORMAL);
+//        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_NORMAL);
+    }
+
+    public void initTelemetry() {
+
+    }
+    public void periodicTelemetry() {
+        telemetry.addData("Drive", "Field centric: " + (DriveConstants.Drivetrain.Value.FIELD_CENTRIC ? "on" : "off"), "Fine Control: " + (DriveConstants.Drivetrain.Value.FINE_CONTROL ? "on" : "off"));
+    }
+
+    public double clipRange(double value) {
+        return value <= -1 ? -1
+                : value >= 1 ? 1
+                : value;
+    }
+
+    protected void normalize(double[] wheelSpeeds, double magnitude) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        for (int i = 1; i < wheelSpeeds.length; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        for (int i = 0; i < wheelSpeeds.length; i++) {
+            wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude) * magnitude;
+        }
+
+    }
+
+    protected void normalize(double[] wheelSpeeds) {
+        double maxMagnitude = Math.abs(wheelSpeeds[0]);
+        for (int i = 1; i < wheelSpeeds.length; i++) {
+            double temp = Math.abs(wheelSpeeds[i]);
+            if (maxMagnitude < temp) {
+                maxMagnitude = temp;
+            }
+        }
+        if (maxMagnitude > 1) {
+            for (int i = 0; i < wheelSpeeds.length; i++) {
+                wheelSpeeds[i] = (wheelSpeeds[i] / maxMagnitude);
+            }
+        }
+
     }
 }

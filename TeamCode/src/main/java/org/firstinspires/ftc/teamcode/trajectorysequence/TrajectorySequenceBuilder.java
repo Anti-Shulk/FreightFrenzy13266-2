@@ -456,6 +456,32 @@ public class TrajectorySequenceBuilder {
         return this;
     }
 
+    public TrajectorySequenceBuilder turnTo(double angle) {
+        return turnTo(angle, currentTurnConstraintMaxAngVel, currentTurnConstraintMaxAngAccel);
+    }
+
+    public TrajectorySequenceBuilder turnTo(double angle, double maxAngVel, double maxAngAccel) {
+        pushPath();
+
+        MotionProfile turnProfile = MotionProfileGenerator.generateSimpleMotionProfile(
+                new MotionState(lastPose.getHeading(), 0.0, 0.0, 0.0),
+                new MotionState(angle, 0.0, 0.0, 0.0),
+                maxAngVel,
+                maxAngAccel
+        );
+
+        sequenceSegments.add(new TurnSegment(lastPose, angle, turnProfile, Collections.emptyList()));
+
+        lastPose = new Pose2d(
+                lastPose.getX(), lastPose.getY(),
+                Angle.norm(lastPose.getHeading() + angle)
+        );
+
+        currentDuration += turnProfile.duration();
+
+        return this;
+    }
+
     public TrajectorySequenceBuilder waitSeconds(double seconds) {
         pushPath();
         sequenceSegments.add(new WaitSegment(lastPose, seconds, Collections.emptyList()));

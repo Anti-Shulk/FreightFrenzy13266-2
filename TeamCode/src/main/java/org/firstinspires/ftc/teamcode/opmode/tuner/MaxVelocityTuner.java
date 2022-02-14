@@ -36,7 +36,7 @@ public class MaxVelocityTuner extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(hardwareMap);
+        MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
         drive.setMode(Motor.RunMode.RawPower);
 
@@ -78,6 +78,6 @@ public class MaxVelocityTuner extends LinearOpMode {
     }
 
     private double veloInchesToTicks(double inchesPerSec) {
-        return inchesPerSec / (2 * Math.PI * DriveConstants.Drivetrain.Values.WHEEL_RADIUS) / DriveConstants.Drivetrain.Values.GEAR_RATIO * DriveConstants.Drivetrain.Values.TICKS_PER_REV;
+        return inchesPerSec / (2 * Math.PI * DriveConstants.Drivetrain.Value.WHEEL_RADIUS) / DriveConstants.Drivetrain.Value.GEAR_RATIO * DriveConstants.Drivetrain.Value.TICKS_PER_REV;
     }
 }

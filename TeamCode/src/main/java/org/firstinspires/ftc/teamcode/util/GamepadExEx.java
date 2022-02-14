@@ -1,11 +1,9 @@
-package org.firstinspires.ftc.teamcode.utilities;
+package org.firstinspires.ftc.teamcode.util;
 
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
-import org.firstinspires.ftc.teamcode.constants.GamepadConstants;
 
 public class GamepadExEx extends GamepadEx {
     public GamepadExEx(Gamepad gamepad) {
@@ -51,6 +49,26 @@ public class GamepadExEx extends GamepadEx {
     public boolean get(GamepadKeys.Trigger trigger) {
         return getTrigger(trigger) >  value.TRIGGER_THRESHOLD;
     }
+
+
+
+    /**
+     * For some stupid reason, the left stick is set to negative, but the right ones
+     * y value is not set to negatiive. this is very dumb so i fixed it
+     * I dont really see how this was intentional so i dont think it was
+     */
+    public double getRightY() {
+        return -gamepad.right_stick_y;
+    }
+    
+    public double getLeftStickToDegrees() {
+        return Math.toDegrees(Math.atan2(getLeftX(), getLeftY()));
+    }
+
+    public double getRightStickToDegrees() {
+        return Math.toDegrees(Math.atan2(getRightX(), getRightY()));
+    }
+
 
 }
 
