@@ -3,13 +3,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import static org.firstinspires.ftc.teamcode.constants.Constants.GrabberConstants.Grip;
 import static org.firstinspires.ftc.teamcode.constants.Constants.GrabberConstants.Lift;
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class GripperSubsystem extends HardwareSubsystem {
@@ -35,8 +31,14 @@ public class GripperSubsystem extends HardwareSubsystem {
         grip.turnToAngle(Grip.value.CLOSE , AngleUnit.DEGREES);
     }
 
-    public void moveUp() {
-        lift.turnToAngle(Lift.value.UP , AngleUnit.DEGREES);
+    public void moveHigh() {
+        lift.turnToAngle(Lift.value.HIGH, AngleUnit.DEGREES);
+    }
+    public void moveMid() {
+        lift.turnToAngle(Lift.value.MID, AngleUnit.DEGREES);
+    }
+    public void moveLow() {
+        lift.turnToAngle(Lift.value.LOW, AngleUnit.DEGREES);
     }
     public void moveDown() {
         lift.turnToAngle(Lift.value.DOWN, AngleUnit.DEGREES);

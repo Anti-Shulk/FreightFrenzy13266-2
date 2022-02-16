@@ -40,6 +40,9 @@ public class Constants {
         }
         public static class Value {
             public double
+                    AUTO_HIGH = 55,
+                    AUTO_MID = 40,
+                    AUTO_LOW = 8,
                     HIGH          = 80, // Degrees
                     MID           = 0, // Degrees
                     LOW           = 0, // Degrees
@@ -182,8 +185,8 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        OPEN = 180, // Degrees
-                        CLOSE = 0; // Degrees
+                        OPEN = 270, // Degrees
+                        CLOSE = 193; // Degrees
             }
 
         }
@@ -200,9 +203,11 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        UP = 90, // Degrees
+                        HIGH = 189, // Degrees
+                        MID = 189, // Degrees
+                        LOW = 162, // Degrees
                         DOWN = 0; // Degrees
-            }
+                }
 
         }
     }
