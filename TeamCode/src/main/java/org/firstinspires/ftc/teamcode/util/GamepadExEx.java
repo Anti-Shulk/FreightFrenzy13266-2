@@ -62,7 +62,7 @@ public class GamepadExEx extends GamepadEx {
     }
     
     public double getLeftStickToDegrees() {
-        return Math.toDegrees(Math.atan2(getLeftX(), getLeftY()));
+        return Math.toDegrees(Math.atan2(getLeftX(), -getLeftY()));
     }
 
     public double getRightStickToDegrees() {
@@ -70,7 +70,7 @@ public class GamepadExEx extends GamepadEx {
 //        boolean negative = Math.toDegrees(Math.atan2(getRightX(), getRightY())) < 0;
 //        return negative ? value - 360:
 //                value;
-        return Math.toDegrees(Math.atan2(getRightX(), getRightY()));
+        return Math.toDegrees(Math.atan2(getRightX(), -getRightY()));
     }
 
 

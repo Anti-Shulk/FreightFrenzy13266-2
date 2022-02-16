@@ -102,6 +102,15 @@ public class ArmSubsystem extends HardwareSubsystem {
         return current >= hardware.CPR / 360 * value.WONT_HIT_SIDES;
 //        return false;
     }
+    public void turnOn() {
+        arm.setPower(controller.POWER);
+    }
+    public void turnLowPower() {
+        arm.setPower(controller.LOW_POWER);
+    }
+    public void turnOff() {
+        arm.setPower(0);
+    }
 
 //    public boolean isIntake() {
 //        return isIntake;

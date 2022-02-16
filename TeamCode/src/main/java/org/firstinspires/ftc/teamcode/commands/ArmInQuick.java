@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.constants.Constants;
@@ -14,7 +15,10 @@ public class ArmInQuick extends SequentialCommandGroup {
                 new InstantCommand(turret::moveIn),
                 new InstantCommand(arm::moveWontHitSides),
                 new WaitUntilCommand(turret::isAtTarget),
-                new InstantCommand(arm::moveIntake)
+                new InstantCommand(arm::moveIntake),
+                new InstantCommand(arm::turnLowPower),
+                new WaitCommand(500),
+                new InstantCommand(arm::turnOff)
         ));
     }
 }

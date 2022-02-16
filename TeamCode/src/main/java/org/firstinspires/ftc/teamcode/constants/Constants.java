@@ -35,7 +35,8 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 0.6;
+                    POWER         = 0.60,
+                    LOW_POWER     = 0.1;
         }
         public static class Value {
             public double
@@ -76,11 +77,11 @@ public class Constants {
             public static Value value = new Value();
 
             public static class Hardware {
-                public String ID = "carouselSpinServo";
+                public String ID = "carouselSpinMotor";
                 public boolean REVERSED = false;
                 public double
-                        RPM = 117,
-                        CPR = 1425.1;
+                        RPM = 435,
+                        CPR = 384.5;
             }
             public static class Controller {
                 public double
@@ -107,8 +108,8 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        UP                   = 90, // Degrees
-                        DOWN                 = 0; // Degrees
+                        UP                   = 42, // Degrees
+                        DOWN                 = 146; // Degrees
             }
 
 
@@ -276,11 +277,11 @@ public class Constants {
             public String ID = "trapdoorServo";
             public double MIN_ANGLE = 0;
             public double MAX_ANGLE = 270;
-            public boolean REVERSED = false;
+            public boolean REVERSED = true;
         }
         public static class Value {
-            public double OPEN                       = 180; // Degrees
-            public double CLOSE                      = 0; // Degrees
+            public double OPEN                       = 83; // Degrees
+            public double CLOSE                      = 30; // Degrees
         }
     }
 

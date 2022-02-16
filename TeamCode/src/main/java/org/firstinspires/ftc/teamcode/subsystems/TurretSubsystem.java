@@ -69,10 +69,7 @@ public class TurretSubsystem extends HardwareSubsystem {
     }
 
     public void moveIn() {
-        if (targetDegrees >= 180) {
-            setDegrees(value.RETURN + 360);
-        }
-        setDegrees(value.RETURN + 360);
+        setDegrees(value.RETURN);
     }
 
 //    public boolean isZero() {
@@ -105,10 +102,10 @@ public class TurretSubsystem extends HardwareSubsystem {
     public boolean isAtTarget() {
         int current   = turret.getCurrentPosition();
 //        int tolerance = turret.getTargetPositionTolerance();
-        return (current <= value.INITIAL_POSITION + 5 &&
-                current >= value.INITIAL_POSITION - 5 &&
-                current != 0) || (current <= value.INITIAL_POSITION + 360 + 5 &&
-                current >= value.INITIAL_POSITION + 360 - 5 &&
+        return (current <= value.INITIAL_POSITION + 1 &&
+                current >= value.INITIAL_POSITION - 1 &&
+                current != 0) || (current <= value.INITIAL_POSITION + 360 + 1 &&
+                current >= value.INITIAL_POSITION + 360 - 1 &&
                 current != 0);
 //        return current == 1;
     }

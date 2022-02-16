@@ -16,8 +16,8 @@ public class TrapdoorSubsystem extends HardwareSubsystem {
     private final ServoEx trapdoor;
 
     public TrapdoorSubsystem() {
-        trapdoor = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MIN_ANGLE);
-        trapdoor.setInverted(false);
+        trapdoor = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MAX_ANGLE);
+        trapdoor.setInverted(hardware.REVERSED);
     }
     public void open() {
         trapdoor.turnToAngle(value.OPEN);

@@ -73,9 +73,13 @@ public class realTeleopHopefully extends CommandOpMode {
 //        command.add(operator::getRightTouchingEdge)
 //                .whileHeld(() -> turret.setTargetXY(operator.getRightX(), -operator.getRightY()));
 
-        command.add(() -> driver.get(button.TURBO))
-                .whenPressed(drive::setTurbo)
-                .whenReleased(drive::setNormal);
+//        command.add(() -> driver.get(button.TURBO))
+//                .whenPressed(drive::setTurbo)
+//                .whenReleased(drive::setNormal);
+
+        command.add(() -> driver.get(button.DROP))
+                .whenPressed(trapdoor::open)
+                .whenReleased(trapdoor::close);
 
         command.add(() -> driver.get(button.INTAKE))
                 .whenPressed(intake::intake)
@@ -109,7 +113,7 @@ public class realTeleopHopefully extends CommandOpMode {
                 .whenReleased(() -> arm.setTargetDegrees(Constants.ArmConstants.value.HIGH));
 
         command.add(() -> operator.get(button.DOWN))
-                .whenPressed(new ArmInQuick(arm, turret));
+                .whenPressed(new ArmInQuick(arm, turret), true);
 
         command.add(() -> operator.get(button.LEFT))
                 .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.LEFT))
@@ -126,7 +130,7 @@ public class realTeleopHopefully extends CommandOpMode {
         command.add(operator::getRightTouchingEdge)
                 .whileHeld(() -> telemetry.addLine("pressed"))
                 .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
-                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees() + 180))
+                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees()))
                 .whileHeld(new ArmOutQuick(arm, turret));
 
 //        command.add(() -> operator.get(button.LEFT))
@@ -150,7 +154,7 @@ public class realTeleopHopefully extends CommandOpMode {
 
         command.add(() -> operator.get(button.CAROUSEL_RED))
                 .whenPressed(carousel::spinReversed)
-                .whenPressed(carousel::stop);
+                .whenReleased(carousel::stop);
 
 
 

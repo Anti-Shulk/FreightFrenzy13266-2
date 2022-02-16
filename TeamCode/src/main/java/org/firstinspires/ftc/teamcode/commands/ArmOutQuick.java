@@ -18,6 +18,7 @@ public class ArmOutQuick extends SequentialCommandGroup {
 
     public ArmOutQuick(ArmSubsystem arm, TurretSubsystem turret) {
         addCommands(new SequentialCommandGroup(
+                new InstantCommand(arm::turnOn),
                 new InstantCommand(arm::moveToTarget),
                 new WaitUntilCommand(arm::wontHitSides),
                 new InstantCommand(turret::moveToTargetDegrees

@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.constants.Constants.CarouselConstan
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.util.MotorExEx;
 
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -19,7 +20,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class CarouselSubsystem extends HardwareSubsystem {
 
 //    private CRServo spin;
-    private CRServo spin;
+    private MotorExEx spin;
     private ServoEx lift;
 
 //    public CarouselSubsystem(HardwareMap hardwareMap) {
@@ -30,7 +31,7 @@ public class CarouselSubsystem extends HardwareSubsystem {
 //        lift.setInverted(false);
 //    }
     public CarouselSubsystem() {
-        spin = new CRServo(hardwareMap, Spin.hardware.ID/*, Spin.hardware.CPR, Spin.hardware.RPM*/);
+        spin = new MotorExEx(hardwareMap, Spin.hardware.ID, Spin.hardware.CPR, Spin.hardware.RPM);
 //        spin2.setPositionCoefficient(controller.KP);
 //        spin2.setPositionTolerance(controller.TOLERANCE);
         spin.setInverted(Spin.hardware.REVERSED);
