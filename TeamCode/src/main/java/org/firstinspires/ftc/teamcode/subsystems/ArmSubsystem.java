@@ -64,7 +64,7 @@ public class ArmSubsystem extends HardwareSubsystem {
     }
 
     public void moveAuthHigh() {
-        setDegrees(value.AUTO_HIGH);
+        setDegrees(value.AUTO_LOW);
     }
 
     public void moveAutoLow() {
@@ -80,7 +80,7 @@ public class ArmSubsystem extends HardwareSubsystem {
     }
 
     public void moveWontHitSides() {
-        setDegrees(value.WONT_HIT_SIDES);
+        setDegrees(value.WONT_HIT_SIDES + 5);
     }
 
     public void moveShared() {

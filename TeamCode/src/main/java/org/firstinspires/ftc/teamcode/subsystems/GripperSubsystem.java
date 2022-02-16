@@ -12,7 +12,7 @@ public class GripperSubsystem extends HardwareSubsystem {
     private final ServoEx grip;
     private final ServoEx lift;
     public GripperSubsystem() {
-        grip = new SimpleServo(hardwareMap, Grip.hardware.ID, Grip.hardware.MIN_ANGLE, Grip.hardware.MIN_ANGLE);
+        grip = new SimpleServo(hardwareMap, Grip.hardware.ID, Grip.hardware.MIN_ANGLE, Grip.hardware.MAX_ANGLE);
         grip.setInverted(false);
 
         lift = new SimpleServo(hardwareMap, Lift.hardware.ID, Lift.hardware.MIN_ANGLE, Lift.hardware.MAX_ANGLE);

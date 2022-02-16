@@ -206,7 +206,7 @@ public class Constants {
                 public double
                         HIGH = 189, // Degrees
                         MID = 189, // Degrees
-                        LOW = 162, // Degrees
+                        LOW = 89, // Degrees
                         DOWN = 0; // Degrees
                 }
 
