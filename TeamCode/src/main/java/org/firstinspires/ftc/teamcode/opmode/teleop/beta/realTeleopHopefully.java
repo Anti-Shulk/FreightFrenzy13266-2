@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.beta;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
@@ -41,6 +42,7 @@ public class realTeleopHopefully extends CommandOpMode {
         IntakeSubsystem intake = new IntakeSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
+
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
                 drive,
@@ -155,6 +157,9 @@ public class realTeleopHopefully extends CommandOpMode {
         command.add(() -> operator.get(button.CAROUSEL_RED))
                 .whenPressed(carousel::spinReversed)
                 .whenReleased(carousel::stop);
+
+        command.add(() -> operator.get(GamepadKeys.Button.Y))
+                .whileHeld(gripper::moveHigh);
 
 
 

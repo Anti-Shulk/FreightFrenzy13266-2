@@ -36,7 +36,8 @@ public class Constants {
                     TOLERANCE     = 10,
                     KP            = 5,
                     POWER         = 0.60,
-                    LOW_POWER     = 0.1;
+                    LOW_POWER     = 0.1,
+                    AUTO_POWER     = 0.5;
         }
         public static class Value {
             public double
@@ -93,7 +94,7 @@ public class Constants {
                         POWER         = 0.6;
             }
             public static class Value {
-                public double SPEED                = 1; // power
+                public double SPEED                = 0.7; // power
             }
 
 

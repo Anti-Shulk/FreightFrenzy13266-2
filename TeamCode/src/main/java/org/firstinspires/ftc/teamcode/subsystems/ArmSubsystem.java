@@ -63,6 +63,18 @@ public class ArmSubsystem extends HardwareSubsystem {
         setDegrees(value.MID);
     }
 
+    public void moveAuthHigh() {
+        setDegrees(value.AUTO_HIGH);
+    }
+
+    public void moveAutoLow() {
+        setDegrees(value.AUTO_LOW);
+    }
+
+    public void moveAutoMid() {
+        setDegrees(value.AUTO_MID);
+    }
+
     public void moveIntake() {
         setDegrees(value.INITIAL);
     }
@@ -111,6 +123,7 @@ public class ArmSubsystem extends HardwareSubsystem {
     public void turnOff() {
         arm.setPower(0);
     }
+    public void turnAutoPower() { arm.setPower(controller.AUTO_POWER);}
 
 //    public boolean isIntake() {
 //        return isIntake;
