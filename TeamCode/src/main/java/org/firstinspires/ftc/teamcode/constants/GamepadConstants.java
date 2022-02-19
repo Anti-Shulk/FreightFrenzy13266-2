@@ -41,6 +41,7 @@ public class GamepadConstants {
 
         public Button GRIPPER_LIFT  = Button.A;
         public Button GRIPPER_GRAB = Button.B;
+        public Button TOGGLE_INTAKE_UP  = Button.Y;
 
 
 

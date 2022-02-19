@@ -63,7 +63,7 @@ public class ArmSubsystem extends HardwareSubsystem {
         setDegrees(value.MID);
     }
 
-    public void moveAuthHigh() {
+    public void moveAutoHigh() {
         setDegrees(value.AUTO_HIGH);
     }
 

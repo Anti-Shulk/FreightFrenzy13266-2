@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeLiftSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TelemetrySubsystem;
@@ -24,7 +25,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
 @TeleOp(name = "Real Teleop Hopefully")
-public class realTeleopHopefully extends CommandOpMode {
+public class RealTeleopHopefully extends CommandOpMode {
     @Override
     public void initialize() {
         // TODO: Move to Robot Container
@@ -42,6 +43,7 @@ public class realTeleopHopefully extends CommandOpMode {
         IntakeSubsystem intake = new IntakeSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
+        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
@@ -160,6 +162,13 @@ public class realTeleopHopefully extends CommandOpMode {
 
         command.add(() -> operator.get(GamepadKeys.Button.Y))
                 .whileHeld(gripper::moveHigh);
+        command.add(() -> operator.get(GamepadKeys.Button.BACK))
+                .whileHeld(gripper::open);
+
+        command.add(() -> driver.get(button.TOGGLE_INTAKE_UP))
+                .toggleWhenPressed(intakeLift::lift, intakeLift::drop);
+        command.add(() -> driver.get(GamepadKeys.Button.A))
+                .whileHeld(gripper::close);
 
 
 

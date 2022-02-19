@@ -6,7 +6,6 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
@@ -47,15 +46,13 @@ public class BlueCarousel extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                .addDisplacementMarker(carousel::lift)
-                .addDisplacementMarker(carousel::spinForward)
+                .run(carousel::lift)
+                .run(carousel::spinForward)
                 .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
                 .waitSeconds(3)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .addDisplacementMarker(outtakeThread::run)
+                .run(outtakeThread::start)
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))
-                .addDisplacementMarker(20, carousel::stop)
-                .addDisplacementMarker(20, carousel::drop)
                 .setReversed(false)
                 .splineTo(new Vector2d(-59, 29), Math.toRadians(90))
                 .build();

@@ -412,6 +412,16 @@ public class TrajectorySequenceBuilder {
         return this.addDisplacementMarker(currentDisplacement, callback);
     }
 
+    public TrajectorySequenceBuilder run(MarkerCallback callback) {
+        return this.addDisplacementMarker(currentDisplacement, callback);
+    }
+
+    public TrajectorySequenceBuilder runThread(Runnable runnable) {
+        MarkerCallback callback = () -> new Thread(runnable).start();
+        return this.addDisplacementMarker(currentDisplacement, callback);
+    }
+
+
     public TrajectorySequenceBuilder UNSTABLE_addDisplacementMarkerOffset(double offset, MarkerCallback callback) {
         return this.addDisplacementMarker(currentDisplacement + offset, callback);
     }

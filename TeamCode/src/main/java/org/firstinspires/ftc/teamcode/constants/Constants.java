@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.constants;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
+import org.firstinspires.ftc.teamcode.subsystems.IntakeLiftSubsystem;
+
 @Config
 public class Constants {
     // TODO: remove all statics except for utility classes so that we can have folders
@@ -14,6 +16,7 @@ public class Constants {
     public static GrabberConstants grabberConstants;
     public static IntakeConstants intakeConstants;
     public static TrapdoorConstants trapdoorConstants;
+    public static IntakeLift intakeLiftConstants;
     
 
 
@@ -35,7 +38,7 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 0.60,
+                    POWER         = 1,
                     LOW_POWER     = 0.1,
                     AUTO_POWER     = 0.5;
         }
@@ -45,8 +48,8 @@ public class Constants {
                     AUTO_MID = 40,
                     AUTO_LOW = 8,
                     HIGH          = 80, // Degrees
-                    MID           = 0, // Degrees
-                    LOW           = 0, // Degrees
+                    MID           = 32, // Degrees
+                    LOW           = 8, // Degrees
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 10,
@@ -186,8 +189,8 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        OPEN = 270, // Degrees
-                        CLOSE = 193; // Degrees
+                        OPEN = 50, // Degrees
+                        CLOSE = 80; // Degrees
             }
 
         }
@@ -204,10 +207,10 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        HIGH = 189, // Degrees
-                        MID = 189, // Degrees
-                        LOW = 162, // Degrees
-                        DOWN = 0; // Degrees
+                        HIGH = 80, // Degrees
+                        MID = 80, // Degrees
+                        LOW = 103, // Degrees
+                        DOWN = 270; // Degrees
                 }
 
         }
@@ -291,5 +294,23 @@ public class Constants {
         }
     }
 
+    public static class IntakeLift {
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
+        public static class Hardware {
+            public String ID = "intakeLiftServo";
+            public boolean REVERSED = false;
+            public double
+                    MIN_ANGLE     = 0,
+                    MAX_ANGLE     = 270;
+
+        }
+        public static class Value {
+            public double
+                    UP = 0, // Degrees
+                    DOWN = 80; // Degrees
+        }
+
+    }
 
 }
