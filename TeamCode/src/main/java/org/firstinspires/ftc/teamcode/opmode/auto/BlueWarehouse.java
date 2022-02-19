@@ -36,7 +36,7 @@ public class BlueWarehouse extends LinearOpMode {
 
         Thread armDown=new Thread(() -> {
             turret.moveIn();
-            arm.moveUpSoItWontHitSides();
+            arm.moveSoItWontHitSides();
             while (!turret.isIn()) {
                 sleep(50);
             }

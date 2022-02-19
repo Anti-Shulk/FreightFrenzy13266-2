@@ -6,6 +6,8 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
+import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
@@ -28,15 +30,6 @@ public class BlueCarousel extends LinearOpMode {
 
         Pose2d startPose = new Pose2d(-40.3, 63.2, Math.toRadians(-90));
 
-        Thread outtakeThread = new Thread(() -> {
-            arm.setAutoPower();
-            arm.moveAutoLow();
-            arm.moveToTarget();
-            while (!arm.isSus()) {
-                sleep(50);
-            }
-            turret.moveToTargetDegrees();
-        });
 
 
 
@@ -51,7 +44,7 @@ public class BlueCarousel extends LinearOpMode {
                 .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
                 .waitSeconds(3)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .run(outtakeThread::start)
+                .runCommandGroup(new ArmOutQuick(arm, turret, arm::moveHigh, turret::moveRight))
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))
                 .setReversed(false)
                 .splineTo(new Vector2d(-59, 29), Math.toRadians(90))

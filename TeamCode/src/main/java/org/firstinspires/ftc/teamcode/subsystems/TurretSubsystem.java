@@ -14,7 +14,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 
     private int targetTicks;
 
-    private boolean positive;
+    private int adder;
 
     public TurretSubsystem() {
 
@@ -59,12 +59,17 @@ public class TurretSubsystem extends HardwareSubsystem {
 
 
     public void setDegrees(double degrees) {
-        targetTicks = (int) ((hardware.CPR / 360) * degrees);
+        if (getTargetPosition() == value.INITIAL_POSITION) {
+            adder = degrees > 180 ? -360 : 0;
+        }
 
-        positive = targetTicks >= 0;
+        targetTicks = degreesToTicks(degrees + adder);
 
         turret.setTargetPosition(targetTicks);
-//        turret2.setTargetPosition((int) ((hardware.CPR / 360) * degrees));
+    }
+
+    public int degreesToTicks(double degrees) {
+        return (int) ((hardware.CPR / 360) * degrees);
     }
 
     public double getTargetDegrees() {

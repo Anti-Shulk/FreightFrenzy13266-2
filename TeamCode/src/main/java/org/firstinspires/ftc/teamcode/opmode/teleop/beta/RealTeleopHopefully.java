@@ -114,31 +114,76 @@ public class RealTeleopHopefully extends CommandOpMode {
 //        command.add(() -> operator.get(button.RIGHT))
 //                .whenPressed(turret::moveRight);
 
-        command.add(() -> operator.get(button.ARM_SHARED))
-                .whenPressed(() -> arm.setTargetDegrees(Constants.ArmConstants.value.SHARED))
-                .whenReleased(() -> arm.setTargetDegrees(Constants.ArmConstants.value.HIGH));
 
-        command.add(() -> operator.get(button.DOWN))
-                .whenPressed(new ArmInQuick(arm, turret), true);
 
-        command.add(() -> operator.get(button.LEFT))
-                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.LEFT))
-                .whenPressed(new ArmOutQuick(arm, turret));
 
-        command.add(() -> operator.get(button.RIGHT))
-                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.RIGHT))
-                .whenPressed(new ArmOutQuick(arm, turret));
 
-        command.add(() -> operator.get(button.FORWARD))
-                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.FORWARD))
-                .whenPressed(new ArmOutQuick(arm, turret));
 
-        command.add(operator::getRightTouchingEdge)
-                .whileHeld(() -> telemetry.addLine("pressed"))
-                .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
-                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees()))
-                .whileHeld(new ArmOutQuick(arm, turret));
 
+
+
+
+
+
+
+
+
+
+//        command.add(() -> operator.get(button.ARM_SHARED))
+//                .whenPressed(() -> arm.setTargetDegrees(Constants.ArmConstants.value.SHARED))
+//                .whenReleased(() -> arm.setTargetDegrees(Constants.ArmConstants.value.HIGH));
+//
+//        command.add(() -> operator.get(button.DOWN))
+//                .whenPressed(new ArmInQuick(arm, turret), true);
+//
+//        command.add(() -> operator.get(button.LEFT))
+//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.LEFT))
+//                .whenPressed(new ArmOutQuick(arm, turret));
+//
+//        command.add(() -> operator.get(button.RIGHT))
+//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.RIGHT))
+//                .whenPressed(new ArmOutQuick(arm, turret));
+//
+//        command.add(() -> operator.get(button.FORWARD))
+//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.FORWARD))
+//                .whenPressed(new ArmOutQuick(arm, turret));
+//
+//        command.add(operator::getRightTouchingEdge)
+//                .whileHeld(() -> telemetry.addLine("pressed"))
+//                .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
+//                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees()))
+//                .whileHeld(new ArmOutQuick(arm, turret));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣷⣶⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣾⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⡟⠁⣰⣿⣿⣿⡿⠿⠻⠿⣿⣿⣿⣿⣧⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⠏⠀⣴⣿⣿⣿⠉⠀⠀⠀⠀⠀⠈⢻⣿⣿⣇⠀⠀⠀
+//⠀⠀⠀⠀⢀⣠⣼⣿⣿⡏⠀⢠⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⡀⠀⠀
+//⠀⠀⠀⣰⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀
+//⠀⠀⢰⣿⣿⡿⣿⣿⣿⡇⠀⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⢀⣸⣿⣿⣿⠁⠀⠀
+//⠀⠀⣿⣿⣿⠁⣿⣿⣿⡇⠀⠀⠻⣿⣿⣿⣷⣶⣶⣶⣶⣶⣿⣿⣿⣿⠃⠀⠀⠀
+//⠀⢰⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
+//⠀⢸⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠛⠛⠛⠉⢉⣿⣿⠀⠀⠀⠀⠀⠀
+//⠀⢸⣿⣿⣇⠀⣿⣿⣿⠀⠀⠀⠀⠀⢀⣤⣤⣤⡀⠀⠀⢸⣿⣿⣿⣷⣦⠀⠀⠀
+//⠀⠀⢻⣿⣿⣶⣿⣿⣿⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣦⡀⠀⠉⠉⠻⣿⣿⡇⠀⠀
+//⠀⠀⠀⠛⠿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀⠀⠈⠹⣿⣿⣇⣀⠀⣠⣾⣿⣿⡇⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣦⣤⣤⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢿⣿⣿⣿⣿⣿⣿⠿⠋⠉⠛⠋⠉⠉⠁⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠁
 
 
 //        command.add(() -> operator.get(button.LEFT))

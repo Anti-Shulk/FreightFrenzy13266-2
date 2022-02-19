@@ -59,7 +59,7 @@ public class ArmSubsystem extends HardwareSubsystem {
         setDegrees(value.INITIAL);
     }
 
-    public void moveUpSoItWontHitSides() {
+    public void moveSoItWontHitSides() {
         setDegrees(value.MOVE_UP_SO_IT_WONT_HIT_SIDES);
     }
 
@@ -101,6 +101,10 @@ public class ArmSubsystem extends HardwareSubsystem {
 
     public boolean isSus() {
         return getCurrentDegrees() < value.MOVE_UP_SO_IT_WONT_HIT_SIDES;
+    }
+
+    public boolean isNotSus() {
+        return getCurrentDegrees() >= value.MOVE_UP_SO_IT_WONT_HIT_SIDES;
     }
 
 

@@ -265,7 +265,7 @@ public class Constants {
         public static class Value {
             public double
                     FORWARD = 180, // Degrees
-                    LEFT    = -90, // Degrees
+                    LEFT    = 270, // Degrees
                     RIGHT   = 90, // Degrees
                     RETURN  = 0; // Degrees
 

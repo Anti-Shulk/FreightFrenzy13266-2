@@ -18,7 +18,11 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryMarker;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.util.Angle;
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
+import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TurnSegment;
@@ -412,13 +416,27 @@ public class TrajectorySequenceBuilder {
         return this.addDisplacementMarker(currentDisplacement, callback);
     }
 
-    public TrajectorySequenceBuilder run(MarkerCallback callback) {
-        return this.addDisplacementMarker(currentDisplacement, callback);
+//    public TrajectorySequenceBuilder run(MarkerCallback callback) {
+//        return this.addDisplacementMarker(currentDisplacement, callback);
+//    }
+//
+//    public TrajectorySequenceBuilder runThread(Runnable runnable) {
+//        MarkerCallback callback = () -> new Thread(runnable).start();
+//        return this.addDisplacementMarker(currentDisplacement, callback);
+//    }
+    public TrajectorySequenceBuilder run(Runnable runnable) {
+        runnable.run();
+        return this;
     }
 
     public TrajectorySequenceBuilder runThread(Runnable runnable) {
-        MarkerCallback callback = () -> new Thread(runnable).start();
-        return this.addDisplacementMarker(currentDisplacement, callback);
+        new Thread(runnable).start();
+        return this;
+    }
+
+    public TrajectorySequenceBuilder runCommandGroup(SequentialCommandGroup sequentialCommandGroup) {
+        new Thread(sequentialCommandGroup::execute).start();
+        return this;
     }
 
 
