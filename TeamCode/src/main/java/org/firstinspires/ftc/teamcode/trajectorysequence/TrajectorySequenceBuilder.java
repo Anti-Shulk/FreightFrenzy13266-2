@@ -21,6 +21,7 @@ import com.acmerobotics.roadrunner.util.Angle;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.button.Trigger;
 
 import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
@@ -31,6 +32,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.WaitSeg
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 public class TrajectorySequenceBuilder {
     private final double resolution = 0.25;
@@ -416,27 +418,41 @@ public class TrajectorySequenceBuilder {
         return this.addDisplacementMarker(currentDisplacement, callback);
     }
 
-//    public TrajectorySequenceBuilder run(MarkerCallback callback) {
-//        return this.addDisplacementMarker(currentDisplacement, callback);
+    public TrajectorySequenceBuilder run(MarkerCallback callback) {
+        return this.addDisplacementMarker(currentDisplacement, callback);
+    }
+
+    public TrajectorySequenceBuilder runThread(BooleanSupplier stopIsRequested, Runnable runnable) {
+        MarkerCallback callback = () -> new Thread(() -> {
+            if (stopIsRequested.getAsBoolean()) return;
+            runnable.run();
+        }).start();
+
+        return this.addDisplacementMarker(currentDisplacement, callback);
+    }
+
+
+
+//    public TrajectorySequenceBuilder run(Runnable runnable) {
+//        runnable.run();
+//        return this;
 //    }
 //
 //    public TrajectorySequenceBuilder runThread(Runnable runnable) {
-//        MarkerCallback callback = () -> new Thread(runnable).start();
-//        return this.addDisplacementMarker(currentDisplacement, callback);
+//        new Thread(runnable).start();
+//        return this;
 //    }
-    public TrajectorySequenceBuilder run(Runnable runnable) {
-        runnable.run();
-        return this;
-    }
 
-    public TrajectorySequenceBuilder runThread(Runnable runnable) {
-        new Thread(runnable).start();
-        return this;
-    }
+    public TrajectorySequenceBuilder runCommandGroupAsThread(BooleanSupplier isStopRequested, SequentialCommandGroup sequentialCommandGroup) {
+        MarkerCallback callback = () -> new Thread(() -> {
+            if (!isStopRequested.getAsBoolean()) sequentialCommandGroup.initialize();
 
-    public TrajectorySequenceBuilder runCommandGroup(SequentialCommandGroup sequentialCommandGroup) {
-        new Thread(sequentialCommandGroup::execute).start();
-        return this;
+            while (!isStopRequested.getAsBoolean() && !sequentialCommandGroup.isFinished()) {
+                sequentialCommandGroup.execute();
+            }
+        }).start();
+
+        return this.addDisplacementMarker(currentDisplacement, callback);
     }
 
 

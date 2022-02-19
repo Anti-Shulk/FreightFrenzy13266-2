@@ -72,7 +72,7 @@ public class RedWarehouse extends LinearOpMode {
                 .run(gripper::moveLow)
                 .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
                 .waitSeconds(1)
-                .runThread(() -> {
+                .runThread(this::opModeIsActive, () -> {
                     gripper.open();
                     sleep(300);
                     gripper.moveDown();
@@ -86,7 +86,7 @@ public class RedWarehouse extends LinearOpMode {
                 .forward(30)
                 .back(40)
                 .run(intake::stop)
-                .runThread(() -> {
+                .runThread(this::opModeIsActive, () -> {
                     arm.setAutoPower();
                     arm.moveHigh();
                     while (!arm.isSus()) {
