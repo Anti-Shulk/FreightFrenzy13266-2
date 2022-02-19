@@ -7,9 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import java.util.function.BooleanSupplier;
 
 public class CommandSchedulerWrapper {
-    private OpMode opMode;
-    public CommandSchedulerWrapper (OpMode opMode) {
-        this.opMode = opMode;
+    public CommandSchedulerWrapper () {
     }
 
     public Button add(BooleanSupplier button) {

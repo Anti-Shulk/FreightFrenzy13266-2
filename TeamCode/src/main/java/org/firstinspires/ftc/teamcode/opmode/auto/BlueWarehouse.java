@@ -26,9 +26,9 @@ public class BlueWarehouse extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Thread armUp=new Thread(() -> {
-            arm.turnAutoPower();
+            arm.setAutoPower();
             arm.moveAutoHigh();
-            while (!arm.wontHitSides()) {
+            while (!arm.isSus()) {
                 sleep(50);
             }
             turret.moveLeft();
@@ -36,14 +36,14 @@ public class BlueWarehouse extends LinearOpMode {
 
         Thread armDown=new Thread(() -> {
             turret.moveIn();
-            arm.moveWontHitSides();
+            arm.moveUpSoItWontHitSides();
             while (!turret.isAtTarget()) {
                 sleep(50);
             }
-            arm.moveIntake();
-            arm.turnLowPower();
+            arm.moveIn();
+            arm.setDropPower();
             sleep(500);
-            arm.turnOff();
+            arm.setOff();
         });
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)

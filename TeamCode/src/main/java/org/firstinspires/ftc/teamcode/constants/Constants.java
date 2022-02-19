@@ -38,8 +38,8 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 1,
-                    LOW_POWER     = 0.1,
+                    TELEOP_POWER = 1,
+                    DROP_POWER = 0.1,
                     AUTO_POWER     = 0.5;
         }
         public static class Value {
@@ -53,7 +53,7 @@ public class Constants {
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 10,
-                    WONT_HIT_SIDES = 40;
+                    MOVE_UP_SO_IT_WONT_HIT_SIDES = 40;
         }
     }
 

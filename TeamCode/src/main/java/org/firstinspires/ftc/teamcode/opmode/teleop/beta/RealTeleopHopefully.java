@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ArmTurretSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
@@ -32,29 +33,30 @@ public class RealTeleopHopefully extends CommandOpMode {
         GamepadExEx driver = new GamepadExEx(gamepad1);
         GamepadExEx operator = new GamepadExEx(gamepad2);
 
-        CommandSchedulerWrapper command = new CommandSchedulerWrapper(this);
+        CommandSchedulerWrapper command = new CommandSchedulerWrapper();
 
         HardwareSubsystem hardware = new HardwareSubsystem(this);
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
-        ArmSubsystem arm = new ArmSubsystem();
+//        ArmSubsystem arm = new ArmSubsystem();
         CarouselSubsystem carousel = new CarouselSubsystem();
         GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
-        TurretSubsystem turret = new TurretSubsystem();
+//        TurretSubsystem turret = new TurretSubsystem();
         IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
+        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
                 drive,
-                arm,
                 carousel,
                 gripper,
                 intake,
                 trapdoor,
-                turret);
-
+                armTurret
+        );
+;
         telemetrySubsystem.teleOpMessage();
 
 //        command.addDefault(() -> telemetry.addData("Driver Stick",

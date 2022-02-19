@@ -44,7 +44,7 @@ public class TelemetrySubsystem extends SubsystemBase {
     public void periodic(GamepadEx driver, GamepadEx operator) {
         loops++;
         if (drive != null) drive.initTelemetry();
-        for (HardwareSubsystem subsystem: this.subsystems) {
+        for (HardwareSubsystem subsystem: subsystems) {
             subsystem.periodic();
         }
         telemetry.addData("Driver Stick",

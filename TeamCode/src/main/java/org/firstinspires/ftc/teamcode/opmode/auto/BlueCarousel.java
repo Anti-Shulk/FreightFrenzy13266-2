@@ -29,10 +29,10 @@ public class BlueCarousel extends LinearOpMode {
         Pose2d startPose = new Pose2d(-40.3, 63.2, Math.toRadians(-90));
 
         Thread outtakeThread = new Thread(() -> {
-            arm.turnAutoPower();
+            arm.setAutoPower();
             arm.moveAutoLow();
             arm.moveToTarget();
-            while (!arm.wontHitSides()) {
+            while (!arm.isSus()) {
                 sleep(50);
             }
             turret.moveToTargetDegrees();

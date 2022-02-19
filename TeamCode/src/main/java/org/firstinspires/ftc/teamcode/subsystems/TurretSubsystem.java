@@ -11,23 +11,11 @@ import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants
 
 public class TurretSubsystem extends HardwareSubsystem {
 
-    private DcMotorEx turret;
-    private MotorEx turret2;
-    private int targetTicks = 0;
-    private double targetDegrees = value.FORWARD;
-//    private boolean isZero;
+    private final DcMotorEx turret;
+
+    private int targetTicks ;
+
     public TurretSubsystem() {
-//        turret = new MotorExEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
-//        turret.setPositionCoefficient(controller.KP);
-//        turret.setPositionTolerance(controller.TOLERANCE);
-//        turret.setInverted(hardware.REVERSED);
-//        turret.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-//        turret.setRunMode(Motor.RunMode.VelocityControl);
-//        turret.resetEncoder();
-//        turret.setTargetDegrees(value.INITIAL_POSITION);
-//        turret.setRunMode(MotorEx.RunMode.PositionControl);
-//        turret.set(controller.POWER);
-//        isZero = false;
 
 
         turret = hardwareMap.get(DcMotorEx.class, hardware.ID);
@@ -39,16 +27,6 @@ public class TurretSubsystem extends HardwareSubsystem {
         setDegrees(0);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(controller.POWER);
-
-//        turret2 = new MotorEx(hardwareMap, hardware.ID, hardware.CPR, hardware.RPM);
-//        turret2.setInverted(hardware.REVERSED);
-//        turret2.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        // reset encoder
-////        turret2.setTargetPosition(0);
-//        turret2.setRunMode(Motor.RunMode.PositionControl);
-////        turret2.setTargetPosition(0);
-//        turret2.set(controller.POWER);
-//        turret2.setPositionTolerance(100);
     }
 
     @Override

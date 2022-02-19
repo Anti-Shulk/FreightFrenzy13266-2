@@ -35,7 +35,7 @@ public class RedWarehouse extends LinearOpMode {
         gripper.close();
         trapdoor.close();
 
-        arm.turnAutoPower();
+        arm.setAutoPower();
         arm.moveAutoLow();
 
 
@@ -76,10 +76,10 @@ public class RedWarehouse extends LinearOpMode {
                     gripper.open();
                     sleep(300);
                     gripper.moveDown();
-                    arm.moveIntake();
-                    arm.turnLowPower();
+                    arm.moveIn();
+                    arm.setDropPower();
                     sleep(500);
-                    arm.turnOff();
+                    arm.setOff();
                 })
                 .lineToLinearHeading(new Pose2d(17, -69, Math.toRadians(0)))
                 .run(intake::intake)
@@ -87,9 +87,9 @@ public class RedWarehouse extends LinearOpMode {
                 .back(40)
                 .run(intake::stop)
                 .runThread(() -> {
-                    arm.turnAutoPower();
+                    arm.setAutoPower();
                     arm.moveHigh();
-                    while (!arm.wontHitSides()) {
+                    while (!arm.isSus()) {
                         sleep(50);
                     }
                     turret.moveRight();
