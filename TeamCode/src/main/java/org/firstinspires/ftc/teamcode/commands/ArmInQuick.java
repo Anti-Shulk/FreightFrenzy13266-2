@@ -11,13 +11,13 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 public class ArmInQuick extends SequentialCommandGroup {
     public ArmInQuick(ArmSubsystem arm, TurretSubsystem turret) {
         addCommands(new SequentialCommandGroup(
-                new InstantCommand(turret::moveIn),
-                new InstantCommand(arm::moveUpSoItWontHitSides),
-                new WaitUntilCommand(turret::isAtTarget),
-                new InstantCommand(arm::moveIn),
-                new InstantCommand(arm::setDropPower),
+                turret::moveIn,
+                arm::moveUpSoItWontHitSides,
+                new WaitUntilCommand(turret::isIn),
+                arm::moveIn,
+                arm::setDropPower,
                 new WaitCommand(500),
-                new InstantCommand(arm::setOff)
+                arm::setOff
         ));
     }
 }

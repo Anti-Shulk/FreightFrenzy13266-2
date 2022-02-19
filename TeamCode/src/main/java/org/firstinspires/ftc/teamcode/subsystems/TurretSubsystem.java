@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-//import static org.firstinspires.ftc.teamcode.constants.Constants.ArmConstants.hardware;
 import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants.*;
 
 
@@ -13,7 +12,9 @@ public class TurretSubsystem extends HardwareSubsystem {
 
     private final DcMotorEx turret;
 
-    private int targetTicks ;
+    private int targetTicks;
+
+    private boolean positive;
 
     public TurretSubsystem() {
 
@@ -47,43 +48,57 @@ public class TurretSubsystem extends HardwareSubsystem {
     }
 
     public void moveIn() {
-        setDegrees(value.RETURN);
+        if (getTargetDegrees() < -180) {
+            setDegrees(-360);
+        } else if (getTargetDegrees() > 180 ) {
+            setDegrees(360);
+        } else {
+            setDegrees(0);
+        }
     }
 
-//    public boolean isZero() {
-//        return isZero;
-//    }
 
-    public void setTargetXY(double stickX, double stickY) {
-//        double position = Math.toDegrees(Math.atan2(stickX, stickY));
-//        double min = (360 - controller.RANGE) / 2;
-//        double max = 360 - ((360 - controller.RANGE) / 2);
-//        setTargetDegrees(Range.clip(position, min, max));
-        setDegrees(Math.toDegrees(Math.atan2(stickX, stickY)));
-    }
     public void setDegrees(double degrees) {
         targetTicks = (int) ((hardware.CPR / 360) * degrees);
+
+        positive = targetTicks >= 0;
+
         turret.setTargetPosition(targetTicks);
 //        turret2.setTargetPosition((int) ((hardware.CPR / 360) * degrees));
     }
-    public void setTargetDegrees(double degrees) {
-        targetDegrees = degrees;
-    }
+
     public double getTargetDegrees() {
-        return targetDegrees;
+        return targetTicks * 360 / hardware.CPR;
     }
 
-    public void moveToTargetDegrees() {
-        setDegrees(targetDegrees);
+    public double getCurrentDegrees() {
+        return turret.getCurrentPosition() * 360 / hardware.CPR;
     }
 
-    public boolean isAtTarget() {
+
+
+    public void setPosition(int ticks) {
+        targetTicks = ticks;
+        turret.setTargetPosition(targetTicks);
+    }
+
+    public double getTargetPosition() {
+        return targetTicks;
+    }
+
+    public double getCurrentPosition() {
+        return turret.getCurrentPosition();
+    }
+
+
+
+    public boolean isIn() {
         int current   = turret.getCurrentPosition();
 //        int tolerance = turret.getTargetPositionTolerance();
-        return (current <= value.INITIAL_POSITION + 1 &&
-                current >= value.INITIAL_POSITION - 1 &&
-                current != 0) || (current <= value.INITIAL_POSITION + 360 + 1 &&
-                current >= value.INITIAL_POSITION + 360 - 1 &&
+        return (current <= value.INITIAL_POSITION + controller.INTAKE_POSITION_TOLERANCE &&
+                current >= value.INITIAL_POSITION - controller.INTAKE_POSITION_TOLERANCE &&
+                current != 0) || (current <= value.INITIAL_POSITION + 360 + controller.INTAKE_POSITION_TOLERANCE &&
+                current >= value.INITIAL_POSITION + 360 - controller.INTAKE_POSITION_TOLERANCE &&
                 current != 0);
 //        return current == 1;
     }
@@ -94,4 +109,8 @@ public class TurretSubsystem extends HardwareSubsystem {
 //    public void resetEncoder() {
 //        turret.resetEncoder();
 //    }
+    public void resetEncoder() {
+        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        targetTicks = 0;
+    }
 }

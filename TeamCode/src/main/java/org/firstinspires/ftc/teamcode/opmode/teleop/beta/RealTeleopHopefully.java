@@ -139,6 +139,8 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees()))
                 .whileHeld(new ArmOutQuick(arm, turret));
 
+
+
 //        command.add(() -> operator.get(button.LEFT))
 //                .whenPressed(new ArmOutQuick(arm, turret, operator.getRightStickToDegrees()));
 //

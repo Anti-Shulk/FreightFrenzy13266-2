@@ -255,7 +255,8 @@ public class Constants {
 
         public static class Controller {
             public double
-                    TOLERANCE     = 10,
+                    PID_TOLERANCE = 10,
+                    INTAKE_POSITION_TOLERANCE = 1,
                     KP            = 5,
                     POWER         = 0.4,
                     RANGE         = 360; // Degrees
