@@ -2,27 +2,23 @@ package org.firstinspires.ftc.teamcode.opmode.teleop.beta;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
 
-import org.firstinspires.ftc.teamcode.commands.ArmInQuick;
-import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
+import org.firstinspires.ftc.teamcode.commands.ArmSetAndMoveToHeight;
+import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
+import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.ArmTurretSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.BooleanButton;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
-import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TelemetrySubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
@@ -133,26 +129,26 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
         command.add(() -> operator.get(button.ARM_SHARED))
-                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH));
+                .whileHeld(new ArmSetAndMoveToHeight(arm, Constants.ArmConstants.Value.Height.SHARED), false)
+                .whenReleased(new ArmSetAndMoveToHeight(arm, Constants.ArmConstants.Value.Height.HIGH), false);
 
         command.add(() -> operator.get(button.DOWN))
-                .whenPressed(new ArmInQuick(arm, turret, box), false);
+                .whenPressed(new TurretArmInQuick(arm, turret, box), false);
 
         command.add(() -> operator.get(button.LEFT))
-                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveLeft), false);
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
 
         command.add(() -> operator.get(button.RIGHT))
-                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveRight), false);
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
 
         command.add(() -> operator.get(button.FORWARD))
-                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveForward), false);
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveForward), false);
 
         command.add(operator::getRightTouchingEdge)
                 .whileHeld(() -> telemetry.addLine("pressed"))
                 .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
 //                .whileHeld(() -> turret.setTargetDegrees())
-                .whileHeld(new ArmOutQuick(arm, turret, box, () -> turret.setDegrees(operator.getRightStickToDegrees())));
+                .whileHeld(new TurretArmOutQuick(arm, turret, box, () -> turret.setDegrees(operator.getRightStickToDegrees())));
 
 
 

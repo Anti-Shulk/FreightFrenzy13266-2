@@ -7,9 +7,9 @@ import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 
-public class ArmInQuick extends SequentialCommandGroupEx {
+public class TurretArmInQuick extends SequentialCommandGroupEx {
 
-    public ArmInQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box) {
+    public TurretArmInQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box) {
 
         addCommands(
                 new ConditionalCommand(nothing(), // if false

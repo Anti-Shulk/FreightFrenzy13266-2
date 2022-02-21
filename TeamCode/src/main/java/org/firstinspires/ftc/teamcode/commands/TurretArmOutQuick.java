@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 
 import java.util.function.BooleanSupplier;
 
-public class ArmOutQuick extends SequentialCommandGroupEx {
+public class TurretArmOutQuick extends SequentialCommandGroupEx {
     private final ArmSubsystem arm;
     private final TurretSubsystem turret;
     private final BoxSubsystem box;
@@ -25,7 +25,7 @@ public class ArmOutQuick extends SequentialCommandGroupEx {
 //         ));
 //    }
 
-    public ArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos, Runnable armPos) {
+    public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos, Runnable armPos) {
         addCommands(new SequentialCommandGroup(
                 run(arm::setTeleOpPower),
                 run(armPos),
@@ -39,15 +39,16 @@ public class ArmOutQuick extends SequentialCommandGroupEx {
         addRequirements(arm, turret, box);
     }
 
-    public ArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos) {
+    public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos) {
         addCommands(new SequentialCommandGroup(
-                new ConditionalCommand(nothing(), run(arm::moveToHeight), arm::isOut),
+                new ConditionalCommand(nothing(), run(arm::moveToNonSusHeight), arm::isOut),
 //                run(arm::setTeleOpPower),
 //                run(arm::moveToHeight),
                 waitUntil(arm::isNotSus),
                 waitMillis(100L),
                 run(box::moveHigh),
                 run(turretPos),
+                run(arm::moveToHeight),
                 run(arm::setIsOut)
 
 

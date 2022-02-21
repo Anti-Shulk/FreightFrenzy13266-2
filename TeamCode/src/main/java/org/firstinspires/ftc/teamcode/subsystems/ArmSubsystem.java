@@ -71,14 +71,23 @@ public class ArmSubsystem extends HardwareSubsystem {
 
     public void moveToHeight() {
         switch (height) {
-            case LOW: setDegrees(value.LOW);
-            case MID: setDegrees(value.MID);
-            case HIGH: setDegrees(value.HIGH);
-            case AUTO_HIGH: setDegrees(value.AUTO_HIGH);
-            case AUTO_MID: setDegrees(value.AUTO_MID);
-            case AUTO_LOW: setDegrees(value.AUTO_LOW);
-            case SHARED: setDegrees(value.SHARED);
-            default: setDegrees(value.HIGH);
+            case LOW: setDegrees(value.LOW); break;
+            case MID: setDegrees(value.MID); break;
+            case HIGH: setDegrees(value.HIGH); break;
+            case AUTO_HIGH: setDegrees(value.AUTO_HIGH); break;
+            case AUTO_MID: setDegrees(value.AUTO_MID); break;
+            case AUTO_LOW: setDegrees(value.AUTO_LOW); break;
+            case SHARED: setDegrees(value.SHARED); break;
+        }
+    }
+
+    public void moveToNonSusHeight() {
+        switch (height) {
+            case MID: setDegrees(value.MID); break;
+            case HIGH: setDegrees(value.HIGH); break;
+            case AUTO_HIGH: setDegrees(value.AUTO_HIGH); break;
+            case AUTO_MID: setDegrees(value.AUTO_MID); break;
+            default: setDegrees(value.SUS_POSITION); break;
         }
     }
 

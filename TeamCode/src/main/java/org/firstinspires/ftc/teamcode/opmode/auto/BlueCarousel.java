@@ -6,7 +6,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
+import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
@@ -52,7 +52,7 @@ public class BlueCarousel extends CommandOpMode {
                 .run(carousel::stop)
                 .run(carousel::drop)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .runCommandGroupAsThread(ThreadStopper, new ArmOutQuick(arm, turret, box, turret::moveForward, arm::moveHigh))
+                .runCommandGroupAsThread(ThreadStopper, new TurretArmOutQuick(arm, turret, box, turret::moveForward, arm::moveHigh))
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))
                 .setReversed(false)
                 .splineTo(new Vector2d(-59, 29), Math.toRadians(90))
