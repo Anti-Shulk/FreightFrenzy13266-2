@@ -8,16 +8,13 @@ import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 
 public class ArmSetAndMoveToHeight extends SequentialCommandGroupEx {
     public ArmSetAndMoveToHeight(ArmSubsystem arm, Constants.ArmConstants.Value.Height height) {
-        addCommands(new ConditionalCommand(
-                new SequentialCommandGroup( // if true
-                        run(() -> arm.setHeight(height)),
-                        run(arm::moveToHeight)),
-                nothing(), // if false
-                arm::isOut)); // boolean supplier
-        addRequirements(arm);
+        addCommands(new SequentialCommandGroup(
+                run(() -> arm.setHeight(height)),
+                new ConditionalCommand(run(arm::moveToHeight),/* < if true*/ nothing(), /* < if false*/ arm::isOut) //< boolean supplier
+//        addRequirements(arm);
 //        addCommands(new SequentialCommandGroup(
 //                run(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED)),
 //                run(arm::moveToHeight)
-//        ));
+        ));
     }
 }
