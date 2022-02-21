@@ -13,11 +13,12 @@ import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ArmTurretSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.BooleanButton;
+import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.IntakeLiftSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TelemetrySubsystem;
@@ -38,26 +39,28 @@ public class RealTeleopHopefully extends CommandOpMode {
         HardwareSubsystem hardware = new HardwareSubsystem(this);
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
-//        ArmSubsystem arm = new ArmSubsystem();
+        ArmSubsystem arm = new ArmSubsystem();
         CarouselSubsystem carousel = new CarouselSubsystem();
-        GripperSubsystem gripper = new GripperSubsystem();
+//        GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
-        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
-//        TurretSubsystem turret = new TurretSubsystem();
-        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
-        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
+//        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
+        TurretSubsystem turret = new TurretSubsystem();
+//        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
+//        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
+        BoxSubsystem box = new BoxSubsystem();
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
                 drive,
                 carousel,
-                gripper,
+//                gripper,
                 intake,
-                trapdoor,
-                armTurret
+//                trapdoor,
+                arm,
+                turret,
+                box
         );
-;
-        telemetrySubsystem.teleOpMessage();
+
 
 //        command.addDefault(() -> telemetry.addData("Driver Stick",
 //                  "x = " + driver.getLeftX() +
@@ -83,9 +86,9 @@ public class RealTeleopHopefully extends CommandOpMode {
 //                .whenPressed(drive::setTurbo)
 //                .whenReleased(drive::setNormal);
 
-        command.add(() -> driver.get(button.DROP))
-                .whenPressed(trapdoor::open)
-                .whenReleased(trapdoor::close);
+//        command.add(() -> driver.get(button.DROP))
+//                .whenPressed(trapdoor::open)
+//                .whenReleased(trapdoor::close);
 
         command.add(() -> driver.get(button.INTAKE))
                 .whenPressed(intake::intake)
@@ -95,9 +98,9 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenPressed(intake::outtake)
                 .whenReleased(intake::stop);
 
-        command.add(() -> driver.get(button.DROP))
-                .whenPressed(trapdoor::open)
-                .whenReleased(trapdoor::close);
+//        command.add(() -> driver.get(button.DROP))
+//                .whenPressed(trapdoor::open)
+//                .whenReleased(trapdoor::close);
 
 
 //        command.add(() -> operator.get(button.ARM_HIGH))
@@ -129,30 +132,27 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
 
-//        command.add(() -> operator.get(button.ARM_SHARED))
-//                .whenPressed(() -> arm.setTargetDegrees(Constants.ArmConstants.value.SHARED))
-//                .whenReleased(() -> arm.setTargetDegrees(Constants.ArmConstants.value.HIGH));
-//
-//        command.add(() -> operator.get(button.DOWN))
-//                .whenPressed(new ArmInQuick(arm, turret), true);
-//
-//        command.add(() -> operator.get(button.LEFT))
-//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.LEFT))
-//                .whenPressed(new ArmOutQuick(arm, turret));
-//
-//        command.add(() -> operator.get(button.RIGHT))
-//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.RIGHT))
-//                .whenPressed(new ArmOutQuick(arm, turret));
-//
-//        command.add(() -> operator.get(button.FORWARD))
-//                .whenPressed(() -> turret.setTargetDegrees(Constants.TurretConstants.value.FORWARD))
-//                .whenPressed(new ArmOutQuick(arm, turret));
-//
-//        command.add(operator::getRightTouchingEdge)
-//                .whileHeld(() -> telemetry.addLine("pressed"))
-//                .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
-//                .whileHeld(() -> turret.setTargetDegrees(operator.getRightStickToDegrees()))
-//                .whileHeld(new ArmOutQuick(arm, turret));
+        command.add(() -> operator.get(button.ARM_SHARED))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH));
+
+        command.add(() -> operator.get(button.DOWN))
+                .whenPressed(new ArmInQuick(arm, turret, box), false);
+
+        command.add(() -> operator.get(button.LEFT))
+                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveLeft), false);
+
+        command.add(() -> operator.get(button.RIGHT))
+                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveRight), false);
+
+        command.add(() -> operator.get(button.FORWARD))
+                .whenPressed(new ArmOutQuick(arm, turret, box, turret::moveForward), false);
+
+        command.add(operator::getRightTouchingEdge)
+                .whileHeld(() -> telemetry.addLine("pressed"))
+                .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
+//                .whileHeld(() -> turret.setTargetDegrees())
+                .whileHeld(new ArmOutQuick(arm, turret, box, () -> turret.setDegrees(operator.getRightStickToDegrees())));
 
 
 
@@ -209,15 +209,15 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenPressed(carousel::spinReversed)
                 .whenReleased(carousel::stop);
 
-        command.add(() -> operator.get(GamepadKeys.Button.Y))
-                .whileHeld(gripper::moveHigh);
-        command.add(() -> operator.get(GamepadKeys.Button.BACK))
-                .whileHeld(gripper::open);
+//        command.add(() -> operator.get(GamepadKeys.Button.Y))
+//                .whileHeld(gripper::moveHigh);
+//        command.add(() -> operator.get(GamepadKeys.Button.BACK))
+//                .whileHeld(gripper::open);
 
-        command.add(() -> driver.get(button.TOGGLE_INTAKE_UP))
-                .toggleWhenPressed(intakeLift::lift, intakeLift::drop);
-        command.add(() -> driver.get(GamepadKeys.Button.A))
-                .whileHeld(gripper::close);
+//        command.add(() -> driver.get(button.TOGGLE_INTAKE_UP))
+//                .toggleWhenPressed(intakeLift::lift, intakeLift::drop);
+//        command.add(() -> driver.get(GamepadKeys.Button.A))
+//                .whileHeld(gripper::close);
 
 
 

@@ -11,6 +11,9 @@ public class SequentialCommandGroupEx extends SequentialCommandGroup {
     public InstantCommand run(Runnable runnable) {
         return new InstantCommand(runnable);
     }
+    public InstantCommand nothing() {
+        return new InstantCommand();
+    }
 
     public WaitUntilCommand waitUntil(BooleanSupplier booleanSupplier) {
         return new WaitUntilCommand(booleanSupplier);

@@ -48,22 +48,24 @@ public class TurretSubsystem extends HardwareSubsystem {
     }
 
     public void moveIn() {
-        if (getTargetDegrees() < -180) {
-            setDegrees(-360);
-        } else if (getTargetDegrees() > 180 ) {
-            setDegrees(360);
-        } else {
-            setDegrees(0);
-        }
+//        if (getTargetDegrees() < -180) {
+//            setDegrees(-360);
+//        } else if (getTargetDegrees() > 180 ) {
+//            setDegrees(360);
+//        } else {
+//            setDegrees(0);
+//        }
+        setDegrees(0);
     }
 
 
     public void setDegrees(double degrees) {
-        if (getTargetPosition() == value.INITIAL_POSITION) {
-            adder = degrees > 180 ? -360 : 0;
-        }
-
-        targetTicks = degreesToTicks(degrees + adder);
+//        if (getTargetPosition() == value.INITIAL_POSITION) {
+//            adder = degrees > 180 ? -360 : 0;
+//        }
+//
+//        targetTicks = degreesToTicks(degrees + adder);
+        targetTicks = degreesToTicks(degrees);
 
         turret.setTargetPosition(targetTicks);
     }

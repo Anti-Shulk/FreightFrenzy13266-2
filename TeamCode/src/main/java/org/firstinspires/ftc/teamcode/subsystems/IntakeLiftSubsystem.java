@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.constants.Constants;
 public class IntakeLiftSubsystem extends HardwareSubsystem{
     private final ServoEx lift;
     public IntakeLiftSubsystem() {
-        lift = new SimpleServo(hardwareMap, Constants.IntakeLift.hardware.ID, Constants.IntakeLift.hardware.MIN_ANGLE, Constants.IntakeLift.hardware.MAX_ANGLE);
+        lift = new SimpleServo(hardwareMap, Constants.IntakeLiftConstants.hardware.ID, Constants.IntakeLiftConstants.hardware.MIN_ANGLE, Constants.IntakeLiftConstants.hardware.MAX_ANGLE);
         lift.setInverted(false);
     }
 
@@ -18,9 +18,9 @@ public class IntakeLiftSubsystem extends HardwareSubsystem{
     }
 
     public void lift() {
-        lift.turnToAngle(Constants.IntakeLift.value.UP);
+        lift.turnToAngle(Constants.IntakeLiftConstants.value.UP);
     }
     public void drop() {
-        lift.turnToAngle(Constants.IntakeLift.value.DOWN);
+        lift.turnToAngle(Constants.IntakeLiftConstants.value.DOWN);
     }
 }

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.commands.ArmOutQuick;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
@@ -29,6 +30,7 @@ public class BlueCarousel extends CommandOpMode {
         ArmSubsystem arm = new ArmSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
         CarouselSubsystem carousel = new CarouselSubsystem();
+        BoxSubsystem box = new BoxSubsystem();
 
         Pose2d startPose = new Pose2d(-40.3, 63.2, Math.toRadians(-90));
 
@@ -47,8 +49,10 @@ public class BlueCarousel extends CommandOpMode {
                 .run(carousel::spinForward)
                 .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
                 .waitSeconds(3)
+                .run(carousel::stop)
+                .run(carousel::drop)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .runCommandGroupAsThread(ThreadStopper, new ArmOutQuick(arm, turret, arm::moveHigh, turret::moveRight))
+                .runCommandGroupAsThread(ThreadStopper, new ArmOutQuick(arm, turret, box, turret::moveForward, arm::moveHigh))
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))
                 .setReversed(false)
                 .splineTo(new Vector2d(-59, 29), Math.toRadians(90))

@@ -11,7 +11,8 @@ public class ArmSubsystem extends HardwareSubsystem {
 
     private final DcMotorEx arm;
     private int targetTicks;
-//    private double targetDegrees = value.HIGH;
+    private Value.Height height = Value.Height.HIGH;
+    private boolean isOut = false;
 
     public ArmSubsystem() {
 
@@ -59,12 +60,33 @@ public class ArmSubsystem extends HardwareSubsystem {
         setDegrees(value.INITIAL);
     }
 
-    public void moveSoItWontHitSides() {
-        setDegrees(value.MOVE_UP_SO_IT_WONT_HIT_SIDES);
-    }
-
     public void moveShared() {
         setDegrees(value.SHARED);
+    }
+
+    public void moveSoItWontHitSides() {
+        setDegrees(value.SUS_POSITION);
+    }
+
+
+    public void moveToHeight() {
+        switch (height) {
+            case LOW: setDegrees(value.LOW);
+            case MID: setDegrees(value.MID);
+            case HIGH: setDegrees(value.HIGH);
+            case AUTO_HIGH: setDegrees(value.AUTO_HIGH);
+            case AUTO_MID: setDegrees(value.AUTO_MID);
+            case AUTO_LOW: setDegrees(value.AUTO_LOW);
+            case SHARED: setDegrees(value.SHARED);
+            default: setDegrees(value.HIGH);
+        }
+    }
+
+    public void setHeight(Value.Height height) {
+        this.height = height;
+    }
+    public Value.Height getHeight() {
+        return height;
     }
 
     
@@ -82,6 +104,8 @@ public class ArmSubsystem extends HardwareSubsystem {
     public double getCurrentDegrees() {
         return arm.getCurrentPosition() * 360 / hardware.CPR;
     }
+
+
     
     
     
@@ -100,11 +124,32 @@ public class ArmSubsystem extends HardwareSubsystem {
     }
 
     public boolean isSus() {
-        return getCurrentDegrees() < value.MOVE_UP_SO_IT_WONT_HIT_SIDES;
+//        if (getTargetDegrees() < value.SUS_POSITION && !isOut) {
+//            setDegrees(value.SUS_POSITION);
+//            isOut = true;
+//        }
+        return getCurrentDegrees() < value.SUS_POSITION - 2;
     }
 
+
     public boolean isNotSus() {
-        return getCurrentDegrees() >= value.MOVE_UP_SO_IT_WONT_HIT_SIDES;
+        return !isSus();
+    }
+
+    public boolean isOut() {
+        return isOut;
+    }
+
+    public boolean isIn() {
+        return !isOut();
+    }
+
+    public void setIsOut() {
+        this.isOut = true;
+    }
+
+    public void setIsIn() {
+        this.isOut = false;
     }
 
 

@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
-
-import org.firstinspires.ftc.teamcode.subsystems.IntakeLiftSubsystem;
 
 @Config
 public class Constants {
@@ -16,7 +13,8 @@ public class Constants {
     public static GrabberConstants grabberConstants;
     public static IntakeConstants intakeConstants;
     public static TrapdoorConstants trapdoorConstants;
-    public static IntakeLift intakeLiftConstants;
+    public static IntakeLiftConstants intakeLiftConstants;
+    public static BoxConstants boxConstants;
     
 
 
@@ -39,8 +37,8 @@ public class Constants {
                     TOLERANCE     = 10,
                     KP            = 5,
                     TELEOP_POWER = 1,
-                    DROP_POWER = 0.1,
-                    AUTO_POWER     = 0.5;
+                    DROP_POWER = 1,
+                    AUTO_POWER     = 1;
         }
         public static class Value {
             public double
@@ -52,8 +50,11 @@ public class Constants {
                     LOW           = 8, // Degrees
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
-                    INITIAL = 10,
-                    MOVE_UP_SO_IT_WONT_HIT_SIDES = 40;
+                    INITIAL = 0,
+                    SUS_POSITION = 60;
+            public enum Height {
+                HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED
+            }
         }
     }
 
@@ -94,7 +95,7 @@ public class Constants {
                 public double
                         TOLERANCE     = 10,
                         KP            = 5,
-                        POWER         = 0.6;
+                        POWER         = 1;
             }
             public static class Value {
                 public double SPEED                = 0.7; // power
@@ -232,7 +233,7 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 0.6,
+                    POWER         = 1,
                     INIT_POWER    = 0;
         }
         public static class Value {
@@ -256,9 +257,9 @@ public class Constants {
         public static class Controller {
             public double
                     PID_TOLERANCE = 10,
-                    INTAKE_POSITION_TOLERANCE = 1,
+                    INTAKE_POSITION_TOLERANCE = 2,
                     KP            = 5,
-                    POWER         = 0.4,
+                    POWER         = 1,
                     RANGE         = 360; // Degrees
 
         }
@@ -295,7 +296,7 @@ public class Constants {
         }
     }
 
-    public static class IntakeLift {
+    public static class IntakeLiftConstants {
         public static Hardware hardware = new Hardware();
         public static Value value = new Value();
         public static class Hardware {
@@ -310,6 +311,27 @@ public class Constants {
             public double
                     UP = 0, // Degrees
                     DOWN = 80; // Degrees
+        }
+
+    }
+
+    public static class BoxConstants {
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
+        public static class Hardware {
+            public String ID = "boxServo";
+            public boolean REVERSED = false;
+            public double
+                    MIN_ANGLE     = 0,
+                    MAX_ANGLE     = 270;
+
+        }
+        public static class Value {
+            public double
+                    DOWN = 210, // Degrees
+                    HIGH = 70,
+                    MID = 0,
+                    LOW = 0;
         }
 
     }
