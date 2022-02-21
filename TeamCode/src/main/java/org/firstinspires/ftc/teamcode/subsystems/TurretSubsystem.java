@@ -109,6 +109,14 @@ public class TurretSubsystem extends HardwareSubsystem {
                 current != 0);
 //        return current == 1;
     }
+    public boolean isAtTarget() {
+        double current   = getCurrentDegrees();
+        double target    = getTargetDegrees();
+        double tolerance = controller.INTAKE_POSITION_TOLERANCE;
+        return (current <= target + tolerance &&
+                current >= target - tolerance &&
+                current != 0);
+    }
 //
 //    public void setTarget(double pos) {
 //        turret.setTargetDegrees(pos);
