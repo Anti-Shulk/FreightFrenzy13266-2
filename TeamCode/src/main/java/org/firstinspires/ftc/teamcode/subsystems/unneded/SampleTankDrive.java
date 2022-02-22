@@ -18,6 +18,8 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -66,6 +68,7 @@ public class SampleTankDrive extends TankDrive {
 
     private List<DcMotorEx> motors, leftMotors, rightMotors;
     private BNO055IMU imu;
+    private LinearOpMode opMode;
 
     private VoltageSensor batteryVoltageSensor;
 
@@ -161,7 +164,8 @@ public class SampleTankDrive extends TankDrive {
         return new TrajectorySequenceBuilder(
                 startPose,
                 VEL_CONSTRAINT, accelConstraint,
-                MAX_ANG_VEL, MAX_ANG_ACCEL
+                MAX_ANG_VEL, MAX_ANG_ACCEL,
+                opMode
         );
     }
 

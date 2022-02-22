@@ -23,6 +23,7 @@ import com.arcrobotics.ftclib.geometry.Vector2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -105,14 +106,14 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     private BNO055IMU imu;
     private VoltageSensor batteryVoltageSensor;
 
-    private final Telemetry telemetry;
+    private final LinearOpMode opMode;
 
     // This is to make an FtcLib mecanum drive
 //    com.arcrobotics.ftclib.drivebase.MecanumDrive controllerMecanumDrive;
 
-    public MecanumDriveSubsystem(OpMode opMode) {
+    public MecanumDriveSubsystem(LinearOpMode opMode) {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
-        telemetry = opMode.telemetry;
+        this.opMode = opMode;
 
         CommandScheduler.getInstance().registerSubsystem(this);
 
@@ -225,7 +226,9 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         return new TrajectorySequenceBuilder(
                 startPose,
                 VEL_CONSTRAINT, ACCEL_CONSTRAINT,
-                MAX_ANG_VEL, MAX_ANG_ACCEL
+                MAX_ANG_VEL, MAX_ANG_ACCEL,
+                opMode
+
         );
     }
 
@@ -454,7 +457,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
     }
     public void periodicTelemetry() {
-        telemetry.addData("Drive", "Field centric: " + (DriveConstants.Drivetrain.Value.FIELD_CENTRIC ? "on" : "off"), "Fine Control: " + (DriveConstants.Drivetrain.Value.FINE_CONTROL ? "on" : "off"));
+        opMode.telemetry.addData("Drive", "Field centric: " + (DriveConstants.Drivetrain.Value.FIELD_CENTRIC ? "on" : "off"), "Fine Control: " + (DriveConstants.Drivetrain.Value.FINE_CONTROL ? "on" : "off"));
     }
 
     public double clipRange(double value) {

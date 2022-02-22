@@ -19,7 +19,7 @@ public class BlueWarehouse extends LinearOpMode {
         HardwareSubsystem hardware =new HardwareSubsystem(this);
         ArmSubsystem arm=new ArmSubsystem();
         TurretSubsystem turret=new TurretSubsystem();
-        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
+//        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
 
         Pose2d startPose = new Pose2d(3, 63.2, Math.toRadians(-90));
 
@@ -50,7 +50,7 @@ public class BlueWarehouse extends LinearOpMode {
                 .run(armUp::start)
                 .lineToLinearHeading(new Pose2d(-14, 38, Math.toRadians(0)))
                 .waitSeconds(1)
-                .run(trapdoor::open)
+//                .run(trapdoor::open)
                 .waitSeconds(1)
                 .lineToLinearHeading(new Pose2d(17, 69, Math.toRadians(0)))
                 .forward(30)

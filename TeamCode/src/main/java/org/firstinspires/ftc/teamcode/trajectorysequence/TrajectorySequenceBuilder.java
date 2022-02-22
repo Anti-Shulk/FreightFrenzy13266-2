@@ -19,6 +19,8 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAcceleration
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.acmerobotics.roadrunner.util.Angle;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
@@ -65,6 +67,10 @@ public class TrajectorySequenceBuilder {
 
     private double lastDurationTraj;
     private double lastDisplacementTraj;
+    
+    
+    // Justin addded
+    private LinearOpMode opMode;
 
     public TrajectorySequenceBuilder(
             Pose2d startPose,
@@ -72,7 +78,8 @@ public class TrajectorySequenceBuilder {
             TrajectoryVelocityConstraint baseVelConstraint,
             TrajectoryAccelerationConstraint baseAccelConstraint,
             double baseTurnConstraintMaxAngVel,
-            double baseTurnConstraintMaxAngAccel
+            double baseTurnConstraintMaxAngAccel,
+            LinearOpMode opMode
     ) {
         this.baseVelConstraint = baseVelConstraint;
         this.baseAccelConstraint = baseAccelConstraint;
@@ -85,6 +92,8 @@ public class TrajectorySequenceBuilder {
 
         this.currentTurnConstraintMaxAngVel = baseTurnConstraintMaxAngVel;
         this.currentTurnConstraintMaxAngAccel = baseTurnConstraintMaxAngAccel;
+
+        this.opMode = opMode;
 
         sequenceSegments = new ArrayList<>();
 
@@ -113,12 +122,14 @@ public class TrajectorySequenceBuilder {
             TrajectoryVelocityConstraint baseVelConstraint,
             TrajectoryAccelerationConstraint baseAccelConstraint,
             double baseTurnConstraintMaxAngVel,
-            double baseTurnConstraintMaxAngAccel
+            double baseTurnConstraintMaxAngAccel,
+            LinearOpMode opMode
     ) {
         this(
                 startPose, null,
                 baseVelConstraint, baseAccelConstraint,
-                baseTurnConstraintMaxAngVel, baseTurnConstraintMaxAngAccel
+                baseTurnConstraintMaxAngVel, baseTurnConstraintMaxAngAccel,
+                opMode
         );
     }
 
@@ -439,11 +450,11 @@ public class TrajectorySequenceBuilder {
 //        return this;
 //    }
 
-    public TrajectorySequenceBuilder runCommandGroupAsThread(BooleanSupplier isStopRequested, SequentialCommandGroup sequentialCommandGroup) {
+    public TrajectorySequenceBuilder runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup) {
         MarkerCallback callback = () -> new Thread(() -> {
-            if (!isStopRequested.getAsBoolean()) sequentialCommandGroup.initialize();
+            if (!opMode.isStopRequested()) sequentialCommandGroup.initialize();
 
-            while (!isStopRequested.getAsBoolean() && !sequentialCommandGroup.isFinished()) {
+            while (!opMode.isStopRequested() && !sequentialCommandGroup.isFinished()) {
                 sequentialCommandGroup.execute();
             }
         }).start();

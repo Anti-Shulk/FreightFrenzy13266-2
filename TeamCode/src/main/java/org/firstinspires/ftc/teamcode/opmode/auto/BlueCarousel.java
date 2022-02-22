@@ -52,7 +52,7 @@ public class BlueCarousel extends CommandOpMode {
                 .run(carousel::stop)
                 .run(carousel::drop)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .runCommandGroupAsThread(ThreadStopper, new TurretArmOutQuick(arm, turret, box, turret::moveForward, arm::moveHigh))
+                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward))
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))
                 .setReversed(false)
                 .splineTo(new Vector2d(-59, 29), Math.toRadians(90))

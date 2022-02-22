@@ -4,7 +4,10 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
+import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
@@ -14,6 +17,8 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous
+// TODO: make an auto selectoer
+// TODO: make a robot container
 public class RedWarehouse extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
@@ -21,9 +26,10 @@ public class RedWarehouse extends LinearOpMode {
         HardwareSubsystem hardware = new HardwareSubsystem(this);
         ArmSubsystem arm = new ArmSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
-        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
-        GripperSubsystem gripper = new GripperSubsystem();
+//        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
+//        GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
+        BoxSubsystem box = new BoxSubsystem();
 
         Pose2d startPose = new Pose2d(3, -63.2, Math.toRadians(90));
 
@@ -31,9 +37,9 @@ public class RedWarehouse extends LinearOpMode {
 
         /** On initialization **/
 
-        gripper.moveDown();
-        gripper.close();
-        trapdoor.close();
+//        gripper.moveDown();
+//        gripper.close();
+//        trapdoor.close();
 
         arm.setAutoPower();
         arm.moveAutoLow();
@@ -69,52 +75,54 @@ public class RedWarehouse extends LinearOpMode {
 //                    }
 //                    turret.moveRight();
 //                })
-                .run(gripper::moveLow)
+//                .run(gripper::moveLow)
                 .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
                 .waitSeconds(1)
                 .runThread(this::opModeIsActive, () -> {
-                    gripper.open();
+//                    gripper.open();
                     sleep(300);
-                    gripper.moveDown();
+//                    gripper.moveDown();
                     arm.moveIn();
                     arm.setDropPower();
                     sleep(500);
                     arm.setOff();
                 })
-                .lineToLinearHeading(new Pose2d(17, -69, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
                 .run(intake::intake)
                 .forward(30)
                 .back(40)
                 .run(intake::stop)
-                .runThread(this::opModeIsActive, () -> {
-                    arm.setAutoPower();
-                    arm.moveHigh();
-                    while (!arm.isSus()) {
-                        sleep(50);
-                    }
-                    turret.moveRight();
-                })
+//                .runThread(this::opModeIsActive, () -> {
+//                    arm.setAutoPower();
+//                    arm.moveHigh();
+//                    while (!arm.isSus()) {
+//                        sleep(50);
+//                    }
+//                    turret.moveRight();
+//                })
+                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight))
                 .setReversed(false)
-                .lineToLinearHeading(new Pose2d(-14, -38, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-14, -40, Math.toRadians(0)))
                 .waitSeconds(1)
-                .run(trapdoor::open)
+//                .run(trapdoor::open)
                 .waitSeconds(1)
-                .lineToLinearHeading(new Pose2d(17, -74, Math.toRadians(0)))
+                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
+                .lineToLinearHeading(new Pose2d(17, -75, Math.toRadians(0)))
                 .forward(30)
                 .back(50)
                 .setReversed(false)
-                .lineToLinearHeading(new Pose2d(-14, -38, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(17, -79, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-14, -45, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(17, -80, Math.toRadians(0)))
                 .forward(30)
                 .back(50)
                 .setReversed(false)
-                .lineToLinearHeading(new Pose2d(-14, -38, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(17, -84, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(17, -85, Math.toRadians(0)))
                 .forward(30)
                 .back(50)
                 .setReversed(false)
-                .lineToLinearHeading(new Pose2d(-14, -38, Math.toRadians(0)))
-                .lineToLinearHeading(new Pose2d(17, -84, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-14, -55, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(17, -90, Math.toRadians(0)))
                 .build();
 
         waitForStart();

@@ -11,10 +11,6 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import java.util.function.BooleanSupplier;
 
 public class TurretArmOutQuick extends SequentialCommandGroupEx {
-    private final ArmSubsystem arm;
-    private final TurretSubsystem turret;
-    private final BoxSubsystem box;
-    private Runnable turretPos;
 
 
 //    public ArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, double turretPos, double armPos) {
@@ -22,22 +18,22 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 //                new InstantCommand(() -> arm.setDegrees(armPos)),
 //                new WaitUntilCommand(arm::isSus),
 //                new InstantCommand(() -> turret.setDegrees(turretPos))
-//         ));
+////         ));
+////    }
+//
+//    public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos, Runnable armPos) {
+//        addCommands(new SequentialCommandGroup(
+//                run(arm::setTeleOpPower),
+//                run(armPos),
+//                waitUntil(arm::isNotSus),
+//                run(turretPos)
+//        ));
+//
+//        this.arm = arm;
+//        this.turret = turret;
+//        this.box = box;
+//        addRequirements(arm, turret, box);
 //    }
-
-    public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos, Runnable armPos) {
-        addCommands(new SequentialCommandGroup(
-                run(arm::setTeleOpPower),
-                run(armPos),
-                waitUntil(arm::isNotSus),
-                run(turretPos)
-        ));
-
-        this.arm = arm;
-        this.turret = turret;
-        this.box = box;
-        addRequirements(arm, turret, box);
-    }
 
     public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos) {
         addCommands(new SequentialCommandGroup(
@@ -64,10 +60,6 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 
         ));
 
-        this.arm = arm;
-        this.turret = turret;
-        this.box = box;
-        this.turretPos = turretPos;
         addRequirements(arm, turret, box);
     }
 
