@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.MarkerCallback;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -13,6 +16,9 @@ import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
+
+import java.util.function.BooleanSupplier;
 
 @Autonomous
 // TODO: make an auto selectoer
@@ -43,12 +49,11 @@ public class BlueWarehouse2 extends LinearOpMode {
         arm.moveAutoLow();
 
 
-
-
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .lineToLinearHeading(new Pose2d(-14, 50, Math.toRadians(-90)))
                 .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
                 .lineToLinearHeading(new Pose2d(17, 70, Math.toRadians(0)))
+//                .run()
                 .build();
 
 
@@ -58,18 +63,40 @@ public class BlueWarehouse2 extends LinearOpMode {
         double xShift = 0;
         double yShift = 0;
 
+        Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(17 + xShift, 70 + yShift))
+                .addDisplacementMarker(intake::intake)
+                .forward(30)
+                .build();
+
+        Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(loop1.end().component1() + xShift, loop1.end().component2() + yShift), true)
+                .back(40)
+                .addDisplacementMarker(intake::stop)
+                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
+                .lineToLinearHeading(new Pose2d(-8 + xShift, 40 + yShift, Math.toRadians(0)))
+                .build();
+
+        // wait, drop, wait
+
+        Trajectory loop3 = drive.trajectoryBuilder(new Pose2d(loop2.end().component1() + xShift, loop2.end().component2() + yShift))
+                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
+                .lineToLinearHeading(new Pose2d(17 + xShift, 70 + yShift, Math.toRadians(0)))
+                .build();
+
+
+
+
         TrajectorySequence loop = drive.trajectorySequenceBuilder(new Pose2d(17 + xShift, 70 + yShift))
-                .run(intake::intake)
+                .addDisplacementMarker(intake::intake)
                 .forward(30)
                 .back(40)
-                .run(intake::stop)
-                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft))
-                .setReversed(false)
+                .addDisplacementMarker(intake::stop)
+                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
+               .setReversed(false)
                 .lineToLinearHeading(new Pose2d(-8 + xShift, 40 + yShift, Math.toRadians(0)))
                 .waitSeconds(1)
-//                .run(trapdoor::open)
+                //.run(trapdoor::open)
                 .waitSeconds(1)
-                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
+                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
                 .lineToLinearHeading(new Pose2d(17 + xShift, 70 + yShift, Math.toRadians(0)))
                 .build();
 
@@ -117,9 +144,22 @@ public class BlueWarehouse2 extends LinearOpMode {
         drive.followTrajectorySequence(trajSeq);
 
         while (opModeIsActive()) {
-            drive.followTrajectorySequence(loop);
-            xShift += 2;
-            yShift += 5;
+            drive.followTrajectory(loop1);
+            drive.followTrajectory(loop2);
+            drive.followTrajectory(loop3);
+            xShift += 2.5;
+            yShift += 6.5;
         }
+    }
+
+    public MarkerCallback runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup) {
+
+        return () -> new Thread(() -> {
+            if (!isStopRequested()) sequentialCommandGroup.initialize();
+
+            while (!isStopRequested() && !sequentialCommandGroup.isFinished()) {
+                sequentialCommandGroup.execute();
+            }
+        }).start();
     }
 }

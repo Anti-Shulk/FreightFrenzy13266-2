@@ -439,17 +439,6 @@ public class TrajectorySequenceBuilder {
     }
 
 
-
-//    public TrajectorySequenceBuilder run(Runnable runnable) {
-//        runnable.run();
-//        return this;
-//    }
-//
-//    public TrajectorySequenceBuilder runThread(Runnable runnable) {
-//        new Thread(runnable).start();
-//        return this;
-//    }
-
     public TrajectorySequenceBuilder runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup) {
         MarkerCallback callback = () -> new Thread(() -> {
             if (!opMode.isStopRequested()) sequentialCommandGroup.initialize();
