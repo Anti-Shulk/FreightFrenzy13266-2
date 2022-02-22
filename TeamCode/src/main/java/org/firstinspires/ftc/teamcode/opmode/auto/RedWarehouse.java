@@ -45,61 +45,16 @@ public class RedWarehouse extends LinearOpMode {
         arm.moveAutoLow();
 
 
-//        Thread armUp = new Thread(() -> {
-//            arm.turnAutoPower();
-//            arm.moveAuthHigh();
-//            while (!arm.wontHitSides()) {
-//                sleep(50);
-//            }
-//            turret.moveLeft();
-//            });
-////
-//        Thread armDown=new Thread(() -> {
-//            turret.moveIn();
-//            arm.moveWontHitSides();
-//            while (!turret.isAtTarget()) {
-//                sleep(50);
-//            }
-//            arm.moveIntake();
-//            arm.turnLowPower();
-//            sleep(500);
-//            arm.turnOff();
-//        });
+
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-//                .runThread(() -> {
-//                    arm.turnAutoPower();
-//                    arm.moveAutoLow();
-//                    while (!arm.wontHitSides()) {
-//                        sleep(50);
-//                    }
-//                    turret.moveRight();
-//                })
-//                .run(gripper::moveLow)
                 .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
-                .waitSeconds(1)
-                .runThread(this::opModeIsActive, () -> {
-//                    gripper.open();
-                    sleep(300);
-//                    gripper.moveDown();
-                    arm.moveIn();
-                    arm.setDropPower();
-                    sleep(500);
-                    arm.setOff();
-                })
+                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
                 .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
                 .run(intake::intake)
                 .forward(30)
                 .back(40)
                 .run(intake::stop)
-//                .runThread(this::opModeIsActive, () -> {
-//                    arm.setAutoPower();
-//                    arm.moveHigh();
-//                    while (!arm.isSus()) {
-//                        sleep(50);
-//                    }
-//                    turret.moveRight();
-//                })
                 .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight))
                 .setReversed(false)
                 .lineToLinearHeading(new Pose2d(-14, -40, Math.toRadians(0)))
