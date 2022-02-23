@@ -39,7 +39,7 @@ public class RealTeleopHopefully extends CommandOpMode {
 
         ArmSubsystem arm = new ArmSubsystem();
         CarouselSubsystem carousel = new CarouselSubsystem();
-//        GripperSubsystem gripper = new GripperSubsystem();
+        GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
@@ -101,6 +101,12 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenPressed(trapdoor::open)
                 .whenReleased(trapdoor::close);
 
+        command.add(()-> driver.get(button.GRIPPER_GRAB))
+                .whenPressed(gripper::close)
+                .whenReleased(gripper::open);
+        command.add(()-> driver.get(button.GRIPPER_LIFT))
+                .whenPressed(gripper::moveLow)
+                .whenReleased(gripper::moveDown);
 
 //        command.add(() -> operator.get(button.ARM_HIGH))
 //                .whenPressed(arm::moveHigh);
