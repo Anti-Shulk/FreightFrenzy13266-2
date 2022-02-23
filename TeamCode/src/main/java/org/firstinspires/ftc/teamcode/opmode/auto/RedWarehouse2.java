@@ -17,14 +17,12 @@ import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
-
-import java.util.function.BooleanSupplier;
 
 @Autonomous
 // TODO: make an auto selectoer
 // TODO: make a robot container
-public class BlueWarehouse2 extends LinearOpMode {
+public class RedWarehouse2 extends LinearOpMode {
+    Pose2d startPose = new Pose2d(12, -63.2, Math.toRadians(90));
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
@@ -36,7 +34,7 @@ public class BlueWarehouse2 extends LinearOpMode {
         IntakeSubsystem intake = new IntakeSubsystem();
         BoxSubsystem box = new BoxSubsystem();
 
-        Pose2d startPose = new Pose2d(3, 63.2, Math.toRadians(-90));
+
 
         drive.setPoseEstimate(startPose);
 
@@ -51,9 +49,9 @@ public class BlueWarehouse2 extends LinearOpMode {
 
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-14, 50, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
                 .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
-                .lineToLinearHeading(new Pose2d(17, 70, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
                 .run(intake::intake)
                 .forward(30)
 //                .run()
@@ -63,29 +61,30 @@ public class BlueWarehouse2 extends LinearOpMode {
 //        Pose2d outPos = new Pose2d(-8, 40, Math.toRadians(0));
 //        Pose2d inPos = new Pose2d(17, 75, Math.toRadians(0));
 
-        double xShift = 0;
-        double yShift = 0;
+//        double xShift = 0;
+//        double yShift = 0;
 
 //        Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(17 + xShift, 70 + yShift))
 ////                .addDisplacementMarker(intake::intake)
 //                .forward(30)
 //                .build();
 
-        Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(trajSeq.end().component1() + xShift, trajSeq.end().component2() + yShift), false)
-                .back(40)
-//                .addDisplacementMarker(intake::stop)
-//                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
-                .splineToConstantHeading(new Vector2d(-8 + xShift, 40 + yShift), Math.toRadians(0)) // second # is end tanject not sure what it does
-                .build();
 
-        // wait, drop, wait
-
-        Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(loop1.end().component1() + xShift, loop1.end().component2() + yShift))
-//                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
-                .splineToConstantHeading(new Vector2d(17 + xShift, 70 + yShift), Math.toRadians(0))
-                .addDisplacementMarker(intake::intake   )
-                .forward(30)
-                .build();
+//        Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(trajSeq.end().component1() + xShift, trajSeq.end().component2() + yShift), false)
+//                .back(30)
+////                .addDisplacementMarker(intake::stop)
+////                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
+//                .splineToConstantHeading(new Vector2d(-4 + xShift, -40 + yShift), Math.toRadians(180)) // second # is end tanject not sure what it does
+//                .build();
+//
+//        // wait, drop, wait
+//
+//        Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(loop1.end().component1() + xShift, loop1.end().component2() + yShift))
+////                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
+//                .splineToConstantHeading(new Vector2d(17 + xShift, -70 + yShift), Math.toRadians(0))
+//                .addDisplacementMarker(intake::intake   )
+//                .forward(30)
+//                .build();
 
 
 //
@@ -148,14 +147,17 @@ public class BlueWarehouse2 extends LinearOpMode {
         if (isStopRequested()) return;
         drive.followTrajectorySequence(trajSeq);
 
+        double xShift = 0;
+        double yShift = 0;
         while (opModeIsActive()) {
             intake.stop();
-            runCommandGroupAsThreadNow(new TurretArmOutQuick(arm, turret, box, turret::moveLeft));
-            drive.followTrajectory(loop1);
+            runCommandGroupAsThreadNow(new TurretArmOutQuick(arm, turret, box, turret::moveRight));
+//            drive.followTrajectory(loop1);
+            drive.followTrajectory(loop1(drive, xShift, yShift));
             runCommandGroupAsThreadNow(new TurretArmInQuick(arm, turret, box));
-            drive.followTrajectory(loop2);
-            xShift += 5;
-            yShift += 6.5;
+            drive.followTrajectory(loop2(drive, intake, xShift, yShift));
+            xShift += 1.7;
+            yShift -= 0;
         }
     }
 
@@ -177,5 +179,48 @@ public class BlueWarehouse2 extends LinearOpMode {
                 sequentialCommandGroup.execute();
             }
         }).start();
+    }
+
+    public TrajectorySequence trajSeq (MecanumDriveSubsystem drive/*, ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, IntakeSubsystem intake,*/) {
+        TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
+//                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
+                .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
+//                .run(intake::intake)
+                .forward(30)
+//                .run()
+                .build();
+
+
+        Pose2d loop1End = trajSeq.end();
+
+        return trajSeq;
+    }
+
+    public Trajectory loop1 (MecanumDriveSubsystem drive, double xShift, double yShift) {
+        Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(trajSeq(drive).end().component1() + xShift, trajSeq(drive).end().component2() + yShift), false)
+                .back(30)
+//                .addDisplacementMarker(intake::stop)
+//                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
+                .splineToConstantHeading(new Vector2d(-6 + xShift, -40 + yShift), Math.toRadians(180)) // second # is end tanject not sure what it does
+                .build();
+
+        final Pose2d loop1End = loop1.end();
+
+        return loop1;
+
+
+    }
+    public Trajectory loop2 (MecanumDriveSubsystem drive, IntakeSubsystem intake, double xShift, double yShift) {
+        Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(loop1(drive, xShift, yShift).end().component1() + xShift, loop1(drive, xShift, yShift).end().component2() + yShift))
+//                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
+                .splineToConstantHeading(new Vector2d(17 + xShift, -70 + yShift), Math.toRadians(0))
+                .addDisplacementMarker(intake::intake)
+                .forward(30)
+                .build();
+
+        final Pose2d loop1End = loop2.end();
+
+        return loop2;
     }
 }
