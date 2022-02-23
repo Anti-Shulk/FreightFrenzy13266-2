@@ -43,43 +43,7 @@ public class RedWarehouse extends LinearOpMode {
         /** On initialization **/
 
 
-        /* Open CV */
 
-        DefaultNewDetection detector = new DefaultNewDetection();
-
-
-        // Obtain camera id to allow for camera preview
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-
-        // Obtain webcam name
-        WebcamName webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
-
-        // Initialize OpenCvWebcam
-        // With live preview
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam, cameraMonitorViewId);
-
-        // Open the Camera Device Asynchronously
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-            @Override
-            public void onOpened() {
-                // Start Camera Streaming
-
-                // NOTE: this must be called *before* you call startStreaming(...)
-                camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
-
-                // Start camera stream with 1280x720 resolution
-                camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
-
-                camera.setPipeline(detector);
-
-            }
-            @Override
-            public void onError(int errorCode) {
-                telemetry.addData("Camera status", "Camera failed :(");
-            }
-        });
-        sleep(AutoValues.CAMERA_WAIT_TIME);
-        telemetry.addData("auto Position", detector.getAnalysis());
 
 //        gripper.moveDown();
 //        gripper.close();

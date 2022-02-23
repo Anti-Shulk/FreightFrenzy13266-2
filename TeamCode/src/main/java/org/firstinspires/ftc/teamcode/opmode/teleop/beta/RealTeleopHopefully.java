@@ -15,10 +15,12 @@ import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
+import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TelemetrySubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
@@ -39,11 +41,12 @@ public class RealTeleopHopefully extends CommandOpMode {
         CarouselSubsystem carousel = new CarouselSubsystem();
 //        GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
-//        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
+        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
 //        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
 //        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
         BoxSubsystem box = new BoxSubsystem();
+
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
@@ -94,9 +97,9 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenPressed(intake::outtake)
                 .whenReleased(intake::stop);
 
-//        command.add(() -> driver.get(button.DROP))
-//                .whenPressed(trapdoor::open)
-//                .whenReleased(trapdoor::close);
+        command.add(() -> driver.get(button.DROP))
+                .whenPressed(trapdoor::open)
+                .whenReleased(trapdoor::close);
 
 
 //        command.add(() -> operator.get(button.ARM_HIGH))

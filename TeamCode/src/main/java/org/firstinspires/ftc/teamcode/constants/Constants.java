@@ -6,7 +6,7 @@ import com.acmerobotics.dashboard.config.Config;
 public class Constants {
     // TODO: remove all statics except for utility classes so that we can have folders
     public static ArmConstants armConstants;
-    public static CameraServoConstants cameraServoConstants;
+    public static CameraConstants cameraConstants;
     public static CarouselConstants carouselConstants;
     public static DriveConstants driveConstants;
     public static TurretConstants turretConstants;
@@ -58,7 +58,7 @@ public class Constants {
         }
     }
 
-    public static class CameraServoConstants {
+    public static class CameraConstants {
         public static Hardware hardware = new Hardware();
             public static Value value = new Value();
 
@@ -72,6 +72,8 @@ public class Constants {
                     BLUE_CAROUSEL              = 1, // Degrees
                     RED_WAREHOUSE              = 1, // Degrees
                     RED_CAROUSEL               = 1; // Degrees
+            public double CAMERA_WAIT_TIME_DOUBLE = 5;
+            public long CAMERA_WAIT_TIME = (long) (CAMERA_WAIT_TIME_DOUBLE * 1000);
         }
     }
 
