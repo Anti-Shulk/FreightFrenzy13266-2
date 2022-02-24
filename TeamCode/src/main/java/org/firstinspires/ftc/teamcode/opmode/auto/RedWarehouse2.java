@@ -107,7 +107,7 @@ public class RedWarehouse2 extends LinearOpMode {
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .run(gripper::moveLow)
-                .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
                 .run(gripper::open)
                 .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
                 .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
