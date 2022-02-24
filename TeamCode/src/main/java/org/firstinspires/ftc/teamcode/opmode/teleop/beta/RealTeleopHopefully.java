@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
 
 import org.firstinspires.ftc.teamcode.commands.ArmSetAndMoveToHeight;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ColorRangeSensorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
@@ -43,6 +45,7 @@ public class RealTeleopHopefully extends CommandOpMode {
         IntakeSubsystem intake = new IntakeSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
         TurretSubsystem turret = new TurretSubsystem();
+        ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
 //        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
 //        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
         BoxSubsystem box = new BoxSubsystem();
@@ -90,7 +93,7 @@ public class RealTeleopHopefully extends CommandOpMode {
 //                .whenReleased(trapdoor::close);
 
         command.add(() -> driver.get(button.INTAKE))
-                .whenPressed(intake::intake)
+                .whileHeld(new IntakeCommand(intake, trapdoor, sensor))
                 .whenReleased(intake::stop);
 
         command.add(() -> driver.get(button.OUTTAKE))
@@ -98,8 +101,7 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenReleased(intake::stop);
 
         command.add(() -> operator.get(button.DROP))
-                .whenPressed(trapdoor::open)
-                .whenReleased(trapdoor::close);
+                .toggleWhenPressed(trapdoor::open, trapdoor::close);
 
         command.add(()-> driver.get(button.GRIPPER_GRAB))
                 .whenPressed(gripper::close)

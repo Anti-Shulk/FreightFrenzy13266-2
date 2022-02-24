@@ -34,8 +34,8 @@ public class Constants {
 
         public static class Controller {
             public double
-                    TOLERANCE     = 2,
-                    KP            = 15,
+                    TOLERANCE     = 5,
+                    KP            = 10,
                     TELEOP_POWER = 1,
                     DROP_POWER = 1,
                     AUTO_POWER     = 1;
@@ -258,9 +258,9 @@ public class Constants {
 
         public static class Controller {
             public double
-                    PID_TOLERANCE = 2,
-                    INTAKE_POSITION_TOLERANCE = 2,
-                    KP            = 20,
+                    PID_TOLERANCE = 5,
+                    INTAKE_POSITION_TOLERANCE = 5,
+                    KP            = 10,
                     POWER         = 1,
                     RANGE         = 360; // Degrees
 
@@ -334,6 +334,19 @@ public class Constants {
                     HIGH = 70,
                     MID = 0,
                     LOW = 0;
+        }
+
+    }
+
+    public static class ColorRangeSensorConstants {
+        public static Hardware hardware = new Hardware();
+        public static Value value = new Value();
+        public static class Hardware {
+            public String ID = "colorRangeSensor";
+        }
+        public static class Value {
+            public double
+                    DISTANCE_THRESHOLD = 70; // unknown unit
         }
 
     }

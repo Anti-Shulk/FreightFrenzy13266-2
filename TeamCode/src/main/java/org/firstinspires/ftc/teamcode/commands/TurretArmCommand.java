@@ -7,21 +7,14 @@ import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 
 public class TurretArmCommand extends CommandBase {
-    private TurretSubsystem turret;
-    private ArmSubsystem arm;
-    private GamepadEx gamepad;
 
     protected double multiplier;
 
     public TurretArmCommand(TurretSubsystem turret, ArmSubsystem arm, GamepadEx gamepad) {
-        this.gamepad = gamepad;
-
-        this.turret = turret;
-        this.arm = arm;
 
 
         this.multiplier = 1;
-        addRequirements(this.turret, this.arm);
+        addRequirements(turret, arm);
     }
 
     @Override
