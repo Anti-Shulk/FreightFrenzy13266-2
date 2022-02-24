@@ -97,7 +97,7 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenPressed(intake::outtake)
                 .whenReleased(intake::stop);
 
-        command.add(() -> driver.get(button.DROP))
+        command.add(() -> operator.get(button.DROP))
                 .whenPressed(trapdoor::open)
                 .whenReleased(trapdoor::close);
 

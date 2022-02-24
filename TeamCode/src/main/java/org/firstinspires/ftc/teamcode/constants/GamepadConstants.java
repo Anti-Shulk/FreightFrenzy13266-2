@@ -24,8 +24,8 @@ public class GamepadConstants {
 
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
-        public Trigger INTAKE      = Trigger.LEFT_TRIGGER;
-        public Trigger OUTTAKE     = Trigger.RIGHT_TRIGGER;
+        public Trigger INTAKE      = Trigger.RIGHT_TRIGGER;
+        public Trigger OUTTAKE     = Trigger.LEFT_TRIGGER;
         public Button  FORWARD = Button.DPAD_UP;
         public Button  LEFT    = Button.DPAD_LEFT;
         public Button  RIGHT   = Button.DPAD_RIGHT;

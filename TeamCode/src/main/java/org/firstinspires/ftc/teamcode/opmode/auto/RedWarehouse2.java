@@ -247,9 +247,10 @@ public class RedWarehouse2 extends LinearOpMode {
 
     public TrajectorySequence trajSeq (MecanumDriveSubsystem drive/*, ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, IntakeSubsystem intake,*/) {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                .setReversed(false)
                 .lineToLinearHeading(new Pose2d(-14, -50, Math.toRadians(90)))
 //                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
-                .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
+                .splineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)), Math.toRadians(0))
 //                .run(intake::intake)
                 .forward(30)
 //                .run()

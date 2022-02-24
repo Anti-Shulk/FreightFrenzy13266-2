@@ -17,6 +17,7 @@ public class GripperSubsystem extends HardwareSubsystem {
 
         lift = new SimpleServo(hardwareMap, Lift.hardware.ID, Lift.hardware.MIN_ANGLE, Lift.hardware.MAX_ANGLE);
         lift.setInverted(false);
+        close();
     }
 
     @Override

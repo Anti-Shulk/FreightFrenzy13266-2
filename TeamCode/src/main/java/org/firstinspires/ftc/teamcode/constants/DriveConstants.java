@@ -92,7 +92,7 @@ public class DriveConstants {
             public static double TELEOP_NORMAL = 1;
             public static double TELEOP_TURBO  = 0.3;
             public static boolean FINE_CONTROL = true;
-            public static boolean FIELD_CENTRIC = false;
+            public static boolean FIELD_CENTRIC = true;
         }
     }
     public static class Imu {

@@ -17,8 +17,8 @@ public class ArmSubsystem extends HardwareSubsystem {
     public ArmSubsystem() {
 
         arm = hardwareMap.get(DcMotorEx.class, hardware.ID);
-//        arm.setPositionPIDFCoefficients(5);
-//        arm.setTargetPositionTolerance(10);
+        arm.setPositionPIDFCoefficients(controller.KP);
+        arm.setTargetPositionTolerance((int) controller.TOLERANCE);
         arm.setDirection(hardware.REVERSED ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
