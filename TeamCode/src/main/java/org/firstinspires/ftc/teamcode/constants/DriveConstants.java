@@ -88,9 +88,9 @@ public class DriveConstants {
              * These are Speeds that can be used to control the drivetrain when NOT using Localization,
              * Trajectory generation, and Path following
              */
-            public static double TELEOP_SLOW   = 0.3;
+            public static double TELEOP_SLOWER = 0.2;
             public static double TELEOP_NORMAL = 1;
-            public static double TELEOP_TURBO  = 0.3;
+            public static double TELEOP_SLOW = 0.5;
             public static boolean FINE_CONTROL = true;
             public static boolean FIELD_CENTRIC = true;
         }

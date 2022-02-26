@@ -21,7 +21,7 @@ public class GamepadConstants {
         public Button  TURBO       = Button.LEFT_BUMPER;
 
         public Button DROP = Button.LEFT_BUMPER; // this is the same button as turbo mode, so there might not be a turbo mode
-
+        public Button  CLOSE = Button.RIGHT_BUMPER;
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
         public Trigger INTAKE      = Trigger.RIGHT_TRIGGER;
@@ -30,6 +30,7 @@ public class GamepadConstants {
         public Button  LEFT    = Button.DPAD_LEFT;
         public Button  RIGHT   = Button.DPAD_RIGHT;
         public Button  DOWN = Button.DPAD_DOWN;
+
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
         public Trigger ARM_SHARED = Trigger.LEFT_TRIGGER;

@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.internal.camera.delegating.DelegatingCapt
 
 import java.security.PrivateKey;
 
-@TeleOp(name = "christan is gay as fuck")
+@TeleOp(name = "christan")
 public class TeleOpMain extends OpMode {
     private DcMotor back_Right = null;
     private DcMotor back_Left = null;

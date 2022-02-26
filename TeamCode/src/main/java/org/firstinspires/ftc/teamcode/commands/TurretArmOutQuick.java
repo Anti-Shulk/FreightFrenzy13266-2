@@ -63,6 +63,36 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 
         addRequirements(arm, turret, box);
     }
+    public TurretArmOutQuick(ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, Runnable turretPos, boolean delayed) {
+        long wait = 0;
+        if (delayed) wait = 800;
+        addCommands(new SequentialCommandGroup(
+                waitMillis(wait),
+                new ConditionalCommand(
+                        nothing(), // if true
+                        new SequentialCommandGroup( // if false
+                                run(arm::moveToNonSusHeight),
+                                waitUntil(arm::isNotSus),
+                                waitMillis(100L)),
+                        arm::isOut), // boolena supplier
+//                run(arm::setTeleOpPower),
+//                run(arm::moveToHeight),
+
+
+                run(box::moveHigh),
+                run(turretPos),
+                new ConditionalCommand(nothing(), // if false
+                        new SequentialCommandGroup(// if true
+                                waitUntil(turret::isAtTarget),
+                                run(arm::moveToHeight)),
+                        arm::isOut), // boolean supplier
+                run(arm::setIsOut)
+
+
+        ));
+
+        addRequirements(arm, turret, box);
+    }
 
 
 

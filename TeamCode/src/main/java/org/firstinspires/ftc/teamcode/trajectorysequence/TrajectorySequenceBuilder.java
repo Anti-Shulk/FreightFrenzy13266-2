@@ -21,6 +21,7 @@ import com.acmerobotics.roadrunner.util.Angle;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.SequenceSegment;
 import org.firstinspires.ftc.teamcode.trajectorysequence.sequencesegment.TrajectorySegment;
@@ -438,14 +439,30 @@ public class TrajectorySequenceBuilder {
         return this.addDisplacementMarker(currentDisplacement, callback);
     }
 
-
     public TrajectorySequenceBuilder runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup) {
         MarkerCallback callback = () -> new Thread(() -> {
-            if (!opMode.isStopRequested()) sequentialCommandGroup.initialize();
+                if (!opMode.isStopRequested()) sequentialCommandGroup.initialize();
 
-            while (!opMode.isStopRequested() && !sequentialCommandGroup.isFinished()) {
-                sequentialCommandGroup.execute();
+                while (!opMode.isStopRequested() && !sequentialCommandGroup.isFinished()) {
+                    sequentialCommandGroup.execute();
+                }
+        }).start();
+
+        return this.addDisplacementMarker(currentDisplacement, callback);
+    }
+
+    public TrajectorySequenceBuilder runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup, double seconds, Runnable stopCommand) {
+        MarkerCallback callback = () -> new Thread(() -> {
+            ElapsedTime elapsedTime = new ElapsedTime();
+            double targetTime = elapsedTime.seconds() + seconds;
+            while (targetTime > elapsedTime.seconds()) {
+                if (!opMode.isStopRequested()) sequentialCommandGroup.initialize();
+
+                while (!opMode.isStopRequested() && !sequentialCommandGroup.isFinished()) {
+                    sequentialCommandGroup.execute();
+                }
             }
+            stopCommand.run();
         }).start();
 
         return this.addDisplacementMarker(currentDisplacement, callback);

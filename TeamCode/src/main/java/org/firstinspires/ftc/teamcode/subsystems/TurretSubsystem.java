@@ -7,10 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants.*;
 
+import org.firstinspires.ftc.teamcode.constants.Constants;
+
 
 public class TurretSubsystem extends HardwareSubsystem {
 
     private final DcMotorEx turret;
+    private final DcMotorEx dummyMotor;
 
     private int targetTicks;
 
@@ -20,6 +23,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 
 
         turret = hardwareMap.get(DcMotorEx.class, hardware.ID);
+        dummyMotor = hardwareMap.get(DcMotorEx.class, Constants.IntakeConstants.hardware.ID);
         turret.setPositionPIDFCoefficients(controller.KP);
         turret.setTargetPositionTolerance((int) controller.PID_TOLERANCE);
         turret.setDirection(hardware.REVERSED ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
@@ -32,7 +36,8 @@ public class TurretSubsystem extends HardwareSubsystem {
 
     @Override
     public void periodic() {
-
+        telemetry.addData("turret ticks", getCurrentDummyPosition());
+        telemetry.addData("turret degrees", getCurrentDummyDegrees());
     }
 
     public void moveForward() {
@@ -55,7 +60,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 //        } else {
 //            setDegrees(0);
 //        }
-        setDegrees(0);
+        setDegrees(value.RETURN);
     }
 
 
@@ -81,6 +86,9 @@ public class TurretSubsystem extends HardwareSubsystem {
     public double getCurrentDegrees() {
         return turret.getCurrentPosition() * 360 / hardware.CPR;
     }
+    public double getCurrentDummyDegrees() {
+        return getCurrentDummyPosition() * 360 / Constants.IntakeConstants.hardware.CPR;
+    }
 
 
 
@@ -97,18 +105,32 @@ public class TurretSubsystem extends HardwareSubsystem {
         return turret.getCurrentPosition();
     }
 
-
-
-    public boolean isIn() {
-        int current   = turret.getCurrentPosition();
-//        int tolerance = turret.getTargetPositionTolerance();
-        return (current <= value.INITIAL_POSITION + controller.INTAKE_POSITION_TOLERANCE &&
-                current >= value.INITIAL_POSITION - controller.INTAKE_POSITION_TOLERANCE &&
-                current != 0) || (current <= value.INITIAL_POSITION + 360 + controller.INTAKE_POSITION_TOLERANCE &&
-                current >= value.INITIAL_POSITION + 360 - controller.INTAKE_POSITION_TOLERANCE &&
-                current != 0);
-//        return current == 1;
+    public double getCurrentDummyPosition() {
+        return dummyMotor.getCurrentPosition();
     }
+
+
+
+//    public boolean isIn() {
+//        int current   = turret.getCurrentPosition();
+////        int tolerance = turret.getTargetPositionTolerance();
+//        return (current <= value.RETURN + controller.INTAKE_POSITION_TOLERANCE &&
+//                current >= value.RETURN - controller.INTAKE_POSITION_TOLERANCE &&
+//                current != 0) || (current <= value.RETURN + 360 + controller.INTAKE_POSITION_TOLERANCE &&
+//                current >= value.RETURN + 360 - controller.INTAKE_POSITION_TOLERANCE &&
+//                current != 0);
+////        return current == 1;
+//    }
+public boolean isIn() {
+    double current   = getCurrentDummyDegrees();
+//        int tolerance = turret.getTargetPositionTolerance();
+    return (current <= value.RETURN + controller.INTAKE_POSITION_TOLERANCE &&
+            current >= value.RETURN - controller.INTAKE_POSITION_TOLERANCE &&
+            current != 0) /*|| (current <= value.RETURN + 360 + controller.INTAKE_POSITION_TOLERANCE &&
+            current >= value.RETURN + 360 - controller.INTAKE_POSITION_TOLERANCE &&
+            current != 0)*/;
+//        return current == 1;
+}
     public boolean isAtTarget() {
         double current   = getCurrentDegrees();
         double target    = getTargetDegrees();
@@ -127,5 +149,7 @@ public class TurretSubsystem extends HardwareSubsystem {
     public void resetEncoder() {
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         targetTicks = 0;
+        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        turret.setPower(controller.POWER);
     }
 }

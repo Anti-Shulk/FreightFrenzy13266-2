@@ -51,7 +51,7 @@ public class Constants {
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 40;
+                    SUS_POSITION = 48;
             public enum Height {
                 HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED
             }
@@ -228,7 +228,7 @@ public class Constants {
             public boolean REVERSED     = false;
             public double
                     RPM           = 435,
-                    CPR           = 1993; // figure this out
+                    CPR           = 8192; // figure this out
         }
 
         public static class Controller {
@@ -253,7 +253,7 @@ public class Constants {
             public boolean REVERSED        = false;
             public double
                     RPM              = 80,
-                    CPR              = 1425.1 * 2;
+                    CPR              = 1425.1/*8192*/ * 2;
         }
 
         public static class Controller {
@@ -261,7 +261,7 @@ public class Constants {
                     PID_TOLERANCE = 5,
                     INTAKE_POSITION_TOLERANCE = 5,
                     KP            = 10,
-                    POWER         = 1,
+                    POWER         = 0,
                     RANGE         = 360; // Degrees
 
         }
@@ -272,7 +272,7 @@ public class Constants {
                     RIGHT   = 90, // Degrees
                     RETURN  = 0; // Degrees
 
-            public int INITIAL_POSITION = 0; // Degrees
+//            public double INITIAL_POSITION = 0; // Degrees
         }
     }
 
@@ -346,7 +346,7 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DISTANCE_THRESHOLD = 70; // unknown unit
+                    DISTANCE_THRESHOLD = 20; // unknown unit
         }
 
     }

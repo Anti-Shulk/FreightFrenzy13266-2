@@ -11,11 +11,16 @@ import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 public class IntakeCommand extends SequentialCommandGroupEx{
     public IntakeCommand (IntakeSubsystem intake, TrapdoorSubsystem trapdoor, ColorRangeSensorSubsystem sensor) {
         addCommands(new ConditionalCommand(
-                        new SequentialCommandGroup( // on true
-//                                run(intake::outtake),
-                                run(trapdoor::close)
+                        new SequentialCommandGroup( // runs if something is detected
+                                run(trapdoor::close),
+                                waitMillis(500L),
+                                run(intake::outtake)
+
                         ),
-                        run(intake::intake), // on false
+                        new SequentialCommandGroup(//  runs if nothing is detected
+                                run(trapdoor::open),
+                                run(intake::intake)
+                        ),
                         sensor::detected) // supplier
         );
         addRequirements(intake, trapdoor, sensor);

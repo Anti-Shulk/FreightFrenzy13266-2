@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 public class MotorExEx extends MotorEx {
 
@@ -58,5 +59,11 @@ public class MotorExEx extends MotorEx {
 
     public void setPositionCoefficients(PIDFCoefficients coefficients) {
         positionController.setPIDF(coefficients.p, coefficients.i, coefficients.d, coefficients.f);
+    }
+    public MotorConfigurationType getMotorType() {
+        return motor.getMotorType();
+    }
+    public void setMotorType(MotorConfigurationType motorConfigurationType) {
+        motor.setMotorType(motorConfigurationType);
     }
 }

@@ -7,14 +7,17 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.pipeline.DefaultNewDetection;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ColorRangeSensorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
@@ -41,6 +44,7 @@ public class RedWarehouse2 extends LinearOpMode {
         GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
         BoxSubsystem box = new BoxSubsystem();
+        ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
 
 
 
@@ -111,9 +115,9 @@ public class RedWarehouse2 extends LinearOpMode {
                 .run(gripper::open)
                 .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
                 .lineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)))
-                .run(intake::intake)
-                .forward(30)
-                .run(trapdoor::close)
+                .runCommandGroupAsThread(new IntakeCommand(intake, trapdoor, sensor), 3, intake::stop)
+                .forward(40)
+//                .run(trapdoor::close)
 //                .run()
                 .build();
 
@@ -213,13 +217,18 @@ public class RedWarehouse2 extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            intake.stop();
-            runCommandGroupAsThreadNow(new TurretArmOutQuick(arm, turret, box, turret::moveRight));
+//            new Thread(() -> {
+////                if (opModeIsActive()) {
+//////                    sleep(1000);
+//////                    intake.stop();
+////                }
+//            }).start();
+            runCommandGroupAsThreadNow(new TurretArmOutQuick(arm, turret, box, turret::moveRight, true));
 //            drive.followTrajectory(loop1);
             drive.followTrajectory(loop1(drive, xShift, yShift));
             trapdoor.open();
-            runCommandGroupAsThreadNow(new TurretArmInQuick(arm, turret, box));
-            drive.followTrajectory(loop2(drive, intake,trapdoor, xShift, yShift));
+            runCommandGroupAsThreadNow(new TurretArmInQuick(arm, turret, box, true));
+            drive.followTrajectory(loop2(drive, intake, trapdoor, sensor, xShift, yShift));
             xShift += 1.7;
             yShift -= 0;
         }
@@ -244,6 +253,20 @@ public class RedWarehouse2 extends LinearOpMode {
             }
         }).start();
     }
+    public void runCommandGroupAsThreadNow(SequentialCommandGroup sequentialCommandGroup, double seconds, Runnable stopCommand) {
+        new Thread(() -> {
+            ElapsedTime elapsedTime = new ElapsedTime();
+            double targetTime = elapsedTime.seconds() + seconds;
+            while (targetTime > elapsedTime.seconds()) {
+                if (!isStopRequested()) sequentialCommandGroup.initialize();
+
+                while (!isStopRequested() && !sequentialCommandGroup.isFinished()) {
+                    sequentialCommandGroup.execute();
+                }
+            }
+            stopCommand.run();
+        }).start();
+    }
 
     public TrajectorySequence trajSeq (MecanumDriveSubsystem drive/*, ArmSubsystem arm, TurretSubsystem turret, BoxSubsystem box, IntakeSubsystem intake,*/) {
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
@@ -252,7 +275,7 @@ public class RedWarehouse2 extends LinearOpMode {
 //                .runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box))
                 .splineToLinearHeading(new Pose2d(17, -70, Math.toRadians(0)), Math.toRadians(0))
 //                .run(intake::intake)
-                .forward(30)
+                .forward(40)
 //                .run()
                 .build();
 
@@ -264,7 +287,7 @@ public class RedWarehouse2 extends LinearOpMode {
 
     public Trajectory loop1 (MecanumDriveSubsystem drive, double xShift, double yShift) {
         Trajectory loop1 = drive.trajectoryBuilder(new Pose2d(trajSeq(drive).end().component1() + xShift, trajSeq(drive).end().component2() + yShift), false)
-                .back(30)
+                .back(40)
 //                .addDisplacementMarker(intake::stop)
 //                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
                 .splineToConstantHeading(new Vector2d(-6 + xShift, -40 + yShift), Math.toRadians(180)) // second # is end tanject not sure what it does
@@ -276,13 +299,12 @@ public class RedWarehouse2 extends LinearOpMode {
 
 
     }
-    public Trajectory loop2 (MecanumDriveSubsystem drive, IntakeSubsystem intake,TrapdoorSubsystem trapdoor, double xShift, double yShift) {
+    public Trajectory loop2 (MecanumDriveSubsystem drive, IntakeSubsystem intake, TrapdoorSubsystem trapdoor, ColorRangeSensorSubsystem sensor, double xShift, double yShift) {
         Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(loop1(drive, xShift, yShift).end().component1() + xShift, loop1(drive, xShift, yShift).end().component2() + yShift))
 //                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box)))
                 .splineToConstantHeading(new Vector2d(17 + xShift, -70 + yShift), Math.toRadians(0))
-                .addDisplacementMarker(intake::intake)
-                .forward(30)
-                .addDisplacementMarker(trapdoor::close)
+                .addDisplacementMarker(() -> runCommandGroupAsThreadNow(new IntakeCommand(intake, trapdoor, sensor), 3, intake::stop))
+                .forward(40)
                 .build();
 
         final Pose2d loop1End = loop2.end();

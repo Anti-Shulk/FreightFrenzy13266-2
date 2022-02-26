@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
-@TeleOp(name = "Real Teleop Hopefully")
+@TeleOp(name = "TeleOP")
 public class RealTeleopHopefully extends CommandOpMode {
     @Override
     public void initialize() {
@@ -93,7 +93,7 @@ public class RealTeleopHopefully extends CommandOpMode {
 //                .whenReleased(trapdoor::close);
 
         command.add(() -> driver.get(button.INTAKE))
-                .whileHeld(new IntakeCommand(intake, trapdoor, sensor))
+                .whileHeld(new IntakeCommand(intake, trapdoor, sensor), true)
                 .whenReleased(intake::stop);
 
         command.add(() -> driver.get(button.OUTTAKE))
@@ -101,7 +101,10 @@ public class RealTeleopHopefully extends CommandOpMode {
                 .whenReleased(intake::stop);
 
         command.add(() -> operator.get(button.DROP))
-                .toggleWhenPressed(trapdoor::open, trapdoor::close);
+                .whenPressed(trapdoor::open);
+
+        command.add(() -> operator.get(button.CLOSE))
+                .whenPressed(trapdoor::close);
 
         command.add(()-> driver.get(button.GRIPPER_GRAB))
                 .whenPressed(gripper::close)

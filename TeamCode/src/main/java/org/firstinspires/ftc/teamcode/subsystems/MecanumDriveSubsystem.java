@@ -25,6 +25,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -165,11 +166,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
 
-//        for (DcMotorEx motor : motors) {
-//     MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-//     motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
-//     motor.setMotorType(motorConfigurationType);
-// }
+        setAchieveableMaxRPMFraction(1);
 
         if (RUN_USING_BUILT_IN_CONTROLLER) {
             setMode(Motor.RunMode.VelocityControl);
@@ -420,6 +417,13 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         rightRear
                 .set(wheelSpeeds[3]);
     }
+    public void setAchieveableMaxRPMFraction (double fraction) {
+        for (MotorExEx motor : motors) {
+            MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
+            motorConfigurationType.setAchieveableMaxRPMFraction(fraction);
+            motor.setMotorType(motorConfigurationType);
+        }
+    }
 
     public void driveRobotCentric(double x, double y, double rotate, boolean fineControl) {
 //        controllerMecanumDrive.driveRobotCentric(x, y, rotate, fineControl);
@@ -439,14 +443,18 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     }
 
     public void setSlow() {
+        setAchieveableMaxRPMFraction(DriveConstants.Drivetrain.Value.TELEOP_SLOWER);
+//        motors.get(0).set
 //        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_SLOW);
     }
 
     public void setTurbo() {
+        setAchieveableMaxRPMFraction(DriveConstants.Drivetrain.Value.TELEOP_SLOW);
 //        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_TURBO);
     }
 
     public void setNormal() {
+        setAchieveableMaxRPMFraction(DriveConstants.Drivetrain.Value.TELEOP_NORMAL);
 //        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_NORMAL);
     }
 
