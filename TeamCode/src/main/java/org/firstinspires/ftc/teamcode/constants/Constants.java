@@ -15,6 +15,7 @@ public class Constants {
     public static TrapdoorConstants trapdoorConstants;
     public static IntakeLiftConstants intakeLiftConstants;
     public static BoxConstants boxConstants;
+    public static ColorRangeSensorConstants colorRangeSensorConstants;
     
 
 
@@ -42,16 +43,16 @@ public class Constants {
         }
         public static class Value {
             public double
-                    AUTO_HIGH = 55,
+                    AUTO_HIGH = 70,
                     AUTO_MID = 40,
-                    AUTO_LOW = 8,
+                    AUTO_LOW = 0,
                     HIGH          = 70, // Degrees
                     MID           = 32, // Degrees
-                    LOW           = 8, // Degrees
+                    LOW           = 0, // Degrees
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 48;
+                    SUS_POSITION = 52;
             public enum Height {
                 HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED
             }
@@ -261,7 +262,7 @@ public class Constants {
                     PID_TOLERANCE = 5,
                     INTAKE_POSITION_TOLERANCE = 5,
                     KP            = 10,
-                    POWER         = 0,
+                    POWER         = 1,
                     RANGE         = 360; // Degrees
 
         }
@@ -333,7 +334,7 @@ public class Constants {
                     DOWN = 210, // Degrees
                     HIGH = 70,
                     MID = 0,
-                    LOW = 0;
+                    LOW = 125;
         }
 
     }
@@ -346,7 +347,7 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DISTANCE_THRESHOLD = 20; // unknown unit
+                    DISTANCE_THRESHOLD = 40; // mm
         }
 
     }

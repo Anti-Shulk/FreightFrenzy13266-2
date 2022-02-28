@@ -21,4 +21,7 @@ public class SequentialCommandGroupEx extends SequentialCommandGroup {
     public WaitCommand waitMillis(Long millis) {
         return new WaitCommand(millis);
     }
+    public WaitCommand waitMillis(int millis) {
+        return new WaitCommand(millis);
+    }
 }

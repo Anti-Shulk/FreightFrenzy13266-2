@@ -143,8 +143,8 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
         command.add(() -> operator.get(button.ARM_SHARED))
-                .whenHeld(new ArmSetAndMoveToHeight(arm, Constants.ArmConstants.Value.Height.SHARED), true)
-                .whenReleased(new ArmSetAndMoveToHeight(arm, Constants.ArmConstants.Value.Height.HIGH), true);
+                .whenHeld(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.SHARED), true)
+                .whenReleased(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.HIGH), true);
 
         command.add(() -> operator.get(button.DOWN))
                 .whenPressed(new TurretArmInQuick(arm, turret, box), false);

@@ -49,7 +49,7 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 //                run(arm::moveToHeight),
 
 
-                run(box::moveHigh),
+                run(box::moveToHeight),
                 run(turretPos),
                 new ConditionalCommand(nothing(), // if false
                         new SequentialCommandGroup(// if true
@@ -79,7 +79,7 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 //                run(arm::moveToHeight),
 
 
-                run(box::moveHigh),
+                run(box::moveToHeight),
                 run(turretPos),
                 new ConditionalCommand(nothing(), // if false
                         new SequentialCommandGroup(// if true

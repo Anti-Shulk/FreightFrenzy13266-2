@@ -2,13 +2,34 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+
+
+import static org.firstinspires.ftc.teamcode.constants.Constants.ArmConstants.Value.Height.*;
 import static org.firstinspires.ftc.teamcode.constants.Constants.BoxConstants.*;
+
+import org.firstinspires.ftc.teamcode.constants.Constants;
 
 public class BoxSubsystem extends HardwareSubsystem{
     ServoEx boxServo;
+    private Constants.ArmConstants.Value.Height height = HIGH;
     public BoxSubsystem() {
         boxServo = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MAX_ANGLE);
         boxServo.turnToAngle(value.DOWN);
+    }
+
+    public void moveToHeight() {
+        switch (height) {
+            case LOW: moveLow(); break;
+            case MID: moveMid(); break;
+            case HIGH: moveHigh(); break;
+            case AUTO_HIGH: moveHigh(); break;
+            case AUTO_MID: moveMid(); break;
+            case AUTO_LOW: moveLow(); break;
+            case SHARED: moveLow(); break;
+        }
+    }
+    public void setHeight(Constants.ArmConstants.Value.Height height) {
+        this.height = height;
     }
 
     public void moveHigh() {
