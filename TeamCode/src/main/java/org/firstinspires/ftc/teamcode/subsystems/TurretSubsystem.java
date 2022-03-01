@@ -9,6 +9,8 @@ import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants
 
 import org.firstinspires.ftc.teamcode.constants.Constants;
 
+import java.security.Policy;
+
 
 public class TurretSubsystem extends HardwareSubsystem {
 
@@ -70,6 +72,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 //        }
 //
 //        targetTicks = degreesToTicks(degrees + adder);
+        turret.setPower(controller.POWER);
         targetTicks = degreesToTicks(degrees);
 
         turret.setTargetPosition(targetTicks);
@@ -122,7 +125,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 ////        return current == 1;
 //    }
 public boolean isIn() {
-    double current   = getCurrentDummyDegrees();
+    double current   = getCurrentDegrees();
 //        int tolerance = turret.getTargetPositionTolerance();
     return (current <= value.RETURN + controller.INTAKE_POSITION_TOLERANCE &&
             current >= value.RETURN - controller.INTAKE_POSITION_TOLERANCE &&
@@ -149,7 +152,7 @@ public boolean isIn() {
     public void resetEncoder() {
         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         targetTicks = 0;
+        turret.setPower(0);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        turret.setPower(controller.POWER);
     }
 }

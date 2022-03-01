@@ -15,10 +15,10 @@ public class OuttakePath extends Path {
     @Override
     public Trajectory get(double xShift, double yShift) {
         return drive.trajectoryBuilder(new Pose2d(startPose.getX() + xShift, startPose.getY() + yShift), false)
-                .back(40)
+                .back(30 + xShift)
 //                .addDisplacementMarker(intake::stop)
 //                .addDisplacementMarker(runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft)))
-                .splineToConstantHeading(new Vector2d(-6 + xShift, -48 + yShift), Math.toRadians(0)) // second # is end tanject not sure what it does
+                .splineToConstantHeading(new Vector2d(-6 + xShift, -39 + yShift), Math.toRadians(90)) // second # is end tanject not sure what it does
                 .build();
     }
 }

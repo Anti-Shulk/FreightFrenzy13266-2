@@ -23,11 +23,12 @@ public class TurretArmInQuick extends SequentialCommandGroupEx {
 
                         run(arm::moveSoItWontHitSides),
                         run(box::moveDown),
+//                        waitMillis(200),
                         //TODO: maybe create another intake in where the box doesnt move in quite lit this. the reason i had
                             // to make it like this is because the box owuld pull down the hub if it was on high and it was pressed down before it was back
 
                         waitUntil(turret::isIn),
-                        waitMillis(300L),
+//                        waitMillis(300L),
 //                            run(box::moveDown),
 //                        waitMillis(500L), // TODO: this delay is alot and its extra try to get rid of it with another command that has this delay
                         run(arm::setDropPower),

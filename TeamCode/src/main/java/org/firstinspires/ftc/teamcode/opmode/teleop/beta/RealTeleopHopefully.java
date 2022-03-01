@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
 
-import org.firstinspires.ftc.teamcode.commands.ArmSetAndMoveToHeight;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
@@ -142,20 +141,28 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
 
-        command.add(() -> operator.get(button.ARM_SHARED))
-                .whenHeld(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.SHARED), true)
-                .whenReleased(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.HIGH), true);
+        command.add(() -> operator.get(button.LEFT_SHARED))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
+        command.add(() -> operator.get(button.RIGHT_SHARED))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
+//                .whenReleased(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.HIGH), true);
 
         command.add(() -> operator.get(button.DOWN))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmInQuick(arm, turret, box), false);
 
         command.add(() -> operator.get(button.LEFT))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
 
         command.add(() -> operator.get(button.RIGHT))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
 
         command.add(() -> operator.get(button.FORWARD))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveForward), false);
 
         command.add(operator::getRightTouchingEdge)

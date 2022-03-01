@@ -33,8 +33,8 @@ public class GamepadConstants {
 
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
-        public Trigger ARM_SHARED = Trigger.LEFT_TRIGGER;
-        public Trigger ARM_HIGH = Trigger.RIGHT_TRIGGER;
+        public Trigger LEFT_SHARED = Trigger.LEFT_TRIGGER;
+        public Trigger RIGHT_SHARED = Trigger.RIGHT_TRIGGER;
 
         public Button CAROUSEL_LIFT = Button.A;
         public Button CAROUSEL_RED  = Button.B;

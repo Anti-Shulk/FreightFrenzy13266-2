@@ -14,7 +14,7 @@ public class LowPath extends Path {
     @Override
     public Trajectory get(double xShift, double yShift) {
         return drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-10 + xShift, -40 + yShift, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-8 + xShift, -42 + yShift, Math.toRadians(0)))
                 .build();
     }
 }

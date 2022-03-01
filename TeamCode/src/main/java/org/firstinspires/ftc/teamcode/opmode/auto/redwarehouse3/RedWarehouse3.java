@@ -123,39 +123,49 @@ public class RedWarehouse3 extends LinearOpMode {
         arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_LOW);
         box.setHeight(Constants.ArmConstants.Value.Height.AUTO_LOW);
 
-        commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight, false));
+        commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight));
 
         Trajectory startPath = new LowPath(drive, startPose).get();
         drive.followTrajectory(startPath);
 
-        sleep(1000);
+//        sleep(1000);
         trapdoor.open();
-        sleep(1000);
+//        sleep(1000);
 
-        commands.runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box, 0.5));
+        new Thread(() -> {
+            sleep(800);
+            commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
+        }).start();
+
 
         Trajectory secondPath = new IntakePath(drive, startPath.end(), commands, intake, trapdoor, sensor).get();
         drive.followTrajectory(secondPath);
 
         double xShift = 0;
         double yShift = 0;
+        arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
+        box.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
 
         while (opModeIsActive()) {
-            arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
-            box.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
             commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight, true));
 
             Trajectory outtakePath = new OuttakePath(drive, secondPath.end()).get(xShift, yShift);
             drive.followTrajectory(outtakePath);
-//            sleep(2000);
+//            sleep(500);
             trapdoor.open();
-//            sleep(2000);
-            commands.runCommandGroupAsThread(new TurretArmInQuick(arm, turret, box, 0.7));
+//            sleep(500);
+            new Thread(() -> {
+                sleep(800);
+                commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
+            }).start();
+
+
+            xShift += 3.5;
+            yShift -= 3;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift, yShift));
 
-            xShift += 1.7;
-            yShift -= 0;
+
         }
     }
 

@@ -36,7 +36,7 @@ public class Constants {
         public static class Controller {
             public double
                     TOLERANCE     = 5,
-                    KP            = 10,
+                    KP            = 6,
                     TELEOP_POWER = 1,
                     DROP_POWER = 1,
                     AUTO_POWER     = 1;
@@ -52,7 +52,7 @@ public class Constants {
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 52;
+                    SUS_POSITION = 58;
             public enum Height {
                 HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED
             }
