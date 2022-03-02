@@ -25,8 +25,8 @@ import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
-@TeleOp(name = "TeleOP")
-public class RealTeleopHopefully extends CommandOpMode {
+@TeleOp(name = "Main TeleOP")
+public class TeleOPMain extends CommandOpMode {
     @Override
     public void initialize() {
         // TODO: Move to Robot Container
@@ -216,7 +216,9 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
         command.add(() -> operator.get(button.CAROUSEL_LIFT))
-                .toggleWhenPressed(carousel::lift, carousel::drop);
+                .toggleWhenPressed(carousel::lift, carousel::drop)
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
 
         command.add(() -> operator.get(button.CAROUSEL_BLUE))
                 .whenPressed(carousel::spinForward)
@@ -243,6 +245,9 @@ public class RealTeleopHopefully extends CommandOpMode {
 
 
         waitForStart();
+        if (gamepad1.x) Constants.TurretConstants.value.FORWARD = 180; // blue
+        if (gamepad1.b) Constants.TurretConstants.value.FORWARD = -180; // red
+
         while (opModeIsActive()) {
             // There are two things that get run when you do this.
             // The periodic method of all defined subsystems, and

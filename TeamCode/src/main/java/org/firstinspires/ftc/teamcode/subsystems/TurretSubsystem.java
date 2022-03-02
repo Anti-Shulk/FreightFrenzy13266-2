@@ -125,7 +125,7 @@ public class TurretSubsystem extends HardwareSubsystem {
 ////        return current == 1;
 //    }
 public boolean isIn() {
-    double current   = getCurrentDegrees();
+    double current   = getCurrentDummyDegrees();
 //        int tolerance = turret.getTargetPositionTolerance();
     return (current <= value.RETURN + controller.INTAKE_POSITION_TOLERANCE &&
             current >= value.RETURN - controller.INTAKE_POSITION_TOLERANCE &&

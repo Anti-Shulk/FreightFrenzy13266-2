@@ -36,6 +36,8 @@ public class TelemetrySubsystem extends SubsystemBase {
 
     public void teleOpMessage() {
         telemetry.addLine("Good Luck!");
+        telemetry.addLine("Start OP Mode while holding X/□ for Blue TELEOP ");
+        telemetry.addLine("and B/⃝ for red TeleOP red is default");
         int randomNumber = (int) (Math.random() * 20);
         switch (randomNumber) {
 
