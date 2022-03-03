@@ -36,6 +36,7 @@ public class Constants {
         public static class Controller {
             public double
                     TOLERANCE     = 5,
+                    POSITION_TOLERANCE = 5,
                     KP            = 6,
                     TELEOP_POWER = 1,
                     DROP_POWER = 1,
@@ -260,7 +261,7 @@ public class Constants {
         public static class Controller {
             public double
                     PID_TOLERANCE = 5,
-                    INTAKE_POSITION_TOLERANCE = 5,
+                    INTAKE_POSITION_TOLERANCE = 1,
                     KP            = 10,
                     POWER         = 1,
                     RANGE         = 360; // Degrees
@@ -294,8 +295,8 @@ public class Constants {
             public boolean REVERSED = true;
         }
         public static class Value {
-            public double OPEN                       = 0; // Degrees
-            public double CLOSE                      = 35; // Degrees
+            public double OPEN                       = 10; // Degrees
+            public double CLOSE                      = 60; // Degrees
         }
     }
 
@@ -331,10 +332,10 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DOWN = 210, // Degrees
+                    DOWN = 205, // Degrees
                     HIGH = 70,
                     MID = 0,
-                    LOW = 125;
+                    LOW = 120;
         }
 
     }

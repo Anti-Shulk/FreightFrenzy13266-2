@@ -161,6 +161,15 @@ public class ArmSubsystem extends HardwareSubsystem {
         this.isOut = false;
     }
 
+        public boolean isAtTarget() {
+        double current   = getCurrentDegrees();
+        double target    = getTargetDegrees();
+        double tolerance = controller.POSITION_TOLERANCE;
+        return (current <= target + tolerance &&
+                current >= target - tolerance &&
+                current != 0);
+    }
+
 
     public void setFullPower() {
         arm.setPower(1);

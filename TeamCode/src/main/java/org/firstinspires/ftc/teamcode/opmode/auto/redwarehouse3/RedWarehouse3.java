@@ -78,7 +78,7 @@ public class RedWarehouse3 extends LinearOpMode {
                 camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
 
                 // Start camera stream with 1280x720 resolution
-                camera.startStreaming(1280,720, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(1280,720, OpenCvCameraRotation.UPSIDE_DOWN);
 
                 camera.setPipeline(detector);
 
@@ -143,10 +143,11 @@ public class RedWarehouse3 extends LinearOpMode {
 
         double xShift = 0;
         double yShift = 0;
+        double intakeDistanceShift = 0;
         arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
         box.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
 
-        while (opModeIsActive()) {
+        for (int i = 0; i < 5; i++) {
             commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight, true));
 
             Trajectory outtakePath = new OuttakePath(drive, secondPath.end()).get(xShift, yShift);
@@ -155,17 +156,18 @@ public class RedWarehouse3 extends LinearOpMode {
             trapdoor.open();
 //            sleep(500);
             new Thread(() -> {
-                sleep(800);
+                sleep(500);
                 commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
             }).start();
 
 
-            xShift += 3.5;
-            yShift -= 3;
+            xShift -= 3;
+            yShift -= 2;
+            intakeDistanceShift = 2;
 
-            drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift, yShift));
+            drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
 
-
+            xShift = xShift + intakeDistanceShift;
         }
     }
 

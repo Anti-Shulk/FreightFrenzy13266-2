@@ -19,10 +19,14 @@ public class TurretArmInQuick extends SequentialCommandGroupEx {
                             run(arm::moveIn)
                     ), // if false
                     new SequentialCommandGroup( // if true
+                            run(arm::moveSoItWontHitSides),
+                            run(box::moveDown),
+//                        waitUntil(arm::isAtTarget),
+                            waitMillis(200),
                         run(turret::moveIn),
 
-                        run(arm::moveSoItWontHitSides),
-                        run(box::moveDown),
+
+
 //                        waitMillis(200),
                         //TODO: maybe create another intake in where the box doesnt move in quite lit this. the reason i had
                             // to make it like this is because the box owuld pull down the hub if it was on high and it was pressed down before it was back
