@@ -250,6 +250,7 @@ public class Constants {
         public static Value value = new Value();
         public static Controller controller = new Controller();
 
+
         public static class Hardware {
             public String ID               = "turretMotor";
             public boolean REVERSED        = false;

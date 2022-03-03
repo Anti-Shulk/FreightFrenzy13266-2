@@ -30,7 +30,7 @@ public class TurretSubsystem extends HardwareSubsystem {
         turret.setTargetPositionTolerance((int) controller.PID_TOLERANCE);
         turret.setDirection(hardware.REVERSED ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+         turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         setDegrees(0);
         turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         turret.setPower(controller.POWER);
