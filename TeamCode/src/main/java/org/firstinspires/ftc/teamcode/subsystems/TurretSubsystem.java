@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -8,8 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import static org.firstinspires.ftc.teamcode.constants.Constants.TurretConstants.*;
 
 import org.firstinspires.ftc.teamcode.constants.Constants;
-
-import java.security.Policy;
 
 
 public class TurretSubsystem extends HardwareSubsystem {
@@ -125,10 +122,10 @@ public class TurretSubsystem extends HardwareSubsystem {
 ////        return current == 1;
 //    }
 public boolean isIn() {
-    double current   = getCurrentDummyDegrees();
+    double current   = getCurrentDegrees();
 //        int tolerance = turret.getTargetPositionTolerance();
-    return (current <= value.RETURN + controller.INTAKE_POSITION_TOLERANCE &&
-            current >= value.RETURN - controller.INTAKE_POSITION_TOLERANCE &&
+    return (current <= value.RETURN + controller.AT_TARGET_POSITION_TOLERANCE &&
+            current >= value.RETURN - controller.AT_TARGET_POSITION_TOLERANCE &&
             current != 0) /*|| (current <= value.RETURN + 360 + controller.INTAKE_POSITION_TOLERANCE &&
             current >= value.RETURN + 360 - controller.INTAKE_POSITION_TOLERANCE &&
             current != 0)*/;
@@ -137,7 +134,7 @@ public boolean isIn() {
     public boolean isAtTarget() {
         double current   = getCurrentDegrees();
         double target    = getTargetDegrees();
-        double tolerance = controller.INTAKE_POSITION_TOLERANCE;
+        double tolerance = controller.AT_TARGET_POSITION_TOLERANCE;
         return (current <= target + tolerance &&
                 current >= target - tolerance &&
                 current != 0);
@@ -150,9 +147,9 @@ public boolean isIn() {
 //        turret.resetEncoder();
 //    }
     public void resetEncoder() {
-        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        targetTicks = 0;
+//        turret.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        targetTicks = 0;
         turret.setPower(0);
-        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        turret.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }

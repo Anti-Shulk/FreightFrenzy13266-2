@@ -262,7 +262,7 @@ public class Constants {
         public static class Controller {
             public double
                     PID_TOLERANCE = 5,
-                    INTAKE_POSITION_TOLERANCE = 1,
+                    AT_TARGET_POSITION_TOLERANCE = 2,
                     KP            = 10,
                     POWER         = 1,
                     RANGE         = 360; // Degrees
@@ -273,7 +273,7 @@ public class Constants {
                     FORWARD = 180, // Degrees
                     LEFT    = -90, // Degrees
                     RIGHT   = 90, // Degrees
-                    RETURN  = 0; // Degrees
+                    RETURN  = -2; // Degrees
 
 //            public double INITIAL_POSITION = 0; // Degrees
         }
