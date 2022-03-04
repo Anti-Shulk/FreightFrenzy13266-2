@@ -18,7 +18,7 @@ public class StartPath extends Path {
 
     public Trajectory get(double xShift, double yShift, Pose2d targetPose) {
         return drive.trajectoryBuilder(startPose)
-                .lineToLinearHeading(new Pose2d(-10 + xShift, 41 + yShift, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(targetPose.getX(), targetPose.getY(), Math.toRadians(0)))
                 .build();
     }
 }

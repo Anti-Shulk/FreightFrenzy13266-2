@@ -1,6 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmode.auto.bluewarehouse3;
+package org.firstinspires.ftc.teamcode.opmode.auto.blueCarousel3;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -10,16 +11,17 @@ import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoCommands;
-import org.firstinspires.ftc.teamcode.opmode.auto.bluewarehouse3.StartPaths.StartPath;
 import org.firstinspires.ftc.teamcode.pipeline.RightSideMissingDetection;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ColorRangeSensorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -27,8 +29,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous
 // TODO: make an auto selectoer
 // TODO: make a robot container
-public class BlueWarehouse3 extends LinearOpMode {
-    Pose2d startPose = new Pose2d(12, 63.2, Math.toRadians(-90));
+public class BlueCarousel3 extends LinearOpMode {
+    Pose2d startPose = new Pose2d(-40.3, 63.2, Math.toRadians(-90));
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
@@ -38,26 +40,19 @@ public class BlueWarehouse3 extends LinearOpMode {
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
 //        GripperSubsystem gripper = new GripperSubsystem();
         IntakeSubsystem intake = new IntakeSubsystem();
+        CarouselSubsystem carousel = new CarouselSubsystem();
         BoxSubsystem box = new BoxSubsystem();
         ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
         AutoCommands commands = new AutoCommands(this);
 
 
-
         drive.setPoseEstimate(startPose);
 
 
-
         /** On initialization **/
-
-
-//        gripper.moveDown();
-//        gripper.close();
         trapdoor.close();
 
         arm.setAutoPower();
-        arm.moveAutoLow();
-        arm.moveSoItWontHitSides();
 
 
         /** Open CV **/
@@ -77,11 +72,9 @@ public class BlueWarehouse3 extends LinearOpMode {
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam, cameraMonitorViewId);
 
         // Open the Camera Device Asynchronously
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
-            public void onOpened()
-            {
+            public void onOpened() {
                 // Usually this is where you'll want to start streaming from the camera (see section 4)
                 // Start Camera Streaming
 
@@ -89,7 +82,7 @@ public class BlueWarehouse3 extends LinearOpMode {
                 camera.setViewportRenderer(OpenCvCamera.ViewportRenderer.GPU_ACCELERATED);
 
                 // Start camera stream with 1280x720 resolution
-                camera.startStreaming(1280,720, OpenCvCameraRotation.UPSIDE_DOWN);
+                camera.startStreaming(1280, 720, OpenCvCameraRotation.UPSIDE_DOWN);
 
                 camera.setPipeline(detector);
 
@@ -102,17 +95,8 @@ public class BlueWarehouse3 extends LinearOpMode {
         });
 
 
-
-
-
-
-
-
-
-
         Constants.ArmConstants.Value.Height height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-        Pose2d preLoadPose = new Pose2d(-10, 41, Math.toRadians(0));
-
+        Vector2d preLoadVector = new Vector2d(-35, 20);
 
 
         while (!isStarted()) {
@@ -121,17 +105,17 @@ public class BlueWarehouse3 extends LinearOpMode {
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadPose = new Pose2d(-10, 41, Math.toRadians(0));
+                    preLoadVector = new Vector2d(-35, 20);
                     break;
                 }
                 case CENTER: {
                     height = Constants.ArmConstants.Value.Height.AUTO_MID;
-                    preLoadPose = new Pose2d(-10, 43, Math.toRadians(0));
+                    preLoadVector = new Vector2d(-35, 20);
                     break;
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadPose = new Pose2d(-10, 38, Math.toRadians(0));
+                    preLoadVector  = new Vector2d(-35, 20);
                     break;
                 }
             }
@@ -140,64 +124,31 @@ public class BlueWarehouse3 extends LinearOpMode {
         waitForStart();
 
 
-
-
         if (isStopRequested()) return;
-//        drive.followTrajectorySequence(lowSeq)
-        arm.setHeight(height);
-        box.setHeight(height);
 
-        commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft));
+        TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                .run(carousel::lift)
+                .run(carousel::spinForwardFast)
+                .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
+                .waitSeconds(3)
+                .run(carousel::stop)
+                .run(carousel::drop)
+//                .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
+                .lineToSplineHeading(new Pose2d(-57, 20, Math.toRadians(-180)))
+                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward))
+//                .lineToLinearHeading(preLoadVector)
+                .splineToConstantHeading(preLoadVector, Math.toRadians(0))
+                .setReversed(false)
+                .splineTo(new Vector2d(-59, 29), Math.toRadians(90))
+                .build();
 
-        Trajectory startPath = new StartPath(drive, startPose).get(0, 0, preLoadPose);
-        drive.followTrajectory(startPath);
-
-//        sleep(1000);
-        trapdoor.open();
-        trapdoor.open();
-//        sleep(1000);
-
-        new Thread(() -> {
-            trapdoor.open();
-            sleep(800);
-            commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
-        }).start();
-
-
-        Trajectory secondPath = new IntakePath(drive, startPath.end(), commands, intake, trapdoor, sensor).get();
-        drive.followTrajectory(secondPath);
-
-        double xShift = 0;
-        double yShift = 0;
-        double intakeDistanceShift = 0;
-        arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
-        box.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
-
-        for (int i = 0; i < 5; i++) {
-            commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft, true));
-
-            Trajectory outtakePath = new OuttakePath(drive, secondPath.end()).get(xShift, yShift);
-            drive.followTrajectory(outtakePath);
-//            sleep(500);
-            trapdoor.open();
-            trapdoor.open();
-//            sleep(500);
-            new Thread(() -> {
-                trapdoor.open();
-                sleep(500);
-                commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
-            }).start();
-
-
-            xShift += 3.5;
-            yShift += 4.7;
-            intakeDistanceShift += .2;
-            if (i == 4) yShift += 2;
-
-            drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
-
-            xShift = xShift + intakeDistanceShift;
+        waitForStart();
+        if (!isStopRequested()) {
+            arm.setHeight(height);
+            box.setHeight(height);
+            drive.followTrajectorySequence(trajSeq);
         }
+
     }
 
 }
