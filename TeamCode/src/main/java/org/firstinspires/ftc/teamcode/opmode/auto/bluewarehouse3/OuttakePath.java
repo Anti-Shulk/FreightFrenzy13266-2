@@ -16,8 +16,8 @@ public class OuttakePath extends Path {
     public Trajectory get(double xShift, double yShift) {
         return drive.trajectoryBuilder(new Pose2d(startPose.getX() + xShift, startPose.getY() + yShift), true)
 //                .splineToConstantHeading(new Vector2d(27 + xShift, 73 + yShift), Math.toRadians(-180))
-                .back(36 + xShift)
-                .splineToConstantHeading(new Vector2d(-10 + xShift, 39 + yShift), Math.toRadians(-90)) // second # is end tanject not sure what it does
+                .back(30 + xShift)
+                .splineToConstantHeading(new Vector2d(-2 + xShift, 46 + yShift), Math.toRadians(-90)) // second # is end tanject not sure what it does
                 .build();
     }
 }

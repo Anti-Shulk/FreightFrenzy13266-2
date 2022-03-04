@@ -335,7 +335,7 @@ public class Constants {
             public double
                     DOWN = 205, // Degrees
                     HIGH = 70,
-                    MID = 0,
+                    MID = 110,
                     LOW = 120;
         }
 

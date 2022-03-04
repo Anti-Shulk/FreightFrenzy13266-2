@@ -38,11 +38,11 @@ public class IntakePath extends Path {
                     intake.stop();
                 }).start())
 //                .splineToConstantHeading(new Vector2d(17 + xShift, -80 + yShift), Math.toRadians(0))
-                .lineToConstantHeading(new Vector2d(-8 + xShift, 55 + yShift))
-                .splineToConstantHeading(new Vector2d(12 + xShift, 77 + yShift), Math.toRadians(0))
+                .lineToConstantHeading(new Vector2d(-7 + xShift, 55 + yShift))
+                .splineToConstantHeading(new Vector2d(12 + xShift, 79 + yShift), Math.toRadians(0))
 //                .addDisplacementMarker(() -> drive.setPoseEstimate(new Pose2d(drive.getPoseEstimate().getX(), 77 + yShift - 2, // This number is how far it will be from thw wall so that it doesnt hit the barrier
 //                        drive.getPoseEstimate().getHeading())))
-                .forward(33 + xShift + intakeDistanceShift)
+                .forward(32 + xShift + intakeDistanceShift)
 //                .splineToConstantHeading(new Vector2d(39 + xShift + intakeDistanceShift, 69 + yShift), Math.toRadians(0))
                 .build();
 

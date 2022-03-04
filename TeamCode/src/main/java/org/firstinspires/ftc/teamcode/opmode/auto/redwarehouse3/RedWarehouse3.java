@@ -10,9 +10,9 @@ import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoCommands;
-import org.firstinspires.ftc.teamcode.opmode.auto.Path;
-import org.firstinspires.ftc.teamcode.opmode.auto.redwarehouse3.StartPaths.LowPath;
+import org.firstinspires.ftc.teamcode.opmode.auto.redwarehouse3.StartPaths.StartPath;
 import org.firstinspires.ftc.teamcode.pipeline.DefaultNewDetection;
+import org.firstinspires.ftc.teamcode.pipeline.RightSideMissingDetection;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ColorRangeSensorSubsystem;
@@ -49,10 +49,22 @@ public class RedWarehouse3 extends LinearOpMode {
 
 
 
+        /** On initialization **/
+
+
+//        gripper.moveDown();
+//        gripper.close();
+        trapdoor.close();
+
+        arm.setAutoPower();
+        arm.moveAutoLow();
+        arm.moveSoItWontHitSides();
+
+
         /** Open CV **/
 
 
-        DefaultNewDetection detector = new DefaultNewDetection();
+        RightSideMissingDetection detector = new RightSideMissingDetection();
 
 
         // Obtain camera id to allow for camera preview
@@ -90,20 +102,6 @@ public class RedWarehouse3 extends LinearOpMode {
             }
         });
 
-//        sleep(Constants.CameraConstants.value.CAMERA_WAIT_TIME);
-        telemetry.addData("auto Position", detector.getAnalysis());
-
-
-
-        /** On initialization **/
-
-
-//        gripper.moveDown();
-//        gripper.close();
-        trapdoor.close();
-
-        arm.setAutoPower();
-        arm.moveAutoLow();
 
 
 
@@ -111,8 +109,35 @@ public class RedWarehouse3 extends LinearOpMode {
 
 
 
-        telemetry.update();
-        arm.moveSoItWontHitSides();
+
+
+        Constants.ArmConstants.Value.Height height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
+        Pose2d preLoadPose = new Pose2d(-10, 41, Math.toRadians(0));
+
+
+
+        while (!isStarted()) {
+            telemetry.addData("auto Position", detector.getAnalysis());
+            telemetry.update();
+            switch (detector.getAnalysis()) {
+                case LEFT: {
+                    height = Constants.ArmConstants.Value.Height.AUTO_LOW;
+                    preLoadPose = new Pose2d(-10, -41, Math.toRadians(0));
+                    break;
+                }
+                case CENTER: {
+                    height = Constants.ArmConstants.Value.Height.AUTO_MID;
+                    preLoadPose = new Pose2d(-10, -43, Math.toRadians(0));
+                    break;
+                }
+                case RIGHT: {
+                    height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
+                    preLoadPose = new Pose2d(-10, -41, Math.toRadians(0));
+                    break;
+                }
+            }
+        }
+
         waitForStart();
 
 
@@ -120,12 +145,12 @@ public class RedWarehouse3 extends LinearOpMode {
 
         if (isStopRequested()) return;
 //        drive.followTrajectorySequence(lowSeq)
-        arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_LOW);
-        box.setHeight(Constants.ArmConstants.Value.Height.AUTO_LOW);
+        arm.setHeight(height);
+        box.setHeight(height);
 
         commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveRight));
 
-        Trajectory startPath = new LowPath(drive, startPose).get();
+        Trajectory startPath = new StartPath(drive, startPose).get(0, 0, preLoadPose);
         drive.followTrajectory(startPath);
 
 //        sleep(1000);
@@ -154,8 +179,10 @@ public class RedWarehouse3 extends LinearOpMode {
             drive.followTrajectory(outtakePath);
 //            sleep(500);
             trapdoor.open();
+            trapdoor.open();
 //            sleep(500);
             new Thread(() -> {
+                trapdoor.open();
                 sleep(500);
                 commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
             }).start();
@@ -163,7 +190,8 @@ public class RedWarehouse3 extends LinearOpMode {
 
             xShift -= 3;
             yShift -= 2;
-            intakeDistanceShift = 2;
+            intakeDistanceShift += 0.5;
+            if (i == 4) yShift += 0;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
 
