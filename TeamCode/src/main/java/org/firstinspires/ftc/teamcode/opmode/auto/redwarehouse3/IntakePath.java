@@ -44,8 +44,8 @@ public class IntakePath extends Path {
                 .splineToConstantHeading(new Vector2d(17 + xShift, -73 + yShift), Math.toRadians(0))
                 .addDisplacementMarker(() -> drive.setPoseEstimate(new Pose2d(drive.getPoseEstimate().getX(), -73 + yShift + 2, // This number is how far it will be from thw wall so that it doesnt hit the barrier
                         drive.getPoseEstimate().getHeading())))
-                .forward(10 + xShift + intakeDistanceShift)
-                .splineToConstantHeading(new Vector2d(39 + xShift + intakeDistanceShift, -69 + yShift), Math.toRadians(0))
+                .forward(32 + xShift + intakeDistanceShift)
+//                .splineToConstantHeading(new Vector2d(39 + xShift + intakeDistanceShift, -69 + yShift), Math.toRadians(0))
                 .build();
 
         final Pose2d loop1End = loop2.end();

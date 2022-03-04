@@ -132,7 +132,7 @@ public class RedWarehouse3 extends LinearOpMode {
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadPose = new Pose2d(-10, -41, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, -35, Math.toRadians(0));
                     break;
                 }
             }
@@ -158,7 +158,7 @@ public class RedWarehouse3 extends LinearOpMode {
 //        sleep(1000);
 
         new Thread(() -> {
-            sleep(800);
+            sleep(500);
             commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
         }).start();
 
@@ -191,7 +191,7 @@ public class RedWarehouse3 extends LinearOpMode {
             xShift -= 3;
             yShift -= 2;
             intakeDistanceShift += 0.5;
-            if (i == 4) yShift += 0;
+            //if (i == 4) yShift += 0;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
 
