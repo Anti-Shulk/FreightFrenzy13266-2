@@ -51,6 +51,14 @@ public class TurretSubsystem extends HardwareSubsystem {
        setDegrees(value.RIGHT);
     }
 
+    public void moveSharedLeft() {
+        setDegrees(value.SHARED_LEFT);
+    }
+
+    public void moveSharedRight() {
+        setDegrees(value.SHARED_RIGHT);
+    }
+
     public void moveIn() {
 //        if (getTargetDegrees() < -180) {
 //            setDegrees(-360);
@@ -73,6 +81,9 @@ public class TurretSubsystem extends HardwareSubsystem {
         targetTicks = degreesToTicks(degrees);
 
         turret.setTargetPosition(targetTicks);
+    }
+    public void addDegrees(double degrees) {
+        setDegrees(getTargetDegrees() + degrees * 10);
     }
 
     public int degreesToTicks(double degrees) {

@@ -46,7 +46,7 @@ public class BlueCarousel extends CommandOpMode {
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .run(carousel::lift)
-                .run(carousel::spinForward)
+                .run(carousel::spinForwardFast)
                 .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
                 .waitSeconds(3)
                 .run(carousel::stop)

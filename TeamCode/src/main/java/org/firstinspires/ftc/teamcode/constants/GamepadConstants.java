@@ -30,6 +30,7 @@ public class GamepadConstants {
         public Button  LEFT    = Button.DPAD_LEFT;
         public Button  RIGHT   = Button.DPAD_RIGHT;
         public Button  DOWN = Button.DPAD_DOWN;
+        public Button  SHARED_BOX_UP = Button.Y;
 
 
         // TODO: maybe there is a way to make it so that the trigger can act as a button with a threshold or something
@@ -44,6 +45,8 @@ public class GamepadConstants {
         public Button GRIPPER_GRAB = Button.B;
         public Button TOGGLE_INTAKE_UP  = Button.Y;
 
+        public Button RESET_IMU  = Button.A;
+
 
 
 
@@ -51,7 +54,7 @@ public class GamepadConstants {
     }
     public static class Value {
         public double STICK_THRESHOLD = 0;
-        public double STICK_TOUCHING_THRESHOLD = 0.9;
+        public double STICK_TOUCHING_THRESHOLD = 0.3;
         public double TRIGGER_THRESHOLD = 0.3;
     }
 }

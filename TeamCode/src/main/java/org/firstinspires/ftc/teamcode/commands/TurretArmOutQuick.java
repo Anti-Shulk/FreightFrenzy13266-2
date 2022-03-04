@@ -51,7 +51,7 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
 
                 run(box::moveToHeight),
                 run(turretPos),
-                new ConditionalCommand(nothing(), // if false
+                new ConditionalCommand(run(arm::moveToHeight), // if false
                         new SequentialCommandGroup(// if true
                                 waitUntil(turret::isAtTarget),
                                 run(arm::moveToHeight)),

@@ -4,17 +4,13 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import static org.firstinspires.ftc.teamcode.constants.Constants.CarouselConstants.Spin;
 import static org.firstinspires.ftc.teamcode.constants.Constants.CarouselConstants.Lift;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.util.MotorExEx;
 
 
-import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
-import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 
 public class CarouselSubsystem extends HardwareSubsystem {
@@ -51,15 +47,27 @@ public class CarouselSubsystem extends HardwareSubsystem {
 
     }
 
-    public void spin (boolean reversed) {
-        spin.set(reversed ? -Spin.value.SPEED : Spin.value.SPEED);
+    public void spinFast(boolean reversed) {
+        spin.set(reversed ? -Spin.value.FAST_SPEED : Spin.value.FAST_SPEED);
     }
-    public void spinForward () {
-        spin(false);
+
+    public void spinSlow(boolean reversed) {
+        spin.set(reversed ? -Spin.value.SLOW_SPEED : Spin.value.SLOW_SPEED);
     }
-    public void spinReversed () {
-        spin(true);
+
+    public void spinForwardFast() {
+        spinFast(false);
     }
+    public void spinReversedFast() {
+        spinFast(true);
+    }
+    public void spinForwardSlow() {
+        spinSlow(false);
+    }
+    public void spinReversedSlow() {
+        spinSlow(true);
+    }
+
 
     public void lift () {
         lift.turnToAngle(Lift.value.UP, AngleUnit.DEGREES);

@@ -44,6 +44,8 @@ import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MAX_VEL;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.MOTOR_VELO_PID;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller.RUN_USING_BUILT_IN_CONTROLLER;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Value.TELEOP_NORMAL;
+import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Drivetrain.Value.TELEOP_SLOWER;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.HEADING_PID;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.INITIAL_POS_MAYBE;
 import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Follower.LATERAL_MULTIPLIER;
@@ -88,6 +90,8 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     public void setSubsystem(String subsystem) {
         setName(subsystem);
     }
+
+    private double multiplier = 1;
 
 
 
@@ -361,6 +365,10 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
         return imu.getAngularOrientation().firstAngle;
     }
 
+    public void resetImu() {
+        imu.initialize(new BNO055IMU.Parameters());
+    }
+
     @Override
     public Double getExternalHeadingVelocity() {
         // To work around an SDK bug, use -zRotationRate in place of xRotationRate
@@ -438,12 +446,15 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     }
 
     public void drive(double x, double y, double rotate, boolean fineControl, boolean fieldCentric) {
+        x = x * multiplier;
+        y = y * multiplier;
+        rotate = rotate * multiplier;
         if (fieldCentric) driveFieldCentric(x, y, rotate, Math.toDegrees(getRawExternalHeading()));
         else driveRobotCentric(x, y, rotate, fineControl);
     }
 
     public void setSlow() {
-        setAchieveableMaxRPMFraction(DriveConstants.Drivetrain.Value.TELEOP_SLOWER);
+        multiplier = TELEOP_SLOWER;
 //        motors.get(0).set
 //        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_SLOW);
     }
@@ -454,7 +465,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     }
 
     public void setNormal() {
-        setAchieveableMaxRPMFraction(DriveConstants.Drivetrain.Value.TELEOP_NORMAL);
+        multiplier = TELEOP_NORMAL;
 //        controllerMecanumDrive.setMaxSpeed(DriveConstants.Drivetrain.Value.TELEOP_NORMAL);
     }
 

@@ -53,9 +53,10 @@ public class Constants {
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 58;
+                    SUS_POSITION = 58,
+                    SHARED_UP = 0;
             public enum Height {
-                HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED
+                HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED, SHARED_UP
             }
         }
     }
@@ -102,7 +103,8 @@ public class Constants {
                         POWER         = 1;
             }
             public static class Value {
-                public double SPEED                = 0.7; // power
+                public double FAST_SPEED = 1; // power
+                public double SLOW_SPEED = 0.4;
             }
 
 
@@ -261,9 +263,9 @@ public class Constants {
 
         public static class Controller {
             public double
-                    PID_TOLERANCE = 5,
+                    PID_TOLERANCE = 3,
                     AT_TARGET_POSITION_TOLERANCE = 2,
-                    KP            = 10,
+                    KP            = 15,
                     POWER         = 1,
                     RANGE         = 360; // Degrees
 
@@ -273,7 +275,9 @@ public class Constants {
                     FORWARD = 180, // Degrees
                     LEFT    = -90, // Degrees
                     RIGHT   = 90, // Degrees
-                    RETURN  = -2; // Degrees
+                    RETURN  = -2,
+                    SHARED_LEFT = -90,
+                    SHARED_RIGHT = 90; // Degrees
 
 //            public double INITIAL_POSITION = 0; // Degrees
         }
@@ -333,10 +337,12 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DOWN = 205, // Degrees
+                    DOWN = 210, // Degrees
                     HIGH = 70,
                     MID = 110,
-                    LOW = 120;
+                    LOW = 120,
+                    SHARED = 120,
+                    SHARED_UP = 100;
         }
 
     }

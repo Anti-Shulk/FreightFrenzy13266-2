@@ -78,6 +78,7 @@ public class ArmSubsystem extends HardwareSubsystem {
             case AUTO_MID: setDegrees(value.AUTO_MID); break;
             case AUTO_LOW: setDegrees(value.AUTO_LOW); break;
             case SHARED: setDegrees(value.SHARED); break;
+            case SHARED_UP: setDegrees(value.SHARED_UP); break;
         }
     }
 

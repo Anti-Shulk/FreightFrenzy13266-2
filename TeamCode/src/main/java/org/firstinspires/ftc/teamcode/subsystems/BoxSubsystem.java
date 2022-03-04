@@ -25,7 +25,8 @@ public class BoxSubsystem extends HardwareSubsystem{
             case AUTO_HIGH: moveHigh(); break;
             case AUTO_MID: moveMid(); break;
             case AUTO_LOW: moveLow(); break;
-            case SHARED: moveLow(); break;
+            case SHARED: moveShared(); break;
+            case SHARED_UP: moveSharedUp(); break;
         }
     }
     public void setHeight(Constants.ArmConstants.Value.Height height) {
@@ -46,5 +47,13 @@ public class BoxSubsystem extends HardwareSubsystem{
 
     public void moveLow() {
         boxServo.turnToAngle(value.LOW);
+    }
+
+    public void moveShared() {
+        boxServo.turnToAngle(value.SHARED);
+    }
+
+    public void moveSharedUp() {
+        boxServo.turnToAngle(value.SHARED_UP);
     }
 }

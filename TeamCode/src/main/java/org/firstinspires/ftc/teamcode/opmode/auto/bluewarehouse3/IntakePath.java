@@ -29,6 +29,7 @@ public class IntakePath extends Path {
     public Trajectory get(double xShift, double yShift, double intakeDistanceShift) {
         Trajectory loop2 = drive.trajectoryBuilder(new Pose2d(startPose.getX(), startPose.getY()), true)
                 .addDisplacementMarker(() -> new Thread(() -> {
+                    trapdoor.open();
                     autoCommands.sleep(1000);
                     ElapsedTime elapsedTime = new ElapsedTime();
                     double targetTime = elapsedTime.seconds() + 4;

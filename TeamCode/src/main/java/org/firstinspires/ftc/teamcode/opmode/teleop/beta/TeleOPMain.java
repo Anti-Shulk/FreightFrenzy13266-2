@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.beta;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.*;
 
+import org.firstinspires.ftc.teamcode.commands.CarouselCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
@@ -142,34 +144,55 @@ public class TeleOPMain extends CommandOpMode {
 
 
         command.add(() -> operator.get(button.LEFT_SHARED))
-                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveSharedLeft), false)
+                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenReleased(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenReleased(new TurretArmOutQuick(arm, turret, box, () -> {}), false);
+
         command.add(() -> operator.get(button.RIGHT_SHARED))
-                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveSharedRight), false)
+                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenReleased(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED))
+                .whenReleased(new TurretArmOutQuick(arm, turret, box, () -> {}), false);
 //                .whenReleased(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.HIGH), true);
 
         command.add(() -> operator.get(button.DOWN))
                 .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmInQuick(arm, turret, box), false);
 
+        command.add(() -> operator.get(button.SHARED_BOX_UP))
+                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
+                .whenPressed(new TurretArmOutQuick(arm, turret, box, () -> {}));
+
         command.add(() -> operator.get(button.LEFT))
                 .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
 
         command.add(() -> operator.get(button.RIGHT))
                 .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
 
         command.add(() -> operator.get(button.FORWARD))
                 .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
+                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
                 .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveForward), false);
 
         command.add(operator::getRightTouchingEdge)
                 .whileHeld(() -> telemetry.addLine("pressed"))
                 .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
 //                .whileHeld(() -> turret.setTargetDegrees())
-                .whileHeld(new TurretArmOutQuick(arm, turret, box, () -> turret.setDegrees(operator.getRightStickToDegrees())));
+                .whileHeld(new TurretArmOutQuick(arm, turret, box, () -> turret.addDegrees(operator.getRightX())));
+
+        command.add(() -> driver.get(button.RESET_IMU))
+                .whenPressed(() -> drive.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0))));
+
 
 
 
@@ -216,17 +239,13 @@ public class TeleOPMain extends CommandOpMode {
 
 
         command.add(() -> operator.get(button.CAROUSEL_LIFT))
-                .toggleWhenPressed(carousel::lift, carousel::drop)
-                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
+                .toggleWhenPressed(carousel::lift, carousel::drop);
 
         command.add(() -> operator.get(button.CAROUSEL_BLUE))
-                .whenPressed(carousel::spinForward)
-                .whenReleased(carousel::stop);
+                .whenPressed(new CarouselCommand(carousel, false), false);
 
         command.add(() -> operator.get(button.CAROUSEL_RED))
-                .whenPressed(carousel::spinReversed)
-                .whenReleased(carousel::stop);
+                .whenPressed(new CarouselCommand(carousel, true), false);
 
 //        command.add(() -> operator.get(GamepadKeys.Button.Y))
 //                .whileHeld(gripper::moveHigh);
