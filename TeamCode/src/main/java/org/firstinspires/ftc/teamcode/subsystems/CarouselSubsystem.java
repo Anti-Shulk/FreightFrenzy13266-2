@@ -55,6 +55,10 @@ public class CarouselSubsystem extends HardwareSubsystem {
         spin.set(reversed ? -Spin.value.SLOW_SPEED : Spin.value.SLOW_SPEED);
     }
 
+    public void spinAuto(boolean reversed) {
+        spin.set(reversed ? -Spin.value.SLOW_SPEED : Spin.value.AUTO_SPEED);
+    }
+
     public void spinForwardFast() {
         spinFast(false);
     }
@@ -66,6 +70,12 @@ public class CarouselSubsystem extends HardwareSubsystem {
     }
     public void spinReversedSlow() {
         spinSlow(true);
+    }
+    public void SpinForwardAuto() {
+        spinAuto(false);
+    }
+    public void spinReversedAuto() {
+        spinAuto(true);
     }
 
 

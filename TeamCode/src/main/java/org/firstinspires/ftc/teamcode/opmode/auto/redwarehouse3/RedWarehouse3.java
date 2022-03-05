@@ -122,17 +122,17 @@ public class RedWarehouse3 extends LinearOpMode {
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadPose = new Pose2d(-10, -41, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, -39, Math.toRadians(0));
                     break;
                 }
                 case CENTER: {
                     height = Constants.ArmConstants.Value.Height.AUTO_MID;
-                    preLoadPose = new Pose2d(-19, -43, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-19, -41, Math.toRadians(0));
                     break;
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadPose = new Pose2d(-10, -35, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, -33, Math.toRadians(0));
                     break;
                 }
             }
@@ -190,7 +190,7 @@ public class RedWarehouse3 extends LinearOpMode {
 
             xShift -= 2;
             yShift -= 4.5;
-            intakeDistanceShift += 1.2;
+            intakeDistanceShift += 1.4;
             //if (i == 4) yShift += 0;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));

@@ -1,11 +1,16 @@
 package org.firstinspires.ftc.teamcode.opmode.auto.redCarousel3;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.opmode.auto.AutoCommands;
@@ -94,26 +99,27 @@ public class RedCarousel3 extends LinearOpMode {
 
 
         Constants.ArmConstants.Value.Height height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-        Vector2d preLoadVector = new Vector2d(-35, -20);
+        Vector2d preLoadVector = new Vector2d(-42, -20);
 
 
         while (!isStarted()) {
             telemetry.addData("auto Position", detector.getAnalysis());
+            telemetry.addData("value", detector.getNumber());
             telemetry.update();
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadVector = new Vector2d(-35, -20);
+                    preLoadVector = new Vector2d(-40, -20);
                     break;
                 }
                 case CENTER: {
                     height = Constants.ArmConstants.Value.Height.AUTO_MID;
-                    preLoadVector = new Vector2d(-35, -20);
+                    preLoadVector = new Vector2d(-39, -20);
                     break;
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadVector  = new Vector2d(-35, -20);
+                    preLoadVector  = new Vector2d(-34, -20);
                     break;
                 }
             }
@@ -122,22 +128,34 @@ public class RedCarousel3 extends LinearOpMode {
         waitForStart();
 
 
+        TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+        TrajectoryAccelerationConstraint accel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+
+        TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 10; // value
+        TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 10; // value
+
         if (isStopRequested()) return;
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .run(carousel::lift)
-                .run(carousel::spinForwardSlow)
-                .lineToLinearHeading(new Pose2d(-57, -60.5, Math.toRadians(145)))
+                .run(carousel::spinReversedAuto)
+//                .setReversed(true)
+//                .lineToLinearHeading(new Pose2d(-66, -57, Math.toRadians(-65)), vel, accel)
+//                .strafeRight(2)
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(-66, -50, Math.toRadians(-90)), Math.toRadians(-90))
+                .forward(4.5, slowVel, slowAccel)
                 .waitSeconds(3)
                 .run(carousel::stop)
                 .run(carousel::drop)
 //                .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .lineToSplineHeading(new Pose2d(-57, -20, Math.toRadians(180)))
-                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward))
+                .run(() -> commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward)))
+                .lineToSplineHeading(new Pose2d(-45, -20, Math.toRadians(180)), vel, accel)
 //                .lineToLinearHeading(preLoadVector)
-                .splineToConstantHeading(preLoadVector, Math.toRadians(0))
+                .splineToConstantHeading(preLoadVector, Math.toRadians(0), vel, accel)
+                .run(trapdoor::open)
                 .setReversed(false)
-                .splineTo(new Vector2d(-59, -29), Math.toRadians(-90))
+                .splineTo(new Vector2d(-65, -28), Math.toRadians(-90), vel, accel)
                 .build();
 
         waitForStart();
@@ -145,6 +163,7 @@ public class RedCarousel3 extends LinearOpMode {
             arm.setHeight(height);
             box.setHeight(height);
             drive.followTrajectorySequence(trajSeq);
+            commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
         }
 
     }

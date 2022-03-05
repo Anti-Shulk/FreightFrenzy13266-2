@@ -22,7 +22,8 @@ public class RightSideMissingDetection extends OpenCvPipeline {
     public static int boxWidth = 640;
     public static int boxHeight = 360;
 
-    public static double THRESHOLD =  -125;
+    public volatile static double THRESHOLD =  -121.5; //125/
+    private volatile int maxOneTwo;
 
     private final Point region1 = new Point(point1x,point1y);
     private final Point region2 = new Point(point2x,point2y);
@@ -224,7 +225,7 @@ public class RightSideMissingDetection extends OpenCvPipeline {
          * Find the max of the 3 averages
          */
         boolean isYellow = false;
-        int maxOneTwo = Math.max(avg1, avg2);
+        maxOneTwo = Math.max(avg1, avg2);
 //        int max = Math.max(maxOneTwo, avg3);
         if (maxOneTwo > THRESHOLD) {
             isYellow = true;
@@ -289,5 +290,8 @@ public class RightSideMissingDetection extends OpenCvPipeline {
     public DuckPosition getAnalysis()
     {
         return this.position;
+    }
+    public double getNumber() {
+        return maxOneTwo;
     }
 }

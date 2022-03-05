@@ -46,7 +46,7 @@ public class Constants {
             public double
                     AUTO_HIGH = 70,
                     AUTO_MID = 40,
-                    AUTO_LOW = 0,
+                    AUTO_LOW = 5,
                     HIGH          = 70, // Degrees
                     MID           = 32, // Degrees
                     LOW           = 0, // Degrees
@@ -105,6 +105,7 @@ public class Constants {
             public static class Value {
                 public double FAST_SPEED = 1; // power
                 public double SLOW_SPEED = 0.4;
+                public double AUTO_SPEED = 0.2;
             }
 
 

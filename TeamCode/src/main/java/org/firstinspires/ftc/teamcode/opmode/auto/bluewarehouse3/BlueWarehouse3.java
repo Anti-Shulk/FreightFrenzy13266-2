@@ -126,7 +126,7 @@ public class BlueWarehouse3 extends LinearOpMode {
                 }
                 case CENTER: {
                     height = Constants.ArmConstants.Value.Height.AUTO_MID;
-                    preLoadPose = new Pose2d(-10, 43, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, 42, Math.toRadians(0));
                     break;
                 }
                 case RIGHT: {
@@ -189,9 +189,9 @@ public class BlueWarehouse3 extends LinearOpMode {
             }).start();
 
 
-            xShift += 3.5;
+            xShift += 3;
             yShift += 4.7;
-            intakeDistanceShift += .2;
+            intakeDistanceShift += .1;
             if (i == 4) yShift += 2;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
