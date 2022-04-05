@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
 import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
@@ -18,6 +19,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import java.util.function.BooleanSupplier;
 
 @Autonomous
+@Disabled
 @Config
 public class BlueCarousel extends CommandOpMode {
     public static Vector2d low = new Vector2d(-43, 20);

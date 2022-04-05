@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.auto;
 
 import com.acmerobotics.roadrunner.trajectory.MarkerCallback;
+import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -53,12 +54,13 @@ public class AutoCommands {
             }
         }).start();
     }
-    public void runCommandGroup(SequentialCommandGroup sequentialCommandGroup) {
-            if (!isStopRequested()) sequentialCommandGroup.initialize();
+    public void runCommandGroup(CommandBase command) {
+            if (!isStopRequested()) command.initialize();
 
-            while (!isStopRequested() && !sequentialCommandGroup.isFinished()) {
-                sequentialCommandGroup.execute();
+            while (!isStopRequested() && !command.isFinished()) {
+                command.execute();
             }
+            command.end(false);
     }
 
     public final void sleep(long milliseconds) {

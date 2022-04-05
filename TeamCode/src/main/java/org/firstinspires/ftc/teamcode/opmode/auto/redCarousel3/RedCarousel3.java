@@ -109,7 +109,7 @@ public class RedCarousel3 extends LinearOpMode {
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadVector = new Vector2d(-40, -20);
+                    preLoadVector = new Vector2d(-38, -20);
                     break;
                 }
                 case CENTER: {
@@ -131,38 +131,45 @@ public class RedCarousel3 extends LinearOpMode {
         TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
         TrajectoryAccelerationConstraint accel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
 
-        TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 10; // value
-        TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 10; // value
+        TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+        TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
 
         if (isStopRequested()) return;
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                .run(carousel::lift)
                 .run(carousel::spinReversedAuto)
+                .run(carousel::lift)
 //                .setReversed(true)
 //                .lineToLinearHeading(new Pose2d(-66, -57, Math.toRadians(-65)), vel, accel)
 //                .strafeRight(2)
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(-66, -50, Math.toRadians(-90)), Math.toRadians(-90))
-                .forward(4.5, slowVel, slowAccel)
+                .splineToSplineHeading(new Pose2d(-66, -50, Math.toRadians(-90)), Math.toRadians(-90), vel, accel)
+                .forward(5, slowVel, slowAccel)
                 .waitSeconds(3)
                 .run(carousel::stop)
                 .run(carousel::drop)
+                .back(10)
+                .build();
 //                .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .run(() -> commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward)))
+        TrajectorySequence trajSeq2 = drive.trajectorySequenceBuilder(trajSeq.end())
+//                .run(() -> commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward)))
+                .setReversed(true)
                 .lineToSplineHeading(new Pose2d(-45, -20, Math.toRadians(180)), vel, accel)
 //                .lineToLinearHeading(preLoadVector)
                 .splineToConstantHeading(preLoadVector, Math.toRadians(0), vel, accel)
                 .run(trapdoor::open)
                 .setReversed(false)
-                .splineTo(new Vector2d(-65, -28), Math.toRadians(-90), vel, accel)
+                .splineTo(new Vector2d(-60, -31), Math.toRadians(-90), vel, accel)
                 .build();
 
         waitForStart();
         if (!isStopRequested()) {
+            carousel.lift();
             arm.setHeight(height);
             box.setHeight(height);
             drive.followTrajectorySequence(trajSeq);
+            commands.runCommandGroup(new TurretArmOutQuick(arm, turret, box, turret::moveForward, true));
+            drive.followTrajectorySequence(trajSeq2);
             commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
         }
 

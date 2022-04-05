@@ -121,7 +121,7 @@ public class BlueWarehouse3 extends LinearOpMode {
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadPose = new Pose2d(-10, 41, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, 42, Math.toRadians(0));
                     break;
                 }
                 case CENTER: {
@@ -131,7 +131,7 @@ public class BlueWarehouse3 extends LinearOpMode {
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadPose = new Pose2d(-10, 38, Math.toRadians(0));
+                    preLoadPose = new Pose2d(-10, 37, Math.toRadians(0));
                     break;
                 }
             }
@@ -173,7 +173,7 @@ public class BlueWarehouse3 extends LinearOpMode {
         arm.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
         box.setHeight(Constants.ArmConstants.Value.Height.AUTO_HIGH);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             commands.runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveLeft, true));
 
             Trajectory outtakePath = new OuttakePath(drive, secondPath.end()).get(xShift, yShift);
@@ -191,8 +191,8 @@ public class BlueWarehouse3 extends LinearOpMode {
 
             xShift += 3;
             yShift += 4.7;
-            intakeDistanceShift += .1;
-            if (i == 4) yShift += 2;
+            intakeDistanceShift += 0;
+            //if (i == 4) yShift += 2;
 
             drive.followTrajectory(new IntakePath(drive, outtakePath.end(), commands, intake, trapdoor, sensor).get(xShift , yShift, intakeDistanceShift));
 

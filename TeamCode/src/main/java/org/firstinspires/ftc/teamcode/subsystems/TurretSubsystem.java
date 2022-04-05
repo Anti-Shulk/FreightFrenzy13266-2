@@ -17,6 +17,7 @@ public class TurretSubsystem extends HardwareSubsystem {
     private int targetTicks;
 
     private int adder;
+    private boolean flipped = false;
 
     public TurretSubsystem() {
 
@@ -40,7 +41,10 @@ public class TurretSubsystem extends HardwareSubsystem {
     }
 
     public void moveForward() {
-        setDegrees(value.FORWARD);
+        setDegrees(flipped ? value.NEGATIVE_FORWARD : value.FORWARD);
+    }
+    public void moveForwardReversed() {
+        setDegrees(value.NEGATIVE_FORWARD);
     }
 
     public void moveLeft() {
@@ -57,6 +61,10 @@ public class TurretSubsystem extends HardwareSubsystem {
 
     public void moveSharedRight() {
         setDegrees(value.SHARED_RIGHT);
+    }
+
+    public void toggleFlipped() {
+        flipped = !flipped;
     }
 
     public void moveIn() {

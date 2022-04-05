@@ -60,6 +60,8 @@ public class ArmSubsystem extends HardwareSubsystem {
         setDegrees(value.INITIAL);
     }
 
+
+
     public void moveShared() {
         setDegrees(value.SHARED);
     }
@@ -84,10 +86,8 @@ public class ArmSubsystem extends HardwareSubsystem {
 
     public void moveToNonSusHeight() {
         switch (height) {
-            case MID: setDegrees(value.MID); break;
             case HIGH: setDegrees(value.HIGH); break;
             case AUTO_HIGH: setDegrees(value.AUTO_HIGH); break;
-            case AUTO_MID: setDegrees(value.AUTO_MID); break;
             default: setDegrees(value.SUS_POSITION); break;
         }
     }

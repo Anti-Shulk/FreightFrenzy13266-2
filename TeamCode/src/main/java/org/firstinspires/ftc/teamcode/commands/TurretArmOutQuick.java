@@ -73,10 +73,8 @@ public class TurretArmOutQuick extends SequentialCommandGroupEx {
                         new SequentialCommandGroup( // if false
                                 run(arm::moveToNonSusHeight),
                                 waitUntil(arm::isNotSus),
-                                waitMillis(100L)),
+                                waitMillis(200L)),
                         arm::isOut), // boolena supplier
-//                run(arm::setTeleOpPower),
-//                run(arm::moveToHeight),
 
 
                 run(box::moveToHeight),

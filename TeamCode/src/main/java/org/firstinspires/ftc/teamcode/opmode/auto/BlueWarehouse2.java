@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.trajectory.MarkerCallback;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuild
 import java.util.function.BooleanSupplier;
 
 @Autonomous
+@Disabled
 // TODO: make an auto selectoer
 // TODO: make a robot container
 public class BlueWarehouse2 extends LinearOpMode {

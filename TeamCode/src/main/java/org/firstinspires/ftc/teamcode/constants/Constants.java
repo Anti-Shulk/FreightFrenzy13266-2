@@ -35,9 +35,9 @@ public class Constants {
 
         public static class Controller {
             public double
-                    TOLERANCE     = 5,
-                    POSITION_TOLERANCE = 5,
-                    KP            = 6,
+                    TOLERANCE     = 8,
+                    POSITION_TOLERANCE = 8,
+                    KP            = 4,
                     TELEOP_POWER = 1,
                     DROP_POWER = 1,
                     AUTO_POWER     = 1;
@@ -45,15 +45,15 @@ public class Constants {
         public static class Value {
             public double
                     AUTO_HIGH = 70,
-                    AUTO_MID = 40,
+                    AUTO_MID = 30,
                     AUTO_LOW = 5,
                     HIGH          = 70, // Degrees
-                    MID           = 32, // Degrees
+                    MID           = 30, // Degrees
                     LOW           = 0, // Degrees
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 58,
+                    SUS_POSITION = 60,
                     SHARED_UP = 0;
             public enum Height {
                 HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED, SHARED_UP
@@ -103,9 +103,11 @@ public class Constants {
                         POWER         = 1;
             }
             public static class Value {
-                public double FAST_SPEED = 1; // power
-                public double SLOW_SPEED = 0.4;
-                public double AUTO_SPEED = 0.2;
+                public double FAST_SPEED = 3000; // power
+                public double SLOW_SPEED = 2000;
+                public double AUTO_SPEED = 1300;
+                public int SLOW_TO_FAST_WAIT = 2000;
+                public int HOW_LONG_IT_STAYS_FAST = 1500;
             }
 
 
@@ -123,8 +125,8 @@ public class Constants {
             }
             public static class Value {
                 public double
-                        UP                   = 42, // Degrees
-                        DOWN                 = 146; // Degrees
+                        UP                   = 170, // Degrees
+                        DOWN                 = 75; // Degrees
             }
 
 
@@ -274,6 +276,7 @@ public class Constants {
         public static class Value {
             public double
                     FORWARD = 180, // Degrees
+                    NEGATIVE_FORWARD = -180, // Degrees
                     LEFT    = -90, // Degrees
                     RIGHT   = 90, // Degrees
                     RETURN  = -2,
@@ -338,10 +341,10 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DOWN = 210, // Degrees
+                    DOWN = 225, // Degrees
                     HIGH = 70,
-                    MID = 110,
-                    LOW = 120,
+                    MID = 120,
+                    LOW = 130,
                     SHARED = 120,
                     SHARED_UP = 100;
         }

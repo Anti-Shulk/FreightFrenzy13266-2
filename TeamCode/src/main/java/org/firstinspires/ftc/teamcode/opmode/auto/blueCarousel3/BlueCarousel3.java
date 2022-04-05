@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.opmode.auto.blueCarousel3;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -30,7 +32,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 // TODO: make an auto selectoer
 // TODO: make a robot container
 public class BlueCarousel3 extends LinearOpMode {
-    Pose2d startPose = new Pose2d(-40.3, 63.2, Math.toRadians(-90));
+    Pose2d startPose = new Pose2d(-35, 63, Math.toRadians(-90));
     @Override
     public void runOpMode() throws InterruptedException {
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
@@ -101,11 +103,12 @@ public class BlueCarousel3 extends LinearOpMode {
 
         while (!isStarted()) {
             telemetry.addData("auto Position", detector.getAnalysis());
+            telemetry.addData("value", detector.getNumber());
             telemetry.update();
             switch (detector.getAnalysis()) {
                 case LEFT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_LOW;
-                    preLoadVector = new Vector2d(-35, 20);
+                    preLoadVector = new Vector2d(-36, 17);
                     break;
                 }
                 case CENTER: {
@@ -115,7 +118,7 @@ public class BlueCarousel3 extends LinearOpMode {
                 }
                 case RIGHT: {
                     height = Constants.ArmConstants.Value.Height.AUTO_HIGH;
-                    preLoadVector  = new Vector2d(-35, 20);
+                    preLoadVector  = new Vector2d(-32, 20);
                     break;
                 }
             }
@@ -124,22 +127,32 @@ public class BlueCarousel3 extends LinearOpMode {
         waitForStart();
 
 
+        TrajectoryVelocityConstraint vel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+        TrajectoryAccelerationConstraint accel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+
+        TrajectoryVelocityConstraint slowVel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+        TrajectoryAccelerationConstraint slowAccel = (v, pose2d, pose2d1, pose2d2) -> 15; // value
+
         if (isStopRequested()) return;
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .run(carousel::lift)
-                .run(carousel::spinForwardFast)
-                .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
+                .run(carousel::spinForwardAuto)
+                .lineToLinearHeading(new Pose2d(-60, 62, Math.toRadians(-145)), vel, accel)
                 .waitSeconds(3)
                 .run(carousel::stop)
                 .run(carousel::drop)
+                .lineToSplineHeading(new Pose2d(-59, 40, Math.toRadians(-145)), vel, accel)
+                .build();
 //                .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
-                .lineToSplineHeading(new Pose2d(-57, 20, Math.toRadians(-180)))
-                .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward))
+        TrajectorySequence trajSeq2 = drive.trajectorySequenceBuilder(trajSeq.end())
+                .setReversed(true)
+                .lineToSplineHeading(new Pose2d(-45, 20, Math.toRadians(180)), vel, accel)
 //                .lineToLinearHeading(preLoadVector)
-                .splineToConstantHeading(preLoadVector, Math.toRadians(0))
+                .splineToConstantHeading(preLoadVector, Math.toRadians(0), vel, accel)
+                .run(trapdoor::open)
                 .setReversed(false)
-                .splineTo(new Vector2d(-59, 29), Math.toRadians(90))
+                .splineTo(new Vector2d(-65, 30), Math.toRadians(90), vel, accel)
                 .build();
 
         waitForStart();
@@ -147,6 +160,9 @@ public class BlueCarousel3 extends LinearOpMode {
             arm.setHeight(height);
             box.setHeight(height);
             drive.followTrajectorySequence(trajSeq);
+            commands.runCommandGroup(new TurretArmOutQuick(arm, turret, box, turret::moveForwardReversed, true));
+            drive.followTrajectorySequence(trajSeq2);
+            commands.runCommandGroup(new TurretArmInQuick(arm, turret, box));
         }
 
     }
