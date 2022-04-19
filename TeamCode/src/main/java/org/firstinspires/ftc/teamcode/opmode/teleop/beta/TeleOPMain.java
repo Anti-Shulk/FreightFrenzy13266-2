@@ -41,28 +41,28 @@ public class TeleOPMain extends CommandOpMode {
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
 //        ArmSubsystem arm = new ArmSubsystem();
-        CarouselSubsystem carousel = new CarouselSubsystem();
+//        CarouselSubsystem carousel = new CarouselSubsystem();
 //        GripperSubsystem gripper = new GripperSubsystem();
-        IntakeSubsystem intake = new IntakeSubsystem();
-        TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
+//        IntakeSubsystem intake = new IntakeSubsystem();
+  //      TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
 //        TurretSubsystem turret = new TurretSubsystem();
-        ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
+ //       ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
 //        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
 //        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
-        BoxSubsystem box = new BoxSubsystem();
+  //      BoxSubsystem box = new BoxSubsystem();
 
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry,
-                drive,
-                carousel,
+                drive);
+//                carousel,
 //                gripper,
-                intake,
-                trapdoor,
+                //intake,
+               // trapdoor,
 //                arm,
 //                turret,
-                box
-        );
+               // box
+
 
 
 //        command.addDefault(() -> telemetry.addData("Driver Stick",
@@ -97,19 +97,19 @@ public class TeleOPMain extends CommandOpMode {
 //                .whenPressed(trapdoor::open)
 //                .whenReleased(trapdoor::close);
 
-        command.add(() -> driver.get(button.INTAKE))
-                .whileHeld(new IntakeCommand(intake, trapdoor, sensor), true)
-                .whenReleased(intake::stop);
+   //     command.add(() -> driver.get(button.INTAKE))
+       //         .whileHeld(new IntakeCommand(intake, trapdoor, sensor), true)
+       //         .whenReleased(intake::stop);
 
-        command.add(() -> driver.get(button.OUTTAKE))
-                .whenPressed(intake::outtake)
-                .whenReleased(intake::stop);
+     //   command.add(() -> driver.get(button.OUTTAKE))
+      //          .whenPressed(intake::outtake)
+       //         .whenReleased(intake::stop);
 
-        command.add(() -> operator.get(button.DROP))
-                .whenPressed(trapdoor::open);
+     //   command.add(() -> operator.get(button.DROP))
+     //           .whenPressed(trapdoor::open);
 
-        command.add(() -> operator.get(button.CLOSE))
-                .whenPressed(trapdoor::close);
+    //    command.add(() -> operator.get(button.CLOSE))
+            //    .whenPressed(trapdoor::close);
 
 //        command.add(()-> driver.get(button.GRIPPER_GRAB))
 //                .whenPressed(gripper::close)
@@ -246,16 +246,28 @@ public class TeleOPMain extends CommandOpMode {
 //                .whenPressed(turret::moveRight);
 
 
-        command.add(() -> operator.get(button.CAROUSEL_LIFT))
-                .toggleWhenPressed(carousel::lift, carousel::drop);
 
-        command.add(() -> operator.get(button.CAROUSEL_BLUE))
-                .whenPressed(new CarouselCommand(carousel, false), true)
-                .whenReleased(new CarouselStopCommand(carousel));
+        /** carousel */
+//        command.add(() -> operator.get(button.CAROUSEL_LIFT))
+//                .toggleWhenPressed(carousel::lift, carousel::drop);
+//
+//        command.add(() -> operator.get(button.CAROUSEL_BLUE))
+//                .whenPressed(new CarouselCommand(carousel, false), true)
+//                .whenReleased(new CarouselStopCommand(carousel));
+//
+//        command.add(() -> operator.get(button.CAROUSEL_RED))
+//                .whenPressed(new CarouselCommand(carousel, true), true)
+//                .whenReleased(new CarouselStopCommand(carousel));
+//
 
-        command.add(() -> operator.get(button.CAROUSEL_RED))
-                .whenPressed(new CarouselCommand(carousel, true), true)
-                .whenReleased(new CarouselStopCommand(carousel));
+
+
+
+
+
+
+
+
 //        command.add(() -> operator.get(GamepadKeys.Button.Y))
 //                .whileHeld(gripper::moveHigh);
 //        command.add(() -> operator.get(GamepadKeys.Button.BACK))

@@ -155,7 +155,7 @@ public class Constants {
             public boolean REVERSED     = true;
             public double
                     RPM           = 435,
-                    CPR           = ;
+                    CPR           = 384.539792;
         }
 
         public static class Controller {
