@@ -37,7 +37,7 @@ public class IntakePath extends Path {
 //                    ElapsedTime elapsedTime = new ElapsedTime();
 //                    double targetTime = elapsedTime.seconds() + 1000000 ;
 //                    while (targetTime > elapsedTime.seconds()) {
-                    autoCommands.runCommandGroup(new IntakeCommandBetter(intake, trapdoor, sensor));
+                    autoCommands.runCommandGroup(new IntakeCommandBetter(intake, trapdoor, sensor), 2);
 //                    }
                     intake.stop();
                 }).start())
@@ -46,7 +46,7 @@ public class IntakePath extends Path {
                 .splineToConstantHeading(new Vector2d(17 + xShift, -79 + yShift), Math.toRadians(0))
                // .addDisplacementMarker(() -> drive.setPoseEstimate(new Pose2d(drive.getPoseEstimate().getX(), -73 + yShift + 2, // This number is how far it will be from thw wall so that it doesnt hit the barrier
                   //      drive.getPoseEstimate().getHeading())))
-                .forward(25 + xShift + intakeDistanceShift)
+                .forward(30 + xShift + intakeDistanceShift)
 //                .splineToConstantHeading(new Vector2d(39 + xShift + intakeDistanceShift, -69 + yShift), Math.toRadians(0))
                 .build();
 

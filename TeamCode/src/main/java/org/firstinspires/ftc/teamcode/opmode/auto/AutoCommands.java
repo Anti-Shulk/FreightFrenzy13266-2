@@ -62,6 +62,16 @@ public class AutoCommands {
             }
             command.end(false);
     }
+    public void runCommandGroup(CommandBase command, double timeout) {
+        ElapsedTime elapsedTime = new ElapsedTime();
+
+        if (!isStopRequested()) command.initialize();
+
+        while (!isStopRequested() && !command.isFinished() && elapsedTime.seconds() < timeout) {
+            command.execute();
+        }
+        command.end(false);
+    }
 
     public final void sleep(long milliseconds) {
         try {

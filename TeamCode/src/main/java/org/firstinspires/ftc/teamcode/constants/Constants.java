@@ -42,18 +42,31 @@ public class Constants {
                     DROP_POWER = 1,
                     AUTO_POWER     = 1;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
         public static class Value {
             public double
                     AUTO_HIGH = 70,
-                    AUTO_MID = 30,
-                    AUTO_LOW = 5,
+                    AUTO_MID = 24,
+                    AUTO_LOW = 3,
                     HIGH          = 70, // Degrees
                     MID           = 30, // Degrees
                     LOW           = 0, // Degrees
 //                    INTAKE        = 0, // Degrees
                     SHARED        = 0, // Degrees
                     INITIAL = 0,
-                    SUS_POSITION = 60,
+                    SUS_POSITION = 67,
                     SHARED_UP = 0;
             public enum Height {
                 HIGH, MID, LOW, AUTO_HIGH, AUTO_MID, AUTO_LOW, SHARED, SHARED_UP
@@ -130,6 +143,37 @@ public class Constants {
             }
 
 
+        }
+    }
+    public static class liftConstants {
+        public static Hardware hardware = new Hardware();
+        public static Controller controller = new Controller();
+        public static Value value = new Value();
+
+        public static class Hardware {
+            public String ID            = "armMotor";
+            public boolean REVERSED     = true;
+            public double
+                    RPM           = 435,
+                    CPR           = ;
+        }
+
+        public static class Controller {
+            public double
+                    TOLERANCE     = 8,
+                    POSITION_TOLERANCE = 8,
+                    KP            = 4,
+                    kI            = 0,
+                    kD            = 0,
+                    kF            = 0,
+                    POWER = 0.4;
+        }
+        public static class Value {
+            public double
+                    HIGH          = 70, // Degrees
+                    MID           = 30, // Degrees
+                    LOW           = 0, // Degrees
+                    INITIAL = 0;
         }
     }
 
@@ -341,12 +385,12 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DOWN = 225, // Degrees
-                    HIGH = 70,
-                    MID = 120,
+                    DOWN = 47, // Degrees
+                    HIGH = 200,
+                    MID = 150,
                     LOW = 130,
-                    SHARED = 120,
-                    SHARED_UP = 100;
+                    SHARED = 150,
+                    SHARED_UP = 170;
         }
 
     }

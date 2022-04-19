@@ -35,7 +35,7 @@ public class IntakePath extends Path {
 //                    ElapsedTime elapsedTime = new ElapsedTime();
 //                    double targetTime = elapsedTime.seconds() + 1000000 ;
 //                    while (targetTime > elapsedTime.seconds()) {
-                    autoCommands.runCommandGroup(new IntakeCommandBetter(intake, trapdoor, sensor));
+                    autoCommands.runCommandGroup(new IntakeCommandBetter(intake, trapdoor, sensor), 2);
 //                    }
                     intake.stop();
                 }).start())

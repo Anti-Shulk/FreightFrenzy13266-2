@@ -2,9 +2,10 @@ package org.firstinspires.ftc.teamcode.constants;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
+@Disabled
 @Config
 public class RoadrunnerTuning {
     //TODO: fix this (unless ftcdashbord thing doens twork)

@@ -5,6 +5,7 @@ import static org.firstinspires.ftc.teamcode.constants.RoadrunnerTuning.backAndF
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
@@ -26,6 +27,7 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 //@Config
+@Disabled
 @Autonomous(group = "drive")
 public class BackAndForth extends LinearOpMode {
 

@@ -88,7 +88,7 @@ public class DriveConstants {
              * These are Speeds that can be used to control the drivetrain when NOT using Localization,
              * Trajectory generation, and Path following
              */
-            public static double TELEOP_SLOWER = 0.2;
+            public static double TELEOP_SLOWER = 0.3;
             public static double TELEOP_NORMAL = 1;
             public static double TELEOP_SLOW = 0.5;
             public static boolean FINE_CONTROL = true;
@@ -156,8 +156,8 @@ public class DriveConstants {
          * You are free to raise this on your own if you would like. It is best determined through experimentation.
          * </p>
          */
-        public static double MAX_VEL       = 30;
-        public static double MAX_ACCEL     = 40;
+        public static double MAX_VEL       = 33;
+        public static double MAX_ACCEL     = 43;
         public static double MAX_ANG_VEL   = Math.toRadians(300.704976);
         public static double MAX_ANG_ACCEL = Math.toRadians(300.704976);
 

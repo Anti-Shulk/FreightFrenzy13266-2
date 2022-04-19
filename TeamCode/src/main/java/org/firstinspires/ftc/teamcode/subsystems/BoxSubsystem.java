@@ -15,6 +15,7 @@ public class BoxSubsystem extends HardwareSubsystem{
     public BoxSubsystem() {
         boxServo = new SimpleServo(hardwareMap, hardware.ID, hardware.MIN_ANGLE, hardware.MAX_ANGLE);
         boxServo.turnToAngle(value.DOWN);
+        boxServo.setInverted(hardware.REVERSED);
     }
 
     public void moveToHeight() {
