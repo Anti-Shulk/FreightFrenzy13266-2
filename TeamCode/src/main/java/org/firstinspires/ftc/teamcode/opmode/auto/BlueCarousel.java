@@ -47,12 +47,12 @@ public class BlueCarousel extends CommandOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                .run(carousel::lift)
+//                .run(carousel::lift)
                 .run(carousel::spinForwardFast)
                 .lineToLinearHeading(new Pose2d(-57, 60.5, Math.toRadians(-145)))
                 .waitSeconds(3)
                 .run(carousel::stop)
-                .run(carousel::drop)
+//                .run(carousel::drop)
                 .lineToLinearHeading(new Pose2d(-50, 20, Math.toRadians(-180)))
                 .runCommandGroupAsThread(new TurretArmOutQuick(arm, turret, box, turret::moveForward))
                 .lineToLinearHeading(new Pose2d(selected, Math.toRadians(-180)))

@@ -13,7 +13,7 @@ public class IntakeCommand extends SequentialCommandGroupEx{
         addCommands(new ConditionalCommand(
                         new SequentialCommandGroup( // runs if something is detected
                                 run(trapdoor::close),
-                                waitMillis(700L),
+                                waitMillis(400L),
                                 run(intake::outtake)
 
                         ),

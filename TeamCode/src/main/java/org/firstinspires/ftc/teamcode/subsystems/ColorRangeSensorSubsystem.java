@@ -19,5 +19,12 @@ public class ColorRangeSensorSubsystem extends HardwareSubsystem {
     @Override
     public void periodic() {
         telemetry.addData("sensor Distance", sensor.getDistance(DistanceUnit.MM));
+        telemetry.addData("Red", sensor.red());
+        telemetry.addData("Blue", sensor.blue());
+        telemetry.addData("Green", sensor.green());
+        telemetry.addData("Alpha", sensor.alpha());
+        telemetry.addData("ARGB", sensor.argb());
+        telemetry.addData("Light Detected", sensor.getLightDetected());
+        telemetry.addData("Raw Light Detected", sensor.getRawLightDetected());
     }
 }

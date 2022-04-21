@@ -20,7 +20,7 @@ public class CarouselSubsystem extends HardwareSubsystem {
 
 //    private CRServo spin;
     private DcMotorEx spin;
-    private ServoEx lift;
+//    private ServoEx lift;
 
 //    public CarouselSubsystem(HardwareMap hardwareMap) {
 ////        spin = new CRServo(hardwareMap, Spin.hardware.ID);
@@ -43,8 +43,8 @@ public class CarouselSubsystem extends HardwareSubsystem {
 //        spin2.setRunMode(MotorEx.RunMode.PositionControl);
         spin.setVelocity(0);
 
-        lift = new SimpleServo(hardwareMap, Lift.hardware.ID, Lift.hardware.MIN_ANGLE, Lift.hardware.MAX_ANGLE);
-        lift.setInverted(false);
+//        lift = new SimpleServo(hardwareMap, Lift.hardware.ID, Lift.hardware.MIN_ANGLE, Lift.hardware.MAX_ANGLE);
+//        lift.setInverted(false);
     }
 
     @Override
@@ -85,10 +85,10 @@ public class CarouselSubsystem extends HardwareSubsystem {
 
 
     public void lift () {
-        lift.turnToAngle(Lift.value.UP, AngleUnit.DEGREES);
+//        lift.turnToAngle(Lift.value.UP, AngleUnit.DEGREES);
     }
     public void drop () {
-        lift.turnToAngle(Lift.value.DOWN, AngleUnit.DEGREES);
+//        lift.turnToAngle(Lift.value.DOWN, AngleUnit.DEGREES);
     }
 
     public void stop() {

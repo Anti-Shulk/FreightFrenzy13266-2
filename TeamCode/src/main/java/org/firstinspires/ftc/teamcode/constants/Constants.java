@@ -16,6 +16,8 @@ public class Constants {
     public static IntakeLiftConstants intakeLiftConstants;
     public static BoxConstants boxConstants;
     public static ColorRangeSensorConstants colorRangeSensorConstants;
+    public static LiftServoConstants liftServoConstants;
+    public static LiftMotorConstants liftMotorConstants;
     
 
 
@@ -145,17 +147,20 @@ public class Constants {
 
         }
     }
-    public static class liftConstants {
+    public static class LiftMotorConstants {
         public static Hardware hardware = new Hardware();
         public static Controller controller = new Controller();
-        public static Value value = new Value();
+        public static Position position = new Position();
+        public static Speed speed = new Speed();
 
         public static class Hardware {
-            public String ID            = "armMotor";
-            public boolean REVERSED     = true;
+            public String LEFT_ID = "leftLiftMotor";
+            public String RIGHT_ID = "rightLiftMotor";
+            public boolean LEFT_REVERSED = false;
+            public boolean RIGHT_REVERSED = true;
             public double
                     RPM           = 435,
-                    CPR           = 384.539792;
+                    CPR           = 384.539792388;
         }
 
         public static class Controller {
@@ -165,15 +170,42 @@ public class Constants {
                     KP            = 4,
                     kI            = 0,
                     kD            = 0,
-                    kF            = 0,
-                    POWER = 0.4;
+                    kF            = 0;
         }
-        public static class Value {
+        public static class Position {
             public double
-                    HIGH          = 70, // Degrees
-                    MID           = 30, // Degrees
-                    LOW           = 0, // Degrees
-                    INITIAL = 0;
+                    HIGH          = 1000, // Degrees
+                    MID           = 600, // Degrees
+                    LOW           = 100, // Degrees
+                    INITIAL = 0,
+                    SHARED_HIGH = 400,
+                    SHARED_LOW = 100;
+        }
+        public static class Speed {
+            public double
+                    NORMAL_SPEED          = 1,
+                    INITIAL_SPEED         = 1;
+
+        }
+    }
+
+    public static class LiftServoConstants {
+        public static Hardware hardware = new Hardware();
+        public static Position position = new Position();
+
+        public static class Hardware {
+            public String ID            = "liftServo";
+            public boolean REVERSED     = true;
+        }
+
+        public static class Position {
+            public double
+                    HIGH          = 80, // Degrees
+                    MID           = 80, // Degrees
+                    LOW           = 80, // Degrees
+                    INITIAL = 270,
+                    SHARED_HIGH = 0,
+                    SHARED_LOW = 0;
         }
     }
 
@@ -276,7 +308,7 @@ public class Constants {
 
         public static class Hardware {
             public String ID            = "intakeMotor";
-            public boolean REVERSED     = false;
+            public boolean REVERSED     = true;
             public double
                     RPM           = 435,
                     CPR           = 8192; // figure this out
@@ -348,8 +380,9 @@ public class Constants {
             public boolean REVERSED = true;
         }
         public static class Value {
-            public double OPEN                       = 10; // Degrees
-            public double CLOSE                      = 60; // Degrees
+            public double OPEN                       = 60; // Degrees
+            public double CLOSE                      = 17; // Degrees
+            public double INTAKE = 52;
         }
     }
 
@@ -403,7 +436,7 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DISTANCE_THRESHOLD = 40; // mm
+                    DISTANCE_THRESHOLD = 53; // mm
         }
 
     }
