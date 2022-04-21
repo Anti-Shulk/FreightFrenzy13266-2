@@ -11,23 +11,17 @@ import org.firstinspires.ftc.teamcode.commands.CarouselCommand;
 import org.firstinspires.ftc.teamcode.commands.CarouselStopCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.OuttakeCommand;
-import org.firstinspires.ftc.teamcode.commands.TurretArmInQuick;
-import org.firstinspires.ftc.teamcode.commands.TurretArmOutQuick;
-import org.firstinspires.ftc.teamcode.constants.Constants;
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
-import org.firstinspires.ftc.teamcode.subsystems.ArmSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.BoxSubsystem;
+import org.firstinspires.ftc.teamcode.constants.GamepadConstants;
 import org.firstinspires.ftc.teamcode.subsystems.CarouselSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ColorRangeSensorSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.CommandSchedulerWrapper;
-import org.firstinspires.ftc.teamcode.subsystems.GripperSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.HardwareSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LiftSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TrapdoorSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 import org.firstinspires.ftc.teamcode.util.GamepadExEx;
 
 @TeleOp(name = "Main TeleOP")
@@ -59,11 +53,7 @@ public class TeleOPMain extends CommandOpMode {
 
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
-                telemetry,
-                drive,
-                lift,
-                trapdoor,
-                sensor);
+                telemetry);
 
 
 
@@ -215,7 +205,17 @@ public class TeleOPMain extends CommandOpMode {
         command.add(() -> operator.get(GamepadKeys.Button.RIGHT_BUMPER))
                 .whenPressed(lift::sharedHigh);
         command.add(() -> operator.get(GamepadKeys.Button.LEFT_BUMPER))
-                .whenPressed(lift::sharedlow);
+                .whenPressed(lift::sharedLow);
+
+        command.add(() -> operator.get(GamepadKeys.Trigger.RIGHT_TRIGGER))
+                .whenPressed(lift::capLow)
+                .whenPressed(trapdoor::capLow);
+        command.add(() -> operator.get(GamepadKeys.Trigger.LEFT_TRIGGER))
+                .whenPressed(lift::capHigh)
+                .whenPressed(trapdoor::capHigh);
+        command.add(() -> operator.get(GamepadKeys.Button.Y))
+                .whenPressed(lift::capPickUp)
+                .whenPressed(trapdoor::capPickUp);
 
         command.add(() -> operator.get(GamepadKeys.Button.A))
                 .whenPressed(trapdoor::open);
@@ -274,13 +274,25 @@ public class TeleOPMain extends CommandOpMode {
 //        command.add(() -> operator.get(button.CAROUSEL_LIFT))
 //                .toggleWhenPressed(carousel::lift, carousel::drop);
 
-        command.add(() -> operator.get(button.CAROUSEL_BLUE))
+        command.add(() -> driver.get(button.CAROUSEL_BLUE))
                 .whenPressed(new CarouselCommand(carousel, false), true)
                 .whenReleased(new CarouselStopCommand(carousel));
 
-        command.add(() -> operator.get(button.CAROUSEL_RED))
+        command.add(() -> driver.get(button.CAROUSEL_RED))
                 .whenPressed(new CarouselCommand(carousel, true), true)
                 .whenReleased(new CarouselStopCommand(carousel));
+
+        command.add(() -> operator.getLeftY() > GamepadConstants.value.STICK_THRESHOLD)
+                .whileHeld(lift::increaseMotorPosition);
+
+        command.add(() -> operator.getLeftY() < -GamepadConstants.value.STICK_THRESHOLD)
+                .whileHeld(lift::decreaseMotorPosition);
+
+        command.add(() -> operator.getRightY() > GamepadConstants.value.STICK_THRESHOLD)
+                .whileHeld(lift::increaseServoPosition);
+
+        command.add(() -> operator.getRightY() < -GamepadConstants.value.STICK_THRESHOLD)
+                .whileHeld(lift::decreaseServoPosition);
 //
 
 

@@ -179,12 +179,18 @@ public class Constants {
                     LOW           = 100, // Degrees
                     INITIAL = 0,
                     SHARED_HIGH = 400,
-                    SHARED_LOW = 100;
+                    SHARED_LOW = 100,
+                    CAP_HIGH = 1210,
+                    CAP_LOW = 1210,
+                    CAP_PICKUP = 350,
+                    MAX_POSITION = 1240,
+                    MIN_POSITION = 0;
         }
         public static class Speed {
             public double
                     NORMAL_SPEED          = 1,
-                    INITIAL_SPEED         = 1;
+                    INITIAL_SPEED         = 1,
+                    SPEED_DEGREES_CHANGE          = 10;
 
         }
     }
@@ -192,6 +198,7 @@ public class Constants {
     public static class LiftServoConstants {
         public static Hardware hardware = new Hardware();
         public static Position position = new Position();
+        public static Speed speed = new Speed();
 
         public static class Hardware {
             public String ID            = "liftServo";
@@ -205,7 +212,15 @@ public class Constants {
                     LOW           = 80, // Degrees
                     INITIAL = 270,
                     SHARED_HIGH = 0,
-                    SHARED_LOW = 0;
+                    SHARED_LOW = 0,
+                    CAP_HIGH = 104,
+                    CAP_LOW = 76,
+                    CAP_PICKUP = 54;
+        }
+        public static class Speed {
+            public double
+                    SPEED_DEGREES_CHANGE          = 1;
+
         }
     }
 
@@ -383,6 +398,9 @@ public class Constants {
             public double OPEN                       = 60; // Degrees
             public double CLOSE                      = 17; // Degrees
             public double INTAKE = 52;
+            public double CAP_HIGH = 60;
+            public double CAP_LOW = 60;
+            public double CAP_PICKUP = 52;
         }
     }
 

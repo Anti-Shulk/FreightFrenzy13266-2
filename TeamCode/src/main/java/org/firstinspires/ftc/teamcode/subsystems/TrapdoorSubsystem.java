@@ -29,6 +29,15 @@ public class TrapdoorSubsystem extends HardwareSubsystem {
     public void intake() {
         trapdoor.turnToAngle(value.INTAKE);
     }
+    public void capHigh() {
+        trapdoor.turnToAngle(value.CAP_HIGH);
+    }
+    public void capLow() {
+        trapdoor.turnToAngle(value.CAP_LOW);
+    }
+    public void capPickUp() {
+        trapdoor.turnToAngle(value.CAP_PICKUP);
+    }
 
     @Override
     public void periodic() {

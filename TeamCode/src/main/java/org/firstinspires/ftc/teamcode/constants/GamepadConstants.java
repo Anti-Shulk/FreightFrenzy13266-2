@@ -53,7 +53,7 @@ public class GamepadConstants {
 
     }
     public static class Value {
-        public double STICK_THRESHOLD = 0;
+        public double STICK_THRESHOLD = 0.3;
         public double STICK_TOUCHING_THRESHOLD = 0.3;
         public double TRIGGER_THRESHOLD = 0.3;
     }
