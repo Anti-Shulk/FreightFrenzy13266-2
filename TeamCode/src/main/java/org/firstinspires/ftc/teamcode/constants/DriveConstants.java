@@ -81,8 +81,8 @@ public class DriveConstants {
             /**
              * These are motor constants that should be listed online for your motors.
              */
-            public static double TICKS_PER_REV = 537.6;
-            public static double MAX_RPM       = 312;
+            public static double TICKS_PER_REV = 384.539792388;
+            public static double MAX_RPM       = 435;
 
             /**
              * These are Speeds that can be used to control the drivetrain when NOT using Localization,
