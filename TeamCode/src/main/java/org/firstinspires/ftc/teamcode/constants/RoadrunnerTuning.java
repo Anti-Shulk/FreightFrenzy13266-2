@@ -5,7 +5,6 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Disabled
 @Config
 public class RoadrunnerTuning {
     //TODO: fix this (unless ftcdashbord thing doens twork)

@@ -41,7 +41,6 @@ import static org.firstinspires.ftc.teamcode.constants.DriveConstants.Controller
  * Pressing B/O (Xbox/PS4) will cede control back to the tuning process.
  */
 //@Config
-@Disabled
 @Autonomous(group = "drive")
 public class ManualFeedforwardTuner extends LinearOpMode {
 //    public double DISTANCE = 72; // in
