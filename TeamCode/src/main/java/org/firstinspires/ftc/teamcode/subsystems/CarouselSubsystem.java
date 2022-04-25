@@ -35,7 +35,7 @@ public class CarouselSubsystem extends HardwareSubsystem {
 //        spin2.setPositionCoefficient(controller.KP);
 //        spin2.setPositionTolerance(controller.TOLERANCE);
         spin.setDirection(DcMotorSimple.Direction.FORWARD);
-//        spin.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        spin.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         spin.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         spin.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        spin2.resetEncoder();

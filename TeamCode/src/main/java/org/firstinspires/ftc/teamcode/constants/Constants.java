@@ -118,10 +118,10 @@ public class Constants {
                         POWER         = 1;
             }
             public static class Value {
-                public double FAST_SPEED = 3000; // power
-                public double SLOW_SPEED = 2000;
+                public double FAST_SPEED = 10000; // power
+                public double SLOW_SPEED = 3000;
                 public double AUTO_SPEED = 1300;
-                public int SLOW_TO_FAST_WAIT = 2000;
+                public int SLOW_TO_FAST_WAIT = 800;
                 public int HOW_LONG_IT_STAYS_FAST = 1500;
             }
 
