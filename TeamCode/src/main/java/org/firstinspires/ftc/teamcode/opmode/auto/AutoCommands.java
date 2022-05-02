@@ -45,13 +45,25 @@ public class AutoCommands {
 //            stopCommand.run();
 //        }).start();
 //    }
-    public void runCommandGroupAsThread(SequentialCommandGroup sequentialCommandGroup) {
+    public void runCommandGroupAsThread(CommandBase command) {
         new Thread(() -> {
-            if (!isStopRequested()) sequentialCommandGroup.initialize();
+            if (!isStopRequested()) command.initialize();
 
-            while (!isStopRequested() && !sequentialCommandGroup.isFinished()) {
-                sequentialCommandGroup.execute();
+            while (!isStopRequested() && !command.isFinished()) {
+                command.execute();
             }
+        }).start();
+    }
+    public MarkerCallback runCommandAsThread(CommandBase command, double timeout) {
+        return () -> new Thread(() -> {
+            ElapsedTime elapsedTime = new ElapsedTime();
+
+            if (!isStopRequested()) command.initialize();
+
+            while (!isStopRequested() && !command.isFinished() && elapsedTime.seconds() < timeout) {
+                command.execute();
+            }
+            command.end(false);
         }).start();
     }
     public void runCommandGroup(CommandBase command) {
