@@ -37,6 +37,7 @@ public class BlueCarousel4 extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                .back(15)
 
                 .setReversed(false)
                 .splineTo(new Vector2d(-60, 60), Math.toRadians(135))
