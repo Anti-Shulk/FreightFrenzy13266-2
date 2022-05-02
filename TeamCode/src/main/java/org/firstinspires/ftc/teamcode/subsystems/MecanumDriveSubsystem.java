@@ -28,8 +28,6 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.teamcode.constants.DriveConstants;
-import org.firstinspires.ftc.teamcode.constants.localizer.StandardTrackingWheelLocalizer;
-import org.firstinspires.ftc.teamcode.constants.localizer.TwoWheelTrackingLocalizer;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -113,6 +111,8 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     private VoltageSensor batteryVoltageSensor;
 
     private final LinearOpMode opMode;
+
+    public static double ENCODER_MULTIPLIER = 1; // Multiplier for drive encoders (might not be that necesary)
 
     // This is to make an FtcLib mecanum drive
 //    com.arcrobotics.ftclib.drivebase.MecanumDrive controllerMecanumDrive;
@@ -208,7 +208,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
-//        setLocalizer(new StandardTrackingWheelLocalizer(opMode.hardwareMap));
+//        setLocalizer(new TwoWheelTrackingLocalizer(opMode.hardwareMap, this));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
     }
@@ -340,10 +340,10 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
 
     @NonNull
     @Override
-    public List<Double> getWheelPositions() {
+    public List<Double> getWheelPositions() { // left front, left rear, right front, right rear
         List<Double> wheelPositions = new ArrayList<>();
         for (MotorExEx motor : motors) {
-            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()));
+            wheelPositions.add(encoderTicksToInches(motor.getCurrentPosition()) * ENCODER_MULTIPLIER);
         }
         return wheelPositions;
     }
@@ -352,7 +352,7 @@ public class MecanumDriveSubsystem extends MecanumDrive implements Subsystem {
     public List<Double> getWheelVelocities() {
         List<Double> wheelVelocities = new ArrayList<>();
         for (MotorExEx motor : motors) {
-            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()));
+            wheelVelocities.add(encoderTicksToInches(motor.getVelocity()) * ENCODER_MULTIPLIER);
         }
         return wheelVelocities;
     }
