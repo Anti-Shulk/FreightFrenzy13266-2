@@ -29,7 +29,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous
-public class BlueCarousel4 extends LinearOpMode {
+public class RedCarousel4 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         HardwareSubsystem hardware = new HardwareSubsystem(this);
@@ -86,7 +86,7 @@ public class BlueCarousel4 extends LinearOpMode {
 
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
-        Pose2d startPose = new Pose2d(-35, 63, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(-35, -63, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
@@ -103,17 +103,17 @@ public class BlueCarousel4 extends LinearOpMode {
             telemetry.update();
             switch (detector.getAnalysis()) {
                 case LEFT: {
-                    forwardDistance = -3.5;
+                    forwardDistance = -8.5;
                     liftCommand = lift::low;
                     break;
                 }
                 case CENTER: {
-                    forwardDistance = -1;
+                    forwardDistance = -6;
                     liftCommand = lift::mid;
                     break;
                 }
                 default: {
-                    forwardDistance = 0;
+                    forwardDistance = -2;
                     liftCommand = lift::high;
                 }
             }
@@ -127,19 +127,22 @@ public class BlueCarousel4 extends LinearOpMode {
                 .setTurnConstraint(Math.toRadians(100), //Turn Velocity
                         Math.toRadians(100))  // Turn Acceleration
                 .setReversed(false)
-                .addDisplacementMarker(carousel::spinForwardAuto)
-                .splineTo(new Vector2d(-60, 58), Math.toRadians(170))
-                .waitSeconds(5)
+                .addDisplacementMarker(carousel::spinReversedAuto)
+                //.splineTo(new Vector2d(-63, -50), Math.toRadians(-90))
+                .lineToSplineHeading(new Pose2d(-66, -50, Math.toRadians(-90)))
+                .forward(2.5)
+                .waitSeconds(4)
                 .addDisplacementMarker(carousel::stop)
                 .setReversed(true)
-                .splineTo(new Vector2d(-48, 22), Math.toRadians(0))
+                .splineTo(new Vector2d(-49, -22), Math.toRadians(0))
                 .addDisplacementMarker(liftCommand)
                 .back(20 + forwardDistance)
+                .waitSeconds(1)
                 .addDisplacementMarker(trapdoor::autoDrop)
                 .setReversed(false)
                 .forward(15 + forwardDistance)
                 .addDisplacementMarker(lift::initial)
-                .splineTo(new Vector2d(-60, 35), Math.toRadians(90))
+                .splineTo(new Vector2d(-62, -33), Math.toRadians(-90))
                 .build();
 
         if (!isStopRequested())

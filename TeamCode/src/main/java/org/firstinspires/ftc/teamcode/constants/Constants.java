@@ -5,19 +5,20 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class Constants {
     // TODO: remove all statics except for utility classes so that we can have folders
-    public static ArmConstants armConstants;
+   // public static ArmConstants armConstants;
     public static CameraConstants cameraConstants;
     public static CarouselConstants carouselConstants;
     public static DriveConstants driveConstants;
-    public static TurretConstants turretConstants;
+   // public static TurretConstants turretConstants;
     public static GrabberConstants grabberConstants;
     public static IntakeConstants intakeConstants;
     public static TrapdoorConstants trapdoorConstants;
-    public static IntakeLiftConstants intakeLiftConstants;
+  //  public static IntakeLiftConstants intakeLiftConstants;
     public static BoxConstants boxConstants;
     public static ColorRangeSensorConstants colorRangeSensorConstants;
     public static LiftServoConstants liftServoConstants;
     public static LiftMotorConstants liftMotorConstants;
+
     
 
 
@@ -174,9 +175,9 @@ public class Constants {
         }
         public static class Position {
             public double
-                    HIGH          = 1000, // Degrees
-                    MID           = 600, // Degrees
-                    LOW           = 100, // Degrees
+                    TALL = 1000, // Degrees
+                    MIDDLE = 450, // Degrees
+                    LOWER = 0, // Degrees
                     INITIAL = 0,
                     SHARED_HIGH = 400,
                     SHARED_LOW = 100,
@@ -185,6 +186,9 @@ public class Constants {
                     CAP_PICKUP = 350,
                     MAX_POSITION = 1240,
                     MIN_POSITION = 0;
+            public enum Tall {
+                LOWER, MIDDLE, TALL
+            }
         }
         public static class Speed {
             public double
@@ -210,7 +214,7 @@ public class Constants {
                     HIGH          = 80, // Degrees
                     MID           = 80, // Degrees
                     LOW           = 80, // Degrees
-                    INITIAL = 270,
+                    INITIAL = 259,
                     SHARED_HIGH = 0,
                     SHARED_LOW = 0,
                     CAP_HIGH = 104,
@@ -333,11 +337,10 @@ public class Constants {
             public double
                     TOLERANCE     = 10,
                     KP            = 5,
-                    POWER         = 1,
+                    POWER         = 0.4,
                     INIT_POWER    = 0;
         }
         public static class Value {
-            public double INTAKE_SPEED   = 1; // % of Power
         }
     }
 
@@ -401,6 +404,7 @@ public class Constants {
             public double CAP_HIGH = 60;
             public double CAP_LOW = 60;
             public double CAP_PICKUP = 52;
+            public double AUTO_DROP = 80;
         }
     }
 
@@ -454,7 +458,7 @@ public class Constants {
         }
         public static class Value {
             public double
-                    DISTANCE_THRESHOLD = 53; // mm
+                    DISTANCE_THRESHOLD = 50; // mm
         }
 
     }

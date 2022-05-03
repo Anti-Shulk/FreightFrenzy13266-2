@@ -76,7 +76,7 @@ public class DriveConstants {
              */
             public static double WHEEL_RADIUS = 1.8898; // in
             public static double GEAR_RATIO   = 1; // output (wheel) speed / input (motor) speed
-            public static double TRACK_WIDTH  = 10.8; // in
+            public static double TRACK_WIDTH  = 8.3; // in
 
             /**
              * These are motor constants that should be listed online for your motors.
@@ -158,8 +158,8 @@ public class DriveConstants {
          */
         public static double MAX_VEL       = 40;
         public static double MAX_ACCEL     = 50; // at 70, bot lifts up when decelerating so it cant go much higher than this this is about as high as it can be
-        public static double MAX_ANG_VEL   = Math.toRadians(300);
-        public static double MAX_ANG_ACCEL = Math.toRadians(300);
+        public static double MAX_ANG_VEL   = Math.toRadians(200);
+        public static double MAX_ANG_ACCEL = Math.toRadians(200);
 
 
     }

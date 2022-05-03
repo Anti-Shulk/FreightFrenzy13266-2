@@ -12,6 +12,7 @@ public class IntakeCommandBetter extends CommandBase {
     private final IntakeSubsystem intake;
     private final TrapdoorSubsystem trapdoor;
     private final ColorRangeSensorSubsystem sensor;
+    private boolean hasDetected = false;
 
     public IntakeCommandBetter(IntakeSubsystem intake, TrapdoorSubsystem trapdoor, ColorRangeSensorSubsystem sensor) {
         this.intake = intake;
@@ -22,29 +23,20 @@ public class IntakeCommandBetter extends CommandBase {
 
     @Override
     public void execute() {
-        trapdoor.open();
-        intake.intake();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return sensor.detected();
+        if (sensor.detected() || hasDetected) {
+            trapdoor.close();
+            intake.outtake();
+            hasDetected = true;
+        } else {
+            trapdoor.intake();
+            intake.intake();
+        }
     }
 
     @Override
     public void end(boolean interrupted) {
         trapdoor.close();
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        intake.outtake();
-        try {
-            Thread.sleep(700);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        intake.stop();
     }
 
 

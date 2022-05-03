@@ -38,19 +38,19 @@ public class LiftSubsystem extends HardwareSubsystem {
     }
 
     public void high() {
-        motorPosition = LiftMotorConstants.position.HIGH;
+        motorPosition = LiftMotorConstants.position.TALL;
         servoPosition = LiftServoConstants.position.HIGH;
         turnToPositions();
     }
 
     public void mid() {
-        motorPosition = LiftMotorConstants.position.MID;
+        motorPosition = LiftMotorConstants.position.MIDDLE;
         servoPosition = LiftServoConstants.position.MID;
         turnToPositions();
     }
 
     public void low() {
-        motorPosition = LiftMotorConstants.position.LOW;
+        motorPosition = LiftMotorConstants.position.LOWER;
         servoPosition = LiftServoConstants.position.LOW;
         turnToPositions();
     }

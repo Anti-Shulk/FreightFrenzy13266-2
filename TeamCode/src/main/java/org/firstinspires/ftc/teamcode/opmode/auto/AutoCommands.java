@@ -54,16 +54,17 @@ public class AutoCommands {
             }
         }).start();
     }
-    public MarkerCallback runCommandAsThread(CommandBase command, double timeout) {
-        return () -> new Thread(() -> {
+    public void runCommandAsThread(CommandBase command, double timeout) {
+        new Thread(() -> {
             ElapsedTime elapsedTime = new ElapsedTime();
 
             if (!isStopRequested()) command.initialize();
 
             while (!isStopRequested() && !command.isFinished() && elapsedTime.seconds() < timeout) {
                 command.execute();
+
             }
-            command.end(false);
+            command.end(true);
         }).start();
     }
     public void runCommandGroup(CommandBase command) {
@@ -72,7 +73,7 @@ public class AutoCommands {
             while (!isStopRequested() && !command.isFinished()) {
                 command.execute();
             }
-            command.end(false);
+            command.end(true);
     }
     public void runCommandGroup(CommandBase command, double timeout) {
         ElapsedTime elapsedTime = new ElapsedTime();
@@ -82,7 +83,7 @@ public class AutoCommands {
         while (!isStopRequested() && !command.isFinished() && elapsedTime.seconds() < timeout) {
             command.execute();
         }
-        command.end(false);
+        command.end(true);
     }
 
     public final void sleep(long milliseconds) {
