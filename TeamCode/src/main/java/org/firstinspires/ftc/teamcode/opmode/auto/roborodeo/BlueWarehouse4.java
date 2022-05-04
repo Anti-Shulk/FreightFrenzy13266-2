@@ -160,8 +160,8 @@ public class BlueWarehouse4 extends LinearOpMode {
                 /** CYCLE 2 */
 
                 .setReversed(false)
-                .lineToSplineHeading(new Pose2d(0, 62, Math.toRadians(0)))
-                .splineToLinearHeading(new Pose2d(20, 70.1, Math.toRadians(0)), Math.toRadians(0))
+                .lineToSplineHeading(new Pose2d(0, 63, Math.toRadians(0)))
+                .splineToLinearHeading(new Pose2d(20, 71.1, Math.toRadians(0)), Math.toRadians(0))
                 .addDisplacementMarker(() -> autoCommands.runCommandAsThread(new IntakeCommandBetter(intake, trapdoor, sensor), 3))
                 .forward(29)
                 .setReversed(true)
