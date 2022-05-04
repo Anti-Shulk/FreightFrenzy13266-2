@@ -74,14 +74,14 @@ public class RedWarehouse4 extends LinearOpMode {
                 telemetry.addData("Camera status", "Camera failed :(");
             }
         });
-        Vector2d startPosition = new Vector2d(-3.15, -41.42); // by default, at high
+        Vector2d preloadVector = new Vector2d(-3.15, -41.42); // by default, at high
         MarkerCallback liftCommand = lift::high; // by default, at high
 
 
 
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
 
-        Pose2d startPose = new Pose2d(10.5, -63, Math.toRadians(-90));
+        Pose2d startPose = new Pose2d(10.5, 63, Math.toRadians(90));
 
         drive.setPoseEstimate(startPose);
 
@@ -92,17 +92,17 @@ public class RedWarehouse4 extends LinearOpMode {
             telemetry.update();
             switch (detector.getAnalysis()) {
                 case LEFT: {
-                    startPosition = new Vector2d(-3.15, -41.42);
+                    preloadVector = new Vector2d(-3.15, -41.42);
                     liftCommand = lift::low;
                     break;
                 }
                 case CENTER: {
-                    startPosition = new Vector2d(-3.15, -41.42);
+                    preloadVector = new Vector2d(-3.15, -41.42);
                     liftCommand = lift::mid;
                     break;
                 }
                 default: {
-                    startPosition = new Vector2d(-3.15, -41.42);
+                    preloadVector = new Vector2d(-3.15, -41.42);
                     liftCommand = lift::high;
                 }
             }
@@ -121,7 +121,7 @@ public class RedWarehouse4 extends LinearOpMode {
                     lift.initial();
                     trapdoor.intake();
                 }).start())
-                .lineToSplineHeading(new Pose2d(startPosition, Math.toRadians(65)))
+                .lineToSplineHeading(new Pose2d(preloadVector, Math.toRadians(-65)))
                 .waitSeconds(0.3)
                 //             .lineToSplineHeading(new Vector2d(-3.15, 41.42), Math.toRadians())
 //                .waitSeconds(0.5)
@@ -150,7 +150,7 @@ public class RedWarehouse4 extends LinearOpMode {
                     lift.initial();
                     trapdoor.intake();
                 }).start())
-                .splineTo(new Vector2d(-3.15, -41.42), Math.toRadians(-115))
+                .splineTo(new Vector2d(-3.15, -41.42), Math.toRadians(115))
                 .waitSeconds(0.3)
 
 
@@ -159,8 +159,8 @@ public class RedWarehouse4 extends LinearOpMode {
                 /** CYCLE 2 */
 
                 .setReversed(false)
-                .lineToSplineHeading(new Pose2d(0, -62, Math.toRadians(0)))
-                .splineToLinearHeading(new Pose2d(20, -70.1, Math.toRadians(0)), Math.toRadians(0))
+                .lineToSplineHeading(new Pose2d(0, -63, Math.toRadians(0)))
+                .splineToLinearHeading(new Pose2d(20, -71.1, Math.toRadians(0)), Math.toRadians(0))
                 .addDisplacementMarker(() -> autoCommands.runCommandAsThread(new IntakeCommandBetter(intake, trapdoor, sensor), 3))
                 .forward(29)
                 .setReversed(true)
@@ -173,7 +173,7 @@ public class RedWarehouse4 extends LinearOpMode {
                     lift.initial();
                     trapdoor.intake();
                 }).start())
-                .splineTo(new Vector2d(-3.15, 46.42), Math.toRadians(-115))
+                .splineTo(new Vector2d(-3.15, -46.42), Math.toRadians(115))
                 .waitSeconds(0.3)
 
 
@@ -196,7 +196,7 @@ public class RedWarehouse4 extends LinearOpMode {
                     lift.initial();
                     trapdoor.intake();
                 }).start())
-                .splineTo(new Vector2d(-3.15, 51.42), Math.toRadians(-115))
+                .splineTo(new Vector2d(-3.15, -51.42), Math.toRadians(115))
                 .waitSeconds(0.3)
 
 
