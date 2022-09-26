@@ -36,34 +36,12 @@ public class TeleOPMain extends CommandOpMode {
 
         HardwareSubsystem hardware = new HardwareSubsystem(this);
         MecanumDriveSubsystem drive = new MecanumDriveSubsystem(this);
-        ColorRangeSensorSubsystem sensor = new ColorRangeSensorSubsystem();
         LiftSubsystem lift = new LiftSubsystem();
         TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
-
-//        ArmSubsystem arm = new ArmSubsystem();
-        CarouselSubsystem carousel = new CarouselSubsystem();
-//        GripperSubsystem gripper = new GripperSubsystem();
-        IntakeSubsystem intake = new IntakeSubsystem();
-  //      TrapdoorSubsystem trapdoor = new TrapdoorSubsystem();
-//        TurretSubsystem turret = new TurretSubsystem();
-
-//        IntakeLiftSubsystem intakeLift = new IntakeLiftSubsystem();
-//        ArmTurretSubsystem armTurret = new ArmTurretSubsystem();
-  //      BoxSubsystem box = new BoxSubsystem();
 
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
                 telemetry);
-
-
-
-//        command.addDefault(() -> telemetry.addData("Driver Stick",
-//                  "x = " + driver.getLeftX() +
-//                        ", y = " + driver.getLeftY() +
-//                        ", rotate = " + driver.getRightX()));
-//        command.addDefault(() -> telemetrySubsystem.addData("x", driver.getLeftX()));
-//        command.addDefault(() -> telemetrySubsystem.addData("y", driver.getLeftY()));
-//        command.addDefault(() -> telemetrySubsystem.addData("rotate", driver.getRightX()));
 
         command.addDefault(() -> telemetrySubsystem.periodic(driver, operator));
 
@@ -78,144 +56,19 @@ public class TeleOPMain extends CommandOpMode {
                 .whenPressed(drive::setTurbo)
                 .whenReleased(drive::setNormal);
 
-//        command.add(operator::getRightTouchingEdge)
-//                .whileHeld(() -> turret.setTargetXY(operator.getRightX(), -operator.getRightY()));
-
-//        command.add(() -> driver.get(button.TURBO))
-//                .whenPressed(drive::setTurbo)
-//                .whenReleased(drive::setNormal);
-
-//        command.add(() -> driver.get(button.DROP))
-//                .whenPressed(trapdoor::open)
-//                .whenReleased(trapdoor::close);
-
-        command.add(() -> driver.get(button.INTAKE))
-                .whileHeld(new IntakeCommand(intake, trapdoor, sensor), true)
-                .whenReleased(intake::stop);
-
-        command.add(() -> driver.get(button.OUTTAKE))
-                .whenPressed(intake::outtake)
-                .whenReleased(intake::stop);
-
-     //   command.add(() -> operator.get(button.DROP))
-     //           .whenPressed(trapdoor::open);
-
-    //    command.add(() -> operator.get(button.CLOSE))
-            //    .whenPressed(trapdoor::close);
-
-//        command.add(()-> driver.get(button.GRIPPER_GRAB))
-//                .whenPressed(gripper::close)
-//                .whenReleased(gripper::open);
-//        command.add(()-> driver.get(button.GRIPPER_LIFT))
-//                .whenPressed(gripper::moveLow)
-//                .whenReleased(gripper::moveDown);
-
-//        command.add(() -> operator.get(button.ARM_HIGH))
-//                .whenPressed(arm::moveHigh);
-//        command.add(() -> operator.get(button.ARM_SHARED))
-//                .whenPressed(arm::moveShared);
-
-//        command.add(() -> operator.get(button.DOWN))
-//                .whenPressed(turret::moveDown);
-//        command.add(() -> operator.get(button.FORWARD))
-//                .whenPressed(turret::moveForward);
-//        command.add(() -> operator.get(button.LEFT))
-//                .whenPressed(turret::moveLeft);
-//        command.add(() -> operator.get(button.RIGHT))
-//                .whenPressed(turret::moveRight);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//        command.add(() -> operator.get(button.LEFT_SHARED))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveSharedLeft), false)
-//                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-//                .whenReleased(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-//                .whenReleased(new TurretArmOutQuick(arm, turret, box, () -> {}), false);
-//
-//        command.add(() -> operator.get(button.RIGHT_SHARED))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveSharedRight), false)
-//                .whenReleased(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-//                .whenReleased(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED))
-//                .whenReleased(new TurretArmOutQuick(arm, turret, box, () -> {}), false);
-//                .whenReleased(new ArmSetAndMoveToHeight(arm, box, Constants.ArmConstants.Value.Height.HIGH), true);
-
-//        command.add(() -> operator.get(button.DOWN))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(new TurretArmInQuick(arm, turret, box), false);
-
-//        command.add(() -> operator.get(button.SHARED_BOX_UP))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.SHARED_UP))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, () -> {}));
-
-//        command.add(() -> operator.get(button.LEFT))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveLeft), false);
-//
-//        command.add(() -> operator.get(button.RIGHT))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveRight), false);
-//
-//        command.add(() -> operator.get(button.FORWARD))
-//                .whenPressed(() -> arm.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(() -> box.setHeight(Constants.ArmConstants.Value.Height.HIGH))
-//                .whenPressed(new TurretArmOutQuick(arm, turret, box, turret::moveForward), false);
-//
-//        command.add(operator::getRightTouchingEdge)
-//                .whileHeld(() -> telemetry.addLine("pressed"))
-//                .whileHeld(() -> telemetry.addLine(String.valueOf(operator.getRightStickToDegrees())))
-////                .whileHeld(() -> turret.setTargetDegrees())
-//                .whileHeld(new TurretArmOutQuick(arm, turret, box, () -> turret.addDegrees(operator.getRightX())));
-
         command.add(() -> driver.get(button.RESET_IMU))
                 .whenPressed(drive::resetImu);
-//
-//        command.add(() -> operator.get(button.FLIP_FORWARD_TURRET_SIDE))
-//                .whenPressed(turret::toggleFlipped);
 
         command.add(() -> operator.get(GamepadKeys.Button.DPAD_DOWN))
                 .whenPressed(lift::initial)
-                .whenPressed(trapdoor::intake)
-                .whenPressed(new OuttakeCommand(intake), true);
+                .whenPressed(trapdoor::intake);
+
         command.add(() -> operator.get(GamepadKeys.Button.DPAD_UP))
                 .whenPressed(lift::high);
         command.add(() -> operator.get(GamepadKeys.Button.DPAD_LEFT))
                 .whenPressed(lift::mid);
         command.add(() -> operator.get(GamepadKeys.Button.DPAD_RIGHT))
                 .whenPressed(lift::low);
-        command.add(() -> operator.get(GamepadKeys.Button.RIGHT_BUMPER))
-                .whenPressed(lift::sharedHigh);
-        command.add(() -> operator.get(GamepadKeys.Button.LEFT_BUMPER))
-                .whenPressed(lift::sharedLow);
-
-        command.add(() -> operator.get(GamepadKeys.Trigger.RIGHT_TRIGGER))
-                .whenPressed(lift::capLow)
-                .whenPressed(trapdoor::capLow);
-        command.add(() -> operator.get(GamepadKeys.Trigger.LEFT_TRIGGER))
-                .whenPressed(lift::capHigh)
-                .whenPressed(trapdoor::capHigh);
-        command.add(() -> operator.get(GamepadKeys.Button.Y))
-                .whenPressed(lift::capPickUp)
-                .whenPressed(trapdoor::capPickUp);
 
         command.add(() -> operator.get(GamepadKeys.Button.A))
                 .whenPressed(trapdoor::open);
@@ -223,64 +76,24 @@ public class TeleOPMain extends CommandOpMode {
         command.add(() -> operator.get(GamepadKeys.Button.B))
                 .whenPressed(trapdoor::close);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣷⣶⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣾⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⡟⠁⣰⣿⣿⣿⡿⠿⠻⠿⣿⣿⣿⣿⣧⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⠏⠀⣴⣿⣿⣿⠉⠀⠀⠀⠀⠀⠈⢻⣿⣿⣇⠀⠀⠀
-⠀⠀⠀⠀⢀⣠⣼⣿⣿⡏⠀⢠⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⡀⠀⠀
-⠀⠀⠀⣰⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀
-⠀⠀⢰⣿⣿⡿⣿⣿⣿⡇⠀⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⢀⣸⣿⣿⣿⠁⠀⠀
-⠀⠀⣿⣿⣿⠁⣿⣿⣿⡇⠀⠀⠻⣿⣿⣿⣷⣶⣶⣶⣶⣶⣿⣿⣿⣿⠃⠀⠀⠀
-⠀⢰⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
-⠀⢸⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠛⠛⠛⠉⢉⣿⣿⠀⠀⠀⠀⠀⠀
-⠀⢸⣿⣿⣇⠀⣿⣿⣿⠀⠀⠀⠀⠀⢀⣤⣤⣤⡀⠀⠀⢸⣿⣿⣿⣷⣦⠀⠀⠀
-⠀⠀⢻⣿⣿⣶⣿⣿⣿⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣦⡀⠀⠉⠉⠻⣿⣿⡇⠀⠀
-⠀⠀⠀⠛⠿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀⠀⠈⠹⣿⣿⣇⣀⠀⣠⣾⣿⣿⡇⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣦⣤⣤⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢿⣿⣿⣿⣿⣿⣿⠿⠋⠉⠛⠋⠉⠉⠁⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠁
-**/
-
-//        command.add(() -> operator.get(button.LEFT))
-//                .whenPressed(new ArmOutQuick(arm, turret, operator.getRightStickToDegrees()));
-//
-//        command.add(() -> operator.get(button.FORWARD))
-//                .whenPressed(turret::moveForward);
-
-
-
-//        command.add(() -> operator.get(button.RIGHT))
-//                .whenPressed(turret::moveRight);
-
-
-
-        /** carousel */
-//        command.add(() -> operator.get(button.CAROUSEL_LIFT))
-//                .toggleWhenPressed(carousel::lift, carousel::drop);
-
-        command.add(() -> driver.get(button.CAROUSEL_BLUE))
-                .whenPressed(new CarouselCommand(carousel, false), true)
-                .whenReleased(new CarouselStopCommand(carousel));
-
-        command.add(() -> driver.get(button.CAROUSEL_RED))
-                .whenPressed(new CarouselCommand(carousel, true), true)
-                .whenReleased(new CarouselStopCommand(carousel));
+        /*
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣷⣶⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣾⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⡟⠁⣰⣿⣿⣿⡿⠿⠻⠿⣿⣿⣿⣿⣧⠀⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⠏⠀⣴⣿⣿⣿⠉⠀⠀⠀⠀⠀⠈⢻⣿⣿⣇⠀⠀⠀
+        ⠀⠀⠀⠀⢀⣠⣼⣿⣿⡏⠀⢠⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⡀⠀⠀
+        ⠀⠀⠀⣰⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀
+        ⠀⠀⢰⣿⣿⡿⣿⣿⣿⡇⠀⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⢀⣸⣿⣿⣿⠁⠀⠀
+        ⠀⠀⣿⣿⣿⠁⣿⣿⣿⡇⠀⠀⠻⣿⣿⣿⣷⣶⣶⣶⣶⣶⣿⣿⣿⣿⠃⠀⠀⠀
+        ⠀⢰⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
+        ⠀⢸⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠛⠛⠛⠉⢉⣿⣿⠀⠀⠀⠀⠀⠀
+        ⠀⢸⣿⣿⣇⠀⣿⣿⣿⠀⠀⠀⠀⠀⢀⣤⣤⣤⡀⠀⠀⢸⣿⣿⣿⣷⣦⠀⠀⠀
+        ⠀⠀⢻⣿⣿⣶⣿⣿⣿⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣦⡀⠀⠉⠉⠻⣿⣿⡇⠀⠀
+        ⠀⠀⠀⠛⠿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀⠀⠈⠹⣿⣿⣇⣀⠀⣠⣾⣿⣿⡇⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣦⣤⣤⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢿⣿⣿⣿⣿⣿⣿⠿⠋⠉⠛⠋⠉⠉⠁⠀⠀⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠁
+        **/
 
         command.add(() -> operator.getLeftY() > GamepadConstants.value.STICK_THRESHOLD)
                 .whileHeld(lift::increaseMotorPosition);
@@ -293,31 +106,6 @@ public class TeleOPMain extends CommandOpMode {
 
         command.add(() -> operator.getRightY() < -GamepadConstants.value.STICK_THRESHOLD)
                 .whileHeld(lift::decreaseServoPosition);
-//
-
-
-
-
-
-
-
-
-
-//        command.add(() -> operator.get(GamepadKeys.Button.Y))
-//                .whileHeld(gripper::moveHigh);
-//        command.add(() -> operator.get(GamepadKeys.Button.BACK))
-//                .whileHeld(gripper::open);
-
-//        command.add(() -> driver.get(button.TOGGLE_INTAKE_UP))
-//                .toggleWhenPressed(intakeLift::lift, intakeLift::drop);
-//        command.add(() -> driver.get(GamepadKeys.Button.A))
-//                .whileHeld(gripper::close);
-
-
-
-
-
-
 
         waitForStart();
 

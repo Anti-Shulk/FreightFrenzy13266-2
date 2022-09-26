@@ -11,9 +11,11 @@ import static org.firstinspires.ftc.teamcode.constants.Constants.LiftServoConsta
 public class LiftSubsystem extends HardwareSubsystem {
     DcMotorEx leftLiftMotor;
     DcMotorEx rightLiftMotor;
-    ServoEx liftServo;
+    ServoEx leftLiftServo;
+    ServoEx rightLiftServo;
     double motorPosition;
     double servoPosition;
+
     public LiftSubsystem() {
         leftLiftMotor = hardwareMap.get(DcMotorEx.class, LiftMotorConstants.hardware.LEFT_ID);
         leftLiftMotor.setDirection(LiftMotorConstants.hardware.LEFT_REVERSED ? DcMotorSimple.Direction.FORWARD : DcMotorSimple.Direction.REVERSE);
@@ -31,9 +33,11 @@ public class LiftSubsystem extends HardwareSubsystem {
 //        leftLiftMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(10, 0, 0, 0));
 //        leftLiftMotor.setTargetPositionTolerance();
 
-        liftServo = new SimpleServo(hardwareMap, LiftServoConstants.hardware.ID, 0, 270);
-        liftServo.setInverted(LiftServoConstants.hardware.REVERSED);
+        leftLiftServo = new SimpleServo(hardwareMap, LiftServoConstants.hardware.LEFT_ID, 0, 270);
+        leftLiftServo.setInverted(LiftServoConstants.hardware.LEFT_REVERSED);
 
+        rightLiftServo = new SimpleServo(hardwareMap, LiftServoConstants.hardware.RIGHT_ID, 0, 270);
+        rightLiftServo.setInverted(LiftServoConstants.hardware.RIGHT_REVERSED);
         initial();
     }
 
@@ -135,7 +139,8 @@ public class LiftSubsystem extends HardwareSubsystem {
     }
 
     public void turnToPositions() {
-        liftServo.turnToAngle(servoPosition);
+        leftLiftServo.turnToAngle(servoPosition);
+        rightLiftServo.turnToAngle(servoPosition + LiftServoConstants.position.RIGHT_SERVO_OFFSET);
         setMotorAngle(motorPosition);
 
         leftLiftMotor.setPower(LiftMotorConstants.speed.INITIAL_SPEED);

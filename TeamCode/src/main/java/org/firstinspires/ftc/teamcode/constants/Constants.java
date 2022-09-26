@@ -157,8 +157,8 @@ public class Constants {
         public static class Hardware {
             public String LEFT_ID = "leftLiftMotor";
             public String RIGHT_ID = "rightLiftMotor";
-            public boolean LEFT_REVERSED = false;
-            public boolean RIGHT_REVERSED = true;
+            public boolean LEFT_REVERSED = true;
+            public boolean RIGHT_REVERSED = false;
             public double
                     RPM           = 435,
                     CPR           = 384.539792388;
@@ -205,21 +205,24 @@ public class Constants {
         public static Speed speed = new Speed();
 
         public static class Hardware {
-            public String ID            = "liftServo";
-            public boolean REVERSED     = true;
+            public String LEFT_ID            = "leftLiftServo";
+            public String RIGHT_ID            = "rightLiftServo";
+            public boolean LEFT_REVERSED     = true;
+            public boolean RIGHT_REVERSED     = true;
         }
 
         public static class Position {
             public double
-                    HIGH          = 80, // Degrees
-                    MID           = 80, // Degrees
-                    LOW           = 80, // Degrees
-                    INITIAL = 259,
+                    HIGH          = 90, // Degrees
+                    MID           = 90, // Degrees
+                    LOW           = 90, // Degrees
+                    INITIAL = 0,
                     SHARED_HIGH = 0,
                     SHARED_LOW = 0,
                     CAP_HIGH = 104,
                     CAP_LOW = 76,
-                    CAP_PICKUP = 54;
+                    CAP_PICKUP = 54,
+                    RIGHT_SERVO_OFFSET = 0;
         }
         public static class Speed {
             public double
@@ -399,7 +402,7 @@ public class Constants {
         }
         public static class Value {
             public double OPEN                       = 60; // Degrees
-            public double CLOSE                      = 17; // Degrees
+            public double CLOSE                      = 150; // Degrees
             public double INTAKE = 52;
             public double CAP_HIGH = 60;
             public double CAP_LOW = 60;
