@@ -119,7 +119,17 @@ public class LiftSubsystem extends HardwareSubsystem {
     }
 
     public void changeMotorPosition(double degrees) {
-        motorPosition += motorPosition >= LiftMotorConstants.position.MAX_POSITION && motorPosition <= LiftMotorConstants.position.MIN_POSITION ? 0 : degrees;
+        if (motorPosition >= LiftMotorConstants.position.MAX_POSITION) {
+            if (degrees < 0) motorPosition += degrees;
+            return;
+        }
+
+        if (motorPosition <= LiftMotorConstants.position.MIN_POSITION) {
+            if (degrees > 0) motorPosition += degrees;
+            return;
+        }
+        
+        motorPosition += degrees;
     }
 
 
