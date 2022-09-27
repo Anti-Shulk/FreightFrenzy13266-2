@@ -76,6 +76,12 @@ public class TeleOPMain extends CommandOpMode {
         command.add(() -> operator.get(GamepadKeys.Button.B))
                 .whenPressed(trapdoor::close);
 
+        command.add(() -> driver.getTriggerPressed(GamepadKeys.Trigger.LEFT_TRIGGER))
+                .whenPressed(trapdoor::open);
+
+        command.add(() -> driver.getTriggerPressed(GamepadKeys.Trigger.RIGHT_TRIGGER))
+                .whenPressed(trapdoor::close);
+
         /*
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣷⣶⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣾⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀
