@@ -175,8 +175,8 @@ public class Constants {
         }
         public static class Position {
             public double
-                    TALL = 1000, // Degrees
-                    MIDDLE = 450, // Degrees
+                    TALL = 1210, // Degrees
+                    MIDDLE = 940, // Degrees
                     LOWER = 0, // Degrees
                     INITIAL = 0,
                     SHARED_HIGH = 400,
@@ -184,7 +184,7 @@ public class Constants {
                     CAP_HIGH = 1210,
                     CAP_LOW = 1210,
                     CAP_PICKUP = 350,
-                    MAX_POSITION = 1240,
+                    MAX_POSITION = 1210,
                     MIN_POSITION = 0;
             public enum Tall {
                 LOWER, MIDDLE, TALL
@@ -194,7 +194,7 @@ public class Constants {
             public double
                     NORMAL_SPEED          = 1,
                     INITIAL_SPEED         = 1,
-                    SPEED_DEGREES_CHANGE          = 10;
+                    SPEED_DEGREES_CHANGE          = 5;
 
         }
     }
@@ -208,15 +208,15 @@ public class Constants {
             public String LEFT_ID            = "leftLiftServo";
             public String RIGHT_ID            = "rightLiftServo";
             public boolean LEFT_REVERSED     = true;
-            public boolean RIGHT_REVERSED     = true;
+            public boolean RIGHT_REVERSED     = false;
         }
 
         public static class Position {
             public double
-                    HIGH          = 90, // Degrees
+                    HIGH          = 115, // Degrees
                     MID           = 90, // Degrees
-                    LOW           = 90, // Degrees
-                    INITIAL = 0,
+                    LOW           = 107, // Degrees
+                    INITIAL = 10,
                     SHARED_HIGH = 0,
                     SHARED_LOW = 0,
                     CAP_HIGH = 104,
@@ -226,7 +226,7 @@ public class Constants {
         }
         public static class Speed {
             public double
-                    SPEED_DEGREES_CHANGE          = 1;
+                    SPEED_DEGREES_CHANGE          = 0.4;
 
         }
     }
@@ -401,8 +401,8 @@ public class Constants {
             public boolean REVERSED = true;
         }
         public static class Value {
-            public double OPEN                       = 60; // Degrees
-            public double CLOSE                      = 150; // Degrees
+            public double OPEN                       = 20; // Degrees
+            public double CLOSE                      = 90; // Degrees
             public double INTAKE = 52;
             public double CAP_HIGH = 60;
             public double CAP_LOW = 60;
