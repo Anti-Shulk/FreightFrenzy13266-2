@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmode.teleop.beta;
 
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Trigger.*;
+import static com.arcrobotics.ftclib.gamepad.GamepadKeys.Button.*;
 import static org.firstinspires.ftc.teamcode.constants.GamepadConstants.button;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
@@ -59,27 +61,27 @@ public class TeleOPMain extends CommandOpMode {
         command.add(() -> driver.get(button.RESET_IMU))
                 .whenPressed(drive::resetImu);
 
-        command.add(() -> operator.get(GamepadKeys.Button.DPAD_DOWN))
+        command.add(() -> operator.get(DPAD_DOWN))
                 .whenPressed(lift::initial)
                 .whenPressed(trapdoor::intake);
 
-        command.add(() -> operator.get(GamepadKeys.Button.DPAD_UP))
+        command.add(() -> operator.get(DPAD_UP))
                 .whenPressed(lift::high);
-        command.add(() -> operator.get(GamepadKeys.Button.DPAD_LEFT))
+        command.add(() -> operator.get(DPAD_LEFT))
                 .whenPressed(lift::mid);
-        command.add(() -> operator.get(GamepadKeys.Button.DPAD_RIGHT))
+        command.add(() -> operator.get(DPAD_RIGHT))
                 .whenPressed(lift::low);
 
-        command.add(() -> operator.get(GamepadKeys.Button.A))
+        command.add(() -> operator.get(A))
                 .whenPressed(trapdoor::open);
 
-        command.add(() -> operator.get(GamepadKeys.Button.B))
+        command.add(() -> operator.get(B))
                 .whenPressed(trapdoor::close);
 
-        command.add(() -> driver.getTriggerPressed(GamepadKeys.Trigger.LEFT_TRIGGER))
+        command.add(() -> driver.getTriggerPressed(LEFT_TRIGGER))
                 .whenPressed(trapdoor::open);
 
-        command.add(() -> driver.getTriggerPressed(GamepadKeys.Trigger.RIGHT_TRIGGER))
+        command.add(() -> driver.getTriggerPressed(RIGHT_TRIGGER))
                 .whenPressed(trapdoor::close);
 
         /*
