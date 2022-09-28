@@ -43,9 +43,17 @@ public class TeleOPMain extends CommandOpMode {
 
 
         TelemetrySubsystem telemetrySubsystem = new TelemetrySubsystem(
-                telemetry);
+                telemetry,
+                drive,
+                lift);
 
         command.addDefault(() -> telemetrySubsystem.periodic(driver, operator));
+
+        /*
+         *
+         * DRIVER COMMANDS
+         *
+         */
 
         command.addDefault(() -> drive.drive(
                 driver.getLeftX(), driver.getLeftY(), driver.getRightX(), DriveConstants.Drivetrain.Value.FINE_CONTROL, DriveConstants.Drivetrain.Value.FIELD_CENTRIC));
@@ -60,6 +68,18 @@ public class TeleOPMain extends CommandOpMode {
 
         command.add(() -> driver.get(button.RESET_IMU))
                 .whenPressed(drive::resetImu);
+
+        command.add(() -> driver.getTriggerPressed(LEFT_TRIGGER))
+                .whenPressed(trapdoor::open);
+
+        command.add(() -> driver.getTriggerPressed(RIGHT_TRIGGER))
+                .whenPressed(trapdoor::close);
+
+        /*
+         *
+         * OPERATOR COMMANDS
+         *
+         */
 
         command.add(() -> operator.get(DPAD_DOWN))
                 .whenPressed(lift::initial)
@@ -77,31 +97,6 @@ public class TeleOPMain extends CommandOpMode {
 
         command.add(() -> operator.get(B))
                 .whenPressed(trapdoor::close);
-
-        command.add(() -> driver.getTriggerPressed(LEFT_TRIGGER))
-                .whenPressed(trapdoor::open);
-
-        command.add(() -> driver.getTriggerPressed(RIGHT_TRIGGER))
-                .whenPressed(trapdoor::close);
-
-        /*
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣶⣿⣿⣷⣶⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣾⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⡟⠁⣰⣿⣿⣿⡿⠿⠻⠿⣿⣿⣿⣿⣧⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⠏⠀⣴⣿⣿⣿⠉⠀⠀⠀⠀⠀⠈⢻⣿⣿⣇⠀⠀⠀
-        ⠀⠀⠀⠀⢀⣠⣼⣿⣿⡏⠀⢠⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⡀⠀⠀
-        ⠀⠀⠀⣰⣿⣿⣿⣿⣿⡇⠀⢸⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⡇⠀⠀
-        ⠀⠀⢰⣿⣿⡿⣿⣿⣿⡇⠀⠘⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⢀⣸⣿⣿⣿⠁⠀⠀
-        ⠀⠀⣿⣿⣿⠁⣿⣿⣿⡇⠀⠀⠻⣿⣿⣿⣷⣶⣶⣶⣶⣶⣿⣿⣿⣿⠃⠀⠀⠀
-        ⠀⢰⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀
-        ⠀⢸⣿⣿⡇⠀⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠉⠛⠛⠛⠉⢉⣿⣿⠀⠀⠀⠀⠀⠀
-        ⠀⢸⣿⣿⣇⠀⣿⣿⣿⠀⠀⠀⠀⠀⢀⣤⣤⣤⡀⠀⠀⢸⣿⣿⣿⣷⣦⠀⠀⠀
-        ⠀⠀⢻⣿⣿⣶⣿⣿⣿⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣦⡀⠀⠉⠉⠻⣿⣿⡇⠀⠀
-        ⠀⠀⠀⠛⠿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀⠀⠈⠹⣿⣿⣇⣀⠀⣠⣾⣿⣿⡇⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣦⣤⣤⣤⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢿⣿⣿⣿⣿⣿⣿⠿⠋⠉⠛⠋⠉⠉⠁⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠁
-        **/
 
         command.add(() -> operator.getLeftY() > GamepadConstants.value.STICK_THRESHOLD)
                 .whileHeld(lift::increaseMotorPosition);
