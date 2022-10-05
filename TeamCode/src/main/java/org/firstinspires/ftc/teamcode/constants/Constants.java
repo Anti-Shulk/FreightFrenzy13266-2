@@ -213,8 +213,8 @@ public class Constants {
 
         public static class Position {
             public double
-                    HIGH          = 115, // Degrees
-                    MID           = 90, // Degrees
+                    HIGH          = 135, // Degrees
+                    MID           = 100, // Degrees
                     LOW           = 107, // Degrees
                     INITIAL = 10,
                     SHARED_HIGH = 0,
@@ -401,8 +401,8 @@ public class Constants {
             public boolean REVERSED = true;
         }
         public static class Value {
-            public double OPEN                       = 20; // Degrees
-            public double CLOSE                      = 90; // Degrees
+            public double OPEN                       = 90; // Degrees
+            public double CLOSE                      = 9; // Degrees
             public double INTAKE = 52;
             public double CAP_HIGH = 60;
             public double CAP_LOW = 60;
