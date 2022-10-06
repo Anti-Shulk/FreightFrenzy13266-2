@@ -208,7 +208,7 @@ public class Constants {
             public String LEFT_ID            = "leftLiftServo";
             public String RIGHT_ID            = "rightLiftServo";
             public boolean LEFT_REVERSED     = true;
-            public boolean RIGHT_REVERSED     = false;
+            public boolean RIGHT_REVERSED     = true;
         }
 
         public static class Position {
